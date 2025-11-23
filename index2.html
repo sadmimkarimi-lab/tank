@@ -5,14 +5,15 @@
   <title>تانکیتا | Tankita</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- فونت فارسی -->
+  <!-- فونت‌های فارسی -->
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet" />
 
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
 
     body{
-      font-family: Vazirmatn, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: Vazir, Vazirmatn, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: radial-gradient(circle at top,#111827,#020617);
       color:#f9fafb;
       display:flex;
@@ -30,7 +31,7 @@
     /* هدر کارت‌شده */
     .header{
       display:flex;
-      flex-direction:row; /* دکمه چپ، لوگو راست */
+      flex-direction:row;
       justify-content:space-between;
       align-items:center;
       gap:10px;
@@ -42,10 +43,10 @@
       box-shadow:0 10px 30px rgba(15,23,42,.9);
     }
 
-    /* راست هدر: لوگو + عنوان (لوگو کاملاً چسبیده به راست) */
+    /* راست هدر: لوگو + عنوان (لوگو کاملاً سمت راست) */
     .header-right{
       display:flex;
-      flex-direction:row-reverse; /* لوگو راست، متن چپش */
+      flex-direction:row;
       align-items:center;
       gap:6px;
       text-align:right;
@@ -216,20 +217,20 @@
       display:flex;
       align-items:center;
       gap:6px;
-      flex-wrap:nowrap; /* همه تو یه خط بمونن */
+      flex-wrap:nowrap;
       margin-bottom:6px;
     }
 
-    /* کادر فروشگاه (هم قد با جون) */
+    /* کادر فروشگاه (هم‌قد با جون) */
     .shop-bar{
       flex:1;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:4px;
-      padding:3px 8px;            /* ارتفاع کم‌تر مثل جون */
+      padding:3px 8px;
       border-radius:999px;
-      border:1px solid rgba(148,163,184,0.8); /* مثل جون */
+      border:1px solid rgba(148,163,184,0.8);
       background:rgba(15,23,42,0.95);
       box-shadow:0 4px 14px rgba(15,23,42,0.9);
     }
@@ -301,9 +302,11 @@
       text-align:right;
     }
 
+    /* پیام الهام‌بخش کنار امتیاز */
     .hud-hint{
-      font-size:11px;
-      opacity:.9;
+      font-size:13px;
+      opacity:.95;
+      font-weight:500;
     }
 
     .overlay{
@@ -456,7 +459,7 @@
 
     <!-- هدر -->
     <header class="header">
-      <!-- راست: لوگو + عنوان چسبیده -->
+      <!-- راست: لوگو بعد عنوان -->
       <div class="header-right">
         <div class="logo-badge">T</div>
         <div class="title-block">
@@ -545,7 +548,7 @@
             </button>
           </div>
 
-          <!-- ۴. صدا -->
+          <!-- ۴. صدا + شروع دوباره -->
           <div class="top-actions">
             <button class="top-icon-btn" id="soundToggle" title="قطع/وصل صدا">🔊</button>
             <button class="top-icon-btn" id="resetRunBtn" title="شروع دوباره">⟲</button>
@@ -817,7 +820,6 @@
     let bossSpawned = false;
     let bossAlive = false;
 
-    // نوع پاورآپ‌هایی که می‌افتند
     const POWER_TYPES = ["shield","triple","slow","rocket"];
 
     let activePowerUps = { shield:false, triple:false, slow:false };
@@ -979,12 +981,12 @@
           }
 
           ctx.fillStyle = "#ffffff";
-          ctx.font = "bold 13px Vazirmatn, system-ui";
+          ctx.font = "bold 13px Vazir, Vazirmatn, system-ui";
           ctx.textAlign = "center";
           ctx.textBaseline = "top";
           ctx.fillText("HP: "+e.hp, x+w/2, y+4);
 
-          ctx.font = "bold 13px Vazirmatn, system-ui";
+          ctx.font = "bold 13px Vazir, Vazirmatn, system-ui";
           ctx.textBaseline = "bottom";
           ctx.fillText(e.bossName, x+w/2, y+h-4);
 
@@ -1007,7 +1009,7 @@
         }
 
         ctx.fillStyle="#0f172a";
-        ctx.font="bold 12px Vazirmatn, system-ui";
+        ctx.font="bold 12px Vazir, Vazirmatn, system-ui";
         ctx.textAlign="center"; ctx.textBaseline="middle";
         ctx.fillText(e.label, e.x+e.w/2, e.y+e.h/2);
       });
@@ -1052,7 +1054,7 @@
         ctx.fillStyle = grad;
         ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
 
-        ctx.font="bold 11px Vazirmatn, system-ui";
+        ctx.font="bold 11px Vazir, Vazirmatn, system-ui";
         ctx.fillStyle="#020617";
         ctx.textAlign="center"; ctx.textBaseline="middle";
         let icon = "⬆";
@@ -1520,6 +1522,13 @@
     updateInventoryUI();
     updateMotivation();
     setInterval(updateMotivation, 10000);
+
+    // اسکرول خودکار برای دیدن دکمه‌ها در موبایل
+    setTimeout(()=>{
+      try{
+        fireBtn.scrollIntoView({ behavior:"smooth", block:"end" });
+      }catch(e){}
+    }, 600);
   </script>
 </body>
 </html>
