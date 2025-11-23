@@ -41,21 +41,22 @@
       box-shadow:0 10px 30px rgba(15,23,42,.9);
     }
 
-    /* راست هدر: لوگو + عنوان */
+    /* راست هدر: لوگو + عنوان (لوگو کاملاً چسبیده به راست) */
     .header-right{
       display:flex;
-      flex-direction:row-reverse; /* لوگو دقیقاً سمت راست */
+      flex-direction:row-reverse; /* لوگو در راست‌ترین نقطه */
       align-items:center;
       gap:8px;
       text-align:right;
       flex:1;
+      justify-content:flex-end;
     }
     .logo-badge{
       width:52px;
       height:52px;
       border-radius:16px;
       background:radial-gradient(circle at top,#38bdf8,#0f172a);
-      box-shadow:0 0 18px rgba(56,189,248,.7);
+      box-shadow:0 0 18px rgba(56,189,248,.9);
       display:flex;
       align-items:center;
       justify-content:center;
@@ -74,8 +75,8 @@
       display:flex;
       align-items:center;
       gap:6px;
+      justify-content:flex-end;
     }
-    .title-row span.icon{font-size:18px;}
     h1{
       font-size:18px;
       font-weight:800;
@@ -87,7 +88,7 @@
       white-space:nowrap;
     }
 
-    /* چپ هدر: درباره / فروشگاه */
+    /* چپ هدر: درباره / فروشگاه (سه‌بعدی‌تر و خفن‌تر) */
     .header-left{
       display:flex;
       flex-direction:row;
@@ -95,20 +96,28 @@
       gap:6px;
     }
     .header-link{
-      background:rgba(15,23,42,.8);
-      border:1px solid rgba(148,163,184,.6);
+      background:linear-gradient(135deg,#1f2937,#0f172a);
+      border:1px solid rgba(148,163,184,.9);
       color:#e5e7eb;
       cursor:pointer;
-      padding:5px 9px;
+      padding:6px 11px;
       border-radius:999px;
       font-size:11px;
-      font-weight:500;
+      font-weight:600;
       white-space:nowrap;
+      box-shadow:0 6px 14px rgba(15,23,42,.9);
       transition:all .15s;
     }
     .header-link:hover{
-      background:rgba(30,64,175,.9);
-      border-color:rgba(129,140,248,.9);
+      background:linear-gradient(135deg,#6366f1,#0ea5e9);
+      border-color:rgba(191,219,254,1);
+      color:#f9fafb;
+      transform:translateY(-1px);
+      box-shadow:0 10px 20px rgba(59,130,246,.8);
+    }
+    .header-link:active{
+      transform:translateY(1px) scale(.97);
+      box-shadow:0 3px 10px rgba(15,23,42,.9);
     }
 
     .game-panel{
@@ -146,6 +155,7 @@
       background:rgba(15,23,42,.85);
       border:1px solid rgba(148,163,184,.5);
       white-space:nowrap;
+      transition:all .2s;
     }
     .dot{
       width:6px;height:6px;border-radius:999px;
@@ -159,6 +169,18 @@
     .badge-coins{
       background:rgba(234,179,8,.12);
       border-color:rgba(234,179,8,.6);
+    }
+
+    /* حالت خطر برای جون */
+    .stat-pill.danger{
+      background:rgba(248,113,113,0.2);
+      border-color:#ef4444;
+      animation:dangerPulse 0.6s ease-in-out 0s 2;
+    }
+    @keyframes dangerPulse{
+      0%{transform:scale(1);}
+      50%{transform:scale(1.08);}
+      100%{transform:scale(1);}
     }
 
     /* آیکون‌های بالا (صدا و ری‌استارت) */
@@ -180,22 +202,21 @@
       cursor:pointer;
       font-size:15px;
       padding:0;
+      user-select:none;
+      -webkit-user-select:none;
+      box-shadow:0 6px 14px rgba(15,23,42,.9);
+      transition:all .15s;
+    }
+    .top-icon-btn:hover{
+      background:linear-gradient(135deg,#6366f1,#0ea5e9);
+      border-color:rgba(191,219,254,1);
+      transform:translateY(-1px);
+    }
+    .top-icon-btn:active{
+      transform:translateY(1px) scale(.96);
+      box-shadow:0 3px 10px rgba(15,23,42,.9);
     }
 
-    .game-panel .top-icon-btn:hover{
-      background:rgba(30,64,175,.9);
-      border-color:rgba(129,140,248,.9);
-    }
-
-    .game-panel .top-icon-btn:active{
-      transform:scale(.9);
-    }
-
-    .game-panel .top-icon-btn#resetRunBtn{
-      font-size:17px;
-    }
-
-    /* Overlays */
     .overlay{
       position:absolute; inset:0;
       display:flex; flex-direction:column;
@@ -222,26 +243,35 @@
       box-shadow:none;
     }
 
-    /* Controls */
+    /* Controls (خفن‌تر) */
     .controls{
       display:flex; justify-content:space-between;
       gap:10px; margin-top:8px; direction:ltr;
+      animation:controlsPulse 3s ease-in-out 0s 2;
+    }
+    @keyframes controlsPulse{
+      0%,100%{transform:translateY(0);}
+      50%{transform:translateY(-3px);}
     }
     .ctrl-btn{
       flex:1; padding:14px 0; border-radius:22px;
-      border:none; cursor:pointer; font-size:20px; font-weight:700;
-      background:linear-gradient(135deg,#0ea5e9,#3b82f6);
-      color:#e0faff; box-shadow:0 8px 26px rgba(59,130,246,.45);
-      transition:transform .1s, box-shadow .15s;
+      border:1px solid rgba(15,23,42,0.9);
+      cursor:pointer; font-size:20px; font-weight:700;
+      background:radial-gradient(circle at top,#1d4ed8,#0ea5e9);
+      color:#e0faff; box-shadow:0 10px 32px rgba(59,130,246,.6);
+      transition:transform .1s, box-shadow .15s, transform .15s;
+      user-select:none;
+      -webkit-user-select:none;
+      text-shadow:0 0 8px rgba(15,23,42,.9);
     }
     .ctrl-btn:active{
-      transform:scale(.9);
+      transform:scale(.9) translateY(1px);
       box-shadow:0 4px 16px rgba(15,23,42,.8);
     }
     .ctrl-btn.fire{
       flex:1.4;
-      background:linear-gradient(135deg,#f97316,#e11d48);
-      box-shadow:0 10px 32px rgba(239,68,68,.6);
+      background:radial-gradient(circle at top,#f97316,#e11d48);
+      box-shadow:0 12px 36px rgba(239,68,68,.7);
     }
     .hint{
       margin-top:6px; font-size:11px; opacity:.8;
@@ -317,9 +347,11 @@
       background:linear-gradient(135deg,#f59e0b,#ef4444);
       color:#fff;
       white-space:nowrap;
+      box-shadow:0 8px 20px rgba(239,68,68,.7);
     }
     .shop-buy:disabled{
       opacity:.5; cursor:not-allowed;
+      box-shadow:none;
     }
     .shop-coins{
       margin-top:4px;
@@ -337,21 +369,20 @@
 <body>
   <div class="game-wrapper">
 
-    <!-- هدر: راست = لوگو و عنوان / چپ = درباره + شاپ -->
+    <!-- هدر -->
     <header class="header">
-      <!-- راست -->
+      <!-- راست: لوگو + عنوان (لوگو کاملاً سمت راست) -->
       <div class="header-right">
         <div class="logo-badge">T</div>
         <div class="title-block">
           <div class="title-row">
-            <span class="icon">🧠</span>
             <h1>تانکیتا</h1>
           </div>
           <div class="subtitle">با تانک اراده، قلمرو ذهنت رو پاک کن.</div>
         </div>
       </div>
 
-      <!-- چپ -->
+      <!-- چپ: درباره / شاپ -->
       <div class="header-left">
         <button class="header-link" id="aboutBtn">درباره ما</button>
         <button class="header-link" id="shopBtn">شاپ</button>
@@ -363,25 +394,29 @@
       <div class="canvas-wrap">
         <canvas id="gameCanvas"></canvas>
 
+        <!-- شروع -->
         <div id="startOverlay" class="overlay">
           <h2>تانکیتا آماده‌ست 🚀</h2>
           <p>
             با تانک اراده‌ات، عادت‌های بد رو نابود کن و مرحله به مرحله<br/>
-            غول‌های قلمرو ذهنت رو شکست بده.
+            غول‌های قلمرو ذهنت رو شکست بده. <br>
+            برای شروع روی دکمه «شروع از مرحله ۱» بزن.
           </p>
           <button id="startBtn">شروع از مرحله ۱</button>
           <button id="continueBtn" class="secondary">ادامه از آخرین مرحله</button>
         </div>
 
+        <!-- پایان مرحله (روشن‌تر و واضح‌تر) -->
         <div id="levelOverlay" class="overlay hidden">
           <h2>مرحله تموم شد! 🎉</h2>
           <p>
-            غول این مرحله رو نابود کردی و مسیر ذهن تمیز شد.<br/>
-            آماده‌ای بری سراغ غول مرحله بعد؟
+            غول این مرحله نابود شد و مسیر ذهن تمیز شد.<br/>
+            ۲ جان هدیه گرفتی؛ آماده‌ای بری سراغ غول بعدی؟
           </p>
-          <button id="nextLevelBtn">مرحله بعد ▶️</button>
+          <button id="nextLevelBtn">رفتن به مرحله بعد ▶️</button>
         </div>
 
+        <!-- گیم‌اور -->
         <div id="gameOverOverlay" class="overlay hidden">
           <h2>پایان این دور 💔</h2>
           <p>
@@ -400,7 +435,7 @@
         <span class="stat-pill badge-level">
           مرحله: <span id="levelLabel">۱</span>
         </span>
-        <span class="stat-pill">
+        <span class="stat-pill" id="livesPill">
           ❤️ <span id="lives">3</span>
         </span>
         <span class="stat-pill badge-coins">
@@ -419,6 +454,7 @@
         <button class="ctrl-btn" id="rightBtn">▶️</button>
       </div>
       <div class="hint">
+        برای حرکت از دکمه‌های پایین استفاده کن؛ <br>
         کامپیوتر: ◀️▶️ برای حرکت، Space برای شلیک | موبایل: از دکمه‌ها استفاده کن.
       </div>
     </div>
@@ -507,6 +543,7 @@
     const coinsEl = document.getElementById("coins");
     const levelLabel = document.getElementById("levelLabel");
     const resetRunBtn = document.getElementById("resetRunBtn");
+    const livesPill = document.getElementById("livesPill");
 
     const startOverlay = document.getElementById("startOverlay");
     const levelOverlay = document.getElementById("levelOverlay");
@@ -537,7 +574,7 @@
 
     const soundToggleBtn = document.getElementById("soundToggle");
 
-    // ======== سیستم صدا (بدون فایل) ========
+    // ======== سیستم صدا (ساده) ========
     let soundEnabled = true;
     let audioCtx = null;
 
@@ -575,7 +612,7 @@
       soundToggleBtn.textContent = soundEnabled ? "🔊" : "🔇";
     });
 
-    // ======== تصاویر تانک و غول‌ها ========
+    // ======== تصاویر تانک و غول ========
     const tankImg = new Image();
     tankImg.src = "https://cdnfa.com/irangiah/a9be/uploads/tank/tank.webp";
 
@@ -708,6 +745,7 @@
       return (distX*distX + distY*distY) <= cr*cr;
     }
 
+    // پس‌زمینه + خطوط نئونی کم برای حس حرکت
     function drawBackground(){
       const grad = ctx.createRadialGradient(
         canvas.width/2, canvas.height*0.1, 20,
@@ -719,8 +757,11 @@
       ctx.fillStyle = grad;
       ctx.fillRect(0,0,canvas.width,canvas.height);
 
-      ctx.strokeStyle = "rgba(148,163,184,0.35)";
+      ctx.save();
+      ctx.strokeStyle = "rgba(56,189,248,0.28)";
       ctx.lineWidth = 1.3;
+      ctx.shadowColor = "rgba(56,189,248,0.5)";
+      ctx.shadowBlur = 6;
       for(let i=0;i<9;i++){
         const y = (canvas.height - 16) - (i*26) + bgOffset;
         ctx.beginPath();
@@ -728,23 +769,11 @@
         ctx.lineTo(canvas.width,y);
         ctx.stroke();
       }
+      ctx.restore();
     }
 
     function drawTank(){
       const {x,y,w,h} = tank;
-
-      const px = x + w/2;
-      const py = y + h + 6;
-      const rx = w*0.55;
-      const ry = h*0.35;
-      const g = ctx.createRadialGradient(px,py,2,px,py,rx);
-      g.addColorStop(0,"rgba(56,189,248,0.75)");
-      g.addColorStop(0.5,"rgba(56,189,248,0.22)");
-      g.addColorStop(1,"rgba(15,23,42,0)");
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.ellipse(px,py,rx,ry,0,0,Math.PI*2);
-      ctx.fill();
 
       if(tankImg.complete && tankImg.naturalWidth>0){
         ctx.drawImage(tankImg, x, y, w, h);
@@ -970,29 +999,13 @@
       sfxShoot();
     }
 
-    function resetGameState(startFromLevelIndex = 0){
-      bullets=[]; enemies=[]; powerUps=[]; particles=[];
-      score=0; lives=3;
-      bossSpawned=false; bossAlive=false;
-      hitFlash=0; shakeTime=0; bgOffset=0;
-
-      currentLevelIndex = startFromLevelIndex;
-      const lvl = LEVELS[currentLevelIndex];
-      levelGoal = lvl.goal;
-      spawnInterval = Math.max(550, lvl.spawnInterval);
-      enemyBaseSpeed = lvl.enemySpeed;
-
-      levelLabel.textContent = lvl.label;
-      scoreEl.textContent = score;
-      livesEl.textContent = lives;
-      coinsEl.textContent = coins;
-
-      const ratio = tankImg.naturalHeight / tankImg.naturalWidth || 0.6;
-      tank.w = canvas.width * 0.18;
-      tank.h = tank.w * ratio;
-      tank.x = canvas.width/2 - tank.w/2;
-      tank.y = canvas.height - tank.h - 18;
+    function flashLifeDanger(){
+      if(!livesPill) return;
+      livesPill.classList.add("danger");
+      setTimeout(()=>livesPill.classList.remove("danger"),700);
     }
+
+    let frameId = null; // برای جلوگیری از سرعت‌گرفتن Loop
 
     function update(){
       if(moveLeft) tank.x -= tank.speed;
@@ -1093,6 +1106,7 @@
               lives--;
               livesEl.textContent=lives;
               hitFlash=1; shakeTime=12;
+              flashLifeDanger();
               sfxHit();
               if(navigator.vibrate) navigator.vibrate(100);
 
@@ -1110,6 +1124,7 @@
               lives--;
               livesEl.textContent=lives;
               hitFlash=1; shakeTime=10;
+              flashLifeDanger();
               sfxHit();
               if(navigator.vibrate) navigator.vibrate(80);
               if(lives<=0){
@@ -1122,6 +1137,8 @@
 
       const levelCleared = score >= lvl.goal && bossSpawned && !bossAlive;
       if(levelCleared){
+        lives += 2;
+        livesEl.textContent = lives;
         gameRunning=false;
         saveState();
         levelOverlay.classList.remove("hidden");
@@ -1161,10 +1178,37 @@
         hitFlash-=0.05;
       }
 
-      requestAnimationFrame(gameLoop);
+      frameId = requestAnimationFrame(gameLoop);
+    }
+
+    function resetGameState(startFromLevelIndex = 0){
+      bullets=[]; enemies=[]; powerUps=[]; particles=[];
+      score=0; lives=3;
+      bossSpawned=false; bossAlive=false;
+      hitFlash=0; shakeTime=0; bgOffset=0;
+
+      currentLevelIndex = startFromLevelIndex;
+      const lvl = LEVELS[currentLevelIndex];
+      levelGoal = lvl.goal;
+      spawnInterval = Math.max(550, lvl.spawnInterval);
+      enemyBaseSpeed = lvl.enemySpeed;
+
+      levelLabel.textContent = lvl.label;
+      scoreEl.textContent = score;
+      livesEl.textContent = lives;
+      coinsEl.textContent = coins;
+
+      const ratio = tankImg.naturalHeight / tankImg.naturalWidth || 0.6;
+      tank.w = canvas.width * 0.18;
+      tank.h = tank.w * ratio;
+      tank.x = canvas.width/2 - tank.w/2;
+      tank.y = canvas.height - tank.h - 18;
     }
 
     function startGame(fromLevelIndex=0){
+      // جلوگیری از چند Loop همزمان
+      if(frameId) cancelAnimationFrame(frameId);
+
       resetGameState(fromLevelIndex);
       startOverlay.classList.add("hidden");
       levelOverlay.classList.add("hidden");
@@ -1172,11 +1216,13 @@
       gameRunning=true;
       lastEnemyTime=performance.now();
       lastPowerUpTime=performance.now();
-      requestAnimationFrame(gameLoop);
+      gameLoop();
     }
 
     function endGame(){
       gameRunning=false;
+      if(frameId) cancelAnimationFrame(frameId);
+
       finalScoreEl.textContent=score;
       const saved=loadState();
       const best=Math.max(score, saved?.bestScore || 0);
@@ -1186,6 +1232,7 @@
       gameOverOverlay.classList.remove("hidden");
     }
 
+    // رویدادها
     startBtn.addEventListener("click", ()=> startGame(0));
 
     continueBtn.addEventListener("click", ()=>{
@@ -1270,9 +1317,17 @@
       saveState(); refreshShopUI();
     });
 
+    // شروع اولیه
     resetGameState(0);
     drawBackground(); drawTank();
     applyLoadedState();
+
+    // کمک به اینکه کاربر دکمه‌ها را ببیند (اسکرول ملایم به پایین)
+    setTimeout(()=>{
+      try{
+        fireBtn.scrollIntoView({behavior:"smooth", block:"end"});
+      }catch(e){}
+    }, 500);
   </script>
 </body>
 </html>
