@@ -29,19 +29,20 @@
     }
 
     /* هدر کارت‌شده */
-    .header{
-      display:flex;
-      flex-direction:row;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      background:rgba(15,23,42,0.95);
-      border-radius:20px;
-      padding:8px 12px;
-      border:1px solid rgba(148,163,184,.5);
-      margin-bottom:12px;
-      box-shadow:0 10px 30px rgba(15,23,42,.9);
-    }
+ .header{
+  display:flex;
+  direction: rtl;      
+  flex-direction:row;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  background:rgba(15,23,42,0.95);
+  border-radius:20px;
+  padding:8px 12px;
+  border:1px solid rgba(148,163,184,.5);
+  margin-bottom:12px;
+  box-shadow:0 10px 30px rgba(15,23,42,.9);
+}
 
     /* راست هدر: لوگو + عنوان (لوگو کاملاً سمت راست) */
     .header-right{
@@ -51,7 +52,7 @@
       gap:6px;
       text-align:right;
       flex:1;
-      justify-content:flex-end;
+      justify-content:flex-start;
     }
     .logo-badge{
       width:64px;
@@ -68,11 +69,12 @@
       color:#e0faff;
       flex-shrink:0;
     }
-    .title-block{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-    }
+  .title-block{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  text-align:right;   
+}
     .title-row{
       display:flex;
       align-items:center;
