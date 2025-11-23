@@ -31,7 +31,7 @@
     /* هدر کارت‌شده */
 .header{
   display:flex;
-  flex-direction: row-reverse; /
+  flex-direction: row;          /* ردیف معمولی */
   justify-content:space-between;
   align-items:center;
   gap:10px;
@@ -44,14 +44,14 @@
 }
 
     /* راست هدر: لوگو + عنوان (لوگو کاملاً سمت راست) */
- .header-right{
+.header-right{
   display:flex;
-  flex-direction: row-reverse;
+  flex-direction: row;     /* دیگه row-reverse نباشه */
   align-items:center;
   gap:6px;
   text-align:right;
   flex:1;
-  justify-content:flex-start;
+  justify-content:flex-start;  /* تو RTL یعنی بچسبه سمت راست */
 }
     .logo-badge{
       width:64px;
