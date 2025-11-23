@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>بازی تانک طاویتا</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Vazirmatn", "IRANSans", sans-serif;
+      background: radial-gradient(circle at top, #1b2b5b, #050816);
+      color: #f9fafb;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    .game-wrapper {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 8px;
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .title-row span.icon {
+      font-size: 20px;
+    }
+
+    h1 {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      opacity: 0.85;
+    }
+
+    .logo-badge {
+      width: 54px;
+      height: 54px;
+      border-radius: 15px;
+      background: radial-gradient(circle at top, #3b82f6, #0f172a);
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 18px;
+      color: #e5f4ff;
+      letter-spacing: 1px;
+    }
+
+    .game-panel {
+      background: radial-gradient(circle at top, #0b1024, #020617);
+      border-radius: 22px;
+      padding: 12px 12px 16px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .top-bar-left span {
+      margin-left: 8px;
+    }
+
+    .stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+    }
+
+    .stat-pill .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+    }
+
+    .canvas-wrap {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: radial-gradient(circle at top, #020617, #020617 60%, #000 100%);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: transparent;
+    }
+
+    /* Overlay پیام‌ها */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, rgba(15,23,42,0.2), rgba(15,23,42,0.9));
+      color: #f9fafb;
+      text-align: center;
+      padding: 16px;
+      z-index: 2;
+    }
+
+    .overlay.hidden {
+      display: none;
+    }
+
+    .overlay h2 {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .overlay p {
+      font-size: 13px;
+      opacity: 0.9;
+      margin-bottom: 12px;
+    }
+
+    .overlay button {
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      background: linear-gradient(135deg, #ec4899, #6366f1);
+      color: #fff;
+      box-shadow: 0 8px 22px rgba(147, 51, 234, 0.8);
+    }
+
+    /* کنترل‌های موبایل */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      gap: 8px;
+    }
+
+    .control-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .ctrl-btn {
+      flex: 1;
+      border: none;
+      padding: 10px 0;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      background: radial-gradient(circle at top, #0ea5e9, #1d4ed8);
+      color: #e5f4ff;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.8);
+    }
+
+    .ctrl-btn.fire {
+      background: radial-gradient(circle at top, #f97316, #e11d48);
+      box-shadow: 0 10px 25px rgba(248, 113, 113, 0.9);
+      min-width: 90px;
+    }
+
+    .hint {
+      margin-top: 6px;
+      font-size: 11px;
+      opacity: 0.8;
+      text-align: center;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 17px;
+      }
+      .subtitle {
+        font-size: 12px;
+      }
+      .logo-badge {
+        width: 48px;
+        height: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="game-wrapper">
+    <!-- هدر -->
+    <header class="header">
+      <div class="header-right">
+        <div class="title-row">
+          <span class="icon">🎮</span>
+          <h1>بازی تانک طاویتا</h1>
+        </div>
+        <div class="subtitle">اینجا با تانک ذهنت، عادت‌های بد رو می‌شکنی.</div>
+      </div>
+      <div class="logo-badge">
+        T
+      </div>
+    </header>
+
+    <div class="game-panel">
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <span class="stat-pill">
+            <span class="dot"></span>
+            امتیاز: <span id="score">0</span>
+          </span>
+        </div>
+        <div class="top-bar-right">
+          <span class="stat-pill">
+            ❤️ <span id="lives">3</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="canvas-wrap">
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- پیام شروع / باخت -->
+        <div id="startOverlay" class="overlay">
+          <h2>آماده‌ای؟ 🚀</h2>
+          <p>تانک ذهنی‌ات رو حرکت بده و به بلوک‌های بدی‌ها شلیک کن؛ از <br> چیزهایی مثل ترس، تنبلی و ناامیدی رد شو.</p>
+          <button id="startBtn">شروع بازی</button>
+        </div>
+
+        <div id="gameOverOverlay" class="overlay hidden">
+          <h2>پایان بازی 💔</h2>
+          <p>امتیازت: <span id="finalScore">0</span> – دوباره تلاش کن و عادت‌های بیشتری رو بشکن!</p>
+          <button id="restartBtn">بازی دوباره</button>
+        </div>
+      </div>
+
+      <!-- کنترل‌ها -->
+      <div class="controls">
+        <div class="control-group">
+          <button class="ctrl-btn" id="leftBtn">◀️ چپ</button>
+          <button class="ctrl-btn" id="rightBtn">راست ▶️</button>
+        </div>
+        <button class="ctrl-btn fire" id="fireBtn">شلیک 🔥</button>
+      </div>
+      <div class="hint">
+        روی کامپیوتر: با کلیدهای ◀️▶️ حرکت کن، با Space شلیک کن.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // گرفتن المنت‌ها
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const scoreEl = document.getElementById("score");
+    const livesEl = document.getElementById("lives");
+    const startOverlay = document.getElementById("startOverlay");
+    const gameOverOverlay = document.getElementById("gameOverOverlay");
+    const startBtn = document.getElementById("startBtn");
+    const restartBtn = document.getElementById("restartBtn");
+    const finalScoreEl = document.getElementById("finalScore");
+
+    // تنظیم اندازه‌ی واکنش‌گرا برای کانواس
+    function resizeCanvas() {
+      const maxWidth = 420;
+      const ratio = 9 / 16; // نسبت عمودی
+      const width = Math.min(maxWidth, window.innerWidth - 32);
+      const height = width / ratio;
+      canvas.width = width;
+      canvas.height = height;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    // وضعیت بازی
+    let tank = {
+      x: 0,
+      y: 0,
+      w: 50,
+      h: 26,
+      speed: 4
+    };
+
+    let bullets = [];
+    let enemies = [];
+    let lastEnemyTime = 0;
+    let enemyInterval = 1300; // هر چند میلی‌ثانیه دشمن بیاد
+    let score = 0;
+    let lives = 3;
+    let gameRunning = false;
+    let lastTime = 0;
+
+    // ورودی‌ها
+    let moveLeft = false;
+    let moveRight = false;
+
+    const badLabels = [
+      "تنبلی",
+      "ترس",
+      "ناامیدی",
+      "خشم",
+      "حسادت",
+      "دروغ",
+      "بی‌احترامی",
+      "خودکم‌بینی"
+    ];
+
+    function resetGameState() {
+      score = 0;
+      lives = 3;
+      bullets = [];
+      enemies = [];
+      scoreEl.textContent = score;
+      livesEl.textContent = lives;
+
+      // جای تانک پایین وسط
+      tank.w = canvas.width * 0.14;
+      tank.h = tank.w * 0.52;
+      tank.x = canvas.width / 2 - tank.w / 2;
+      tank.y = canvas.height - tank.h - 18;
+    }
+
+    // رسم تانک
+    function drawTank() {
+      const x = tank.x;
+      const y = tank.y;
+      const w = tank.w;
+      const h = tank.h;
+
+      // بدنه
+      const grad = ctx.createLinearGradient(x, y, x + w, y + h);
+      grad.addColorStop(0, "#38bdf8");
+      grad.addColorStop(1, "#0f172a");
+      ctx.fillStyle = grad;
+      ctx.strokeStyle = "#7dd3fc";
+      ctx.lineWidth = 2;
+      const r = 8;
+      roundRect(ctx, x, y, w, h, r);
+      ctx.fill();
+      ctx.stroke();
+
+      // برجک بالا
+      const turretW = w * 0.65;
+      const turretH = h * 0.45;
+      const turretX = x + (w - turretW) / 2;
+      const turretY = y - turretH + 6;
+      const gradTurret = ctx.createLinearGradient(turretX, turretY, turretX + turretW, turretY + turretH);
+      gradTurret.addColorStop(0, "#4ade80");
+      gradTurret.addColorStop(1, "#22c55e");
+      ctx.fillStyle = gradTurret;
+      roundRect(ctx, turretX, turretY, turretW, turretH, 6);
+      ctx.fill();
+
+      // لوله‌ی تانک
+      const barrelW = 8;
+      const barrelH = h * 0.8;
+      const barrelX = x + w / 2 - barrelW / 2;
+      const barrelY = turretY - barrelH + 6;
+      ctx.fillStyle = "#e5f4ff";
+      roundRect(ctx, barrelX, barrelY, barrelW, barrelH, 4);
+      ctx.fill();
+
+      // چراغ‌ها / جزئیات
+      ctx.fillStyle = "#22d3ee";
+      ctx.beginPath();
+      ctx.arc(x + w * 0.2, y + h * 0.3, 4, 0, Math.PI * 2);
+      ctx.arc(x + w * 0.8, y + h * 0.3, 4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // تابع کمکی برای رسم مستطیل گوشه‌گرد
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+    // رسم گلوله
+    function drawBullets() {
+      ctx.fillStyle = "#f97316";
+      bullets.forEach(b => {
+        const grad = ctx.createRadialGradient(
+          b.x + b.r / 2, b.y + b.r / 2, 1,
+          b.x + b.r / 2, b.y + b.r / 2, b.r
+        );
+        grad.addColorStop(0, "#ffffff");
+        grad.addColorStop(1, "#f97316");
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    // رسم دشمن‌ها
+    function drawEnemies() {
+      enemies.forEach(e => {
+        const grad = ctx.createLinearGradient(e.x, e.y, e.x + e.w, e.y + e.h);
+        grad.addColorStop(0, e.colorStart);
+        grad.addColorStop(1, e.colorEnd);
+        ctx.fillStyle = grad;
+        ctx.strokeStyle = "rgba(15,23,42,0.9)";
+        ctx.lineWidth = 2;
+        roundRect(ctx, e.x, e.y, e.w, e.h, 8);
+        ctx.fill();
+        ctx.stroke();
+
+        // متن روی بلوک
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "bold 13px system-ui";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(e.label, e.x + e.w / 2, e.y + e.h / 2);
+      });
+    }
+
+    // ایجاد دشمن جدید
+    function spawnEnemy() {
+      const laneCount = 5;
+      const laneWidth = canvas.width / laneCount;
+      const laneIndex = Math.floor(Math.random() * laneCount);
+      const w = laneWidth * 0.7;
+      const h = 32;
+      const x = laneIndex * laneWidth + (laneWidth - w) / 2;
+      const y = -h - 10;
+
+      const colors = [
+        ["#f97316", "#fb923c"],
+        ["#22c55e", "#4ade80"],
+        ["#3b82f6", "#6366f1"],
+        ["#e11d48", "#f97316"],
+        ["#a855f7", "#6366f1"]
+      ];
+      const pair = colors[Math.floor(Math.random() * colors.length)];
+      const label = badLabels[Math.floor(Math.random() * badLabels.length)];
+
+      enemies.push({
+        x,
+        y,
+        w,
+        h,
+        speed: 1.3 + Math.random() * 0.7,
+        colorStart: pair[0],
+        colorEnd: pair[1],
+        label
+      });
+    }
+
+    // شلیک
+    function fireBullet() {
+      if (!gameRunning) return;
+      const r = 7;
+      bullets.push({
+        x: tank.x + tank.w / 2,
+        y: tank.y - r - 6,
+        r: r,
+        speed: 6
+      });
+    }
+
+    // آپدیت وضعیت
+    function update(delta) {
+      // حرکت تانک
+      if (moveLeft) {
+        tank.x -= tank.speed;
+      }
+      if (moveRight) {
+        tank.x += tank.speed;
+      }
+      // محدودیت لبه‌ها
+      tank.x = Math.max(6, Math.min(canvas.width - tank.w - 6, tank.x));
+
+      // حرکت گلوله‌ها
+      bullets.forEach(b => {
+        b.y -= b.speed;
+      });
+      bullets = bullets.filter(b => b.y + b.r > 0);
+
+      // اسپاون دشمن‌ها
+      if (performance.now() - lastEnemyTime > enemyInterval) {
+        spawnEnemy();
+        lastEnemyTime = performance.now();
+      }
+
+      // حرکت دشمن‌ها
+      enemies.forEach(e => {
+        e.y += e.speed;
+      });
+
+      // برخورد گلوله با دشمن
+      bullets.forEach((b, bi) => {
+        enemies.forEach((e, ei) => {
+          if (
+            b.x > e.x &&
+            b.x < e.x + e.w &&
+            b.y - b.r < e.y + e.h &&
+            b.y + b.r > e.y
+          ) {
+            // حذف گلوله و دشمن
+            bullets.splice(bi, 1);
+            enemies.splice(ei, 1);
+            score += 5;
+            scoreEl.textContent = score;
+          }
+        });
+      });
+
+      // برخورد دشمن با کف (از دست دادن جان)
+      enemies.forEach((e, ei) => {
+        if (e.y + e.h >= canvas.height - 5) {
+          enemies.splice(ei, 1);
+          lives -= 1;
+          livesEl.textContent = lives;
+          if (lives <= 0) {
+            endGame();
+          }
+        }
+      });
+    }
+
+    // رسم پس‌زمینه
+    function drawBackground() {
+      const grad = ctx.createRadialGradient(
+        canvas.width / 2,
+        canvas.height * 0.15,
+        20,
+        canvas.width / 2,
+        canvas.height,
+        canvas.height
+      );
+      grad.addColorStop(0, "#0f172a");
+      grad.addColorStop(0.4, "#020617");
+      grad.addColorStop(1, "#000000");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // خطوط افکت
+      ctx.strokeStyle = "rgba(148,163,184,0.18)";
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 4; i++) {
+        ctx.beginPath();
+        ctx.moveTo(0, canvas.height - (i + 1) * 26);
+        ctx.lineTo(canvas.width, canvas.height - (i + 1) * 26);
+        ctx.stroke();
+      }
+    }
+
+    // حلقه‌ی اصلی
+    function gameLoop(timestamp) {
+      if (!gameRunning) return;
+      const delta = timestamp - lastTime;
+      lastTime = timestamp;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawBackground();
+      update(delta);
+      drawEnemies();
+      drawBullets();
+      drawTank();
+
+      requestAnimationFrame(gameLoop);
+    }
+
+    function startGame() {
+      resetGameState();
+      startOverlay.classList.add("hidden");
+      gameOverOverlay.classList.add("hidden");
+      gameRunning = true;
+      lastTime = performance.now();
+      lastEnemyTime = performance.now();
+      requestAnimationFrame(gameLoop);
+    }
+
+    function endGame() {
+      gameRunning = false;
+      finalScoreEl.textContent = score;
+      gameOverOverlay.classList.remove("hidden");
+    }
+
+    // رویداد دکمه‌ها
+    startBtn.addEventListener("click", startGame);
+    restartBtn.addEventListener("click", startGame);
+
+    // کیبورد
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "ArrowLeft") {
+        moveLeft = true;
+      } else if (e.code === "ArrowRight") {
+        moveRight = true;
+      } else if (e.code === "Space") {
+        e.preventDefault();
+        fireBullet();
+      }
+    });
+
+    document.addEventListener("keyup", (e) => {
+      if (e.code === "ArrowLeft") {
+        moveLeft = false;
+      } else if (e.code === "ArrowRight") {
+        moveRight = false;
+      }
+    });
+
+    // کنترل‌های موبایل
+    const leftBtn = document.getElementById("leftBtn");
+    const rightBtn = document.getElementById("rightBtn");
+    const fireBtn = document.getElementById("fireBtn");
+
+    function bindHoldButton(btn, onHoldChange, key) {
+      const start = (e) => {
+        e.preventDefault();
+        onHoldChange(true);
+      };
+      const end = (e) => {
+        e.preventDefault();
+        onHoldChange(false);
+      };
+      btn.addEventListener("mousedown", start);
+      btn.addEventListener("mouseup", end);
+      btn.addEventListener("mouseleave", end);
+      btn.addEventListener("touchstart", start, { passive: false });
+      btn.addEventListener("touchend", end);
+      btn.addEventListener("touchcancel", end);
+    }
+
+    bindHoldButton(leftBtn, (v) => (moveLeft = v));
+    bindHoldButton(rightBtn, (v) => (moveRight = v));
+
+    fireBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      fireBullet();
+    });
+    fireBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      fireBullet();
+    }, { passive: false });
+
+    // شروع با صفحه‌ی اینترو
+    resetGameState();
+    drawBackground();
+    drawTank();
+  </script>
+</body>
+</html>
