@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <title>تانک ذهنی طاویتا | Tavita Tank</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- فونت فارسی -->
+
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/dist/font-face.css" rel="stylesheet" />
+
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
 
@@ -25,7 +26,7 @@
       max-width:420px;
     }
 
-    /* هدر */
+    /* Header */
     .header{
       display:flex;
       justify-content:space-between;
@@ -33,7 +34,6 @@
       margin-bottom:12px;
       gap:8px;
     }
-
     .header-left{
       display:flex;
       gap:10px;
@@ -58,18 +58,17 @@
     .header-right{
       display:flex;
       flex-direction:column;
-      align-items:flex-end;
+      align-items:flex-start;
       text-align:right;
       gap:4px;
     }
 
     .logo-row{
       display:flex;
-      flex-direction:row-reverse; /* لوگو سمت راست، عنوان می‌چسبه کنارش */
+      flex-direction:row-reverse; /* logo right, title glued beside */
       align-items:center;
       gap:8px;
     }
-
     .title-row{
       display:flex;
       align-items:center;
@@ -79,10 +78,12 @@
     h1{
       font-size:18px;
       font-weight:800;
+      white-space:nowrap;
     }
     .subtitle{
       font-size:12px;
       opacity:.85;
+      white-space:nowrap;
     }
 
     .logo-badge{
@@ -116,11 +117,7 @@
       border:1px solid rgba(148,163,184,.35);
       margin-bottom:10px;
     }
-    canvas{
-      display:block;
-      width:100%;
-      height:auto;
-    }
+    canvas{ display:block; width:100%; height:auto; }
 
     .top-bar{
       display:flex;
@@ -128,6 +125,8 @@
       align-items:center;
       margin-bottom:10px;
       font-size:12px;
+      gap:6px;
+      flex-wrap:wrap;
     }
     .stat-pill{
       display:inline-flex;
@@ -137,11 +136,10 @@
       border-radius:999px;
       background:rgba(15,23,42,.85);
       border:1px solid rgba(148,163,184,.5);
+      white-space:nowrap;
     }
     .dot{
-      width:6px;
-      height:6px;
-      border-radius:999px;
+      width:6px;height:6px;border-radius:999px;
       background:#22c55e;
       box-shadow:0 0 8px rgba(34,197,94,.9);
     }
@@ -149,41 +147,30 @@
       background:rgba(59,130,246,.2);
       border-color:rgba(59,130,246,.7);
     }
+    .badge-coins{
+      background:rgba(234,179,8,.12);
+      border-color:rgba(234,179,8,.6);
+    }
 
-    /* اوورلی‌های داخل بازی */
+    /* Overlays */
     .overlay{
-      position:absolute;
-      inset:0;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+      justify-content:center; align-items:center;
       background:radial-gradient(circle at center,rgba(15,23,42,.35),rgba(15,23,42,.96));
-      text-align:center;
-      padding:14px;
-      z-index:3;
+      text-align:center; padding:14px; z-index:3;
     }
     .overlay.hidden{display:none;}
-    .overlay h2{
-      font-size:19px;
-      margin-bottom:6px;
-    }
+    .overlay h2{ font-size:19px; margin-bottom:6px; }
     .overlay p{
-      font-size:12px;
-      opacity:.9;
-      margin-bottom:10px;
-      line-height:1.9;
+      font-size:12px; opacity:.9; margin-bottom:10px; line-height:1.9;
     }
     .overlay button{
-      border:none;
-      border-radius:999px;
-      padding:7px 18px;
-      font-size:13px;
-      font-weight:600;
+      border:none; border-radius:999px;
+      padding:7px 18px; font-size:13px; font-weight:600;
       cursor:pointer;
       background:linear-gradient(135deg,#ec4899,#6366f1);
-      color:#fff;
-      box-shadow:0 10px 26px rgba(129,140,248,.9);
+      color:#fff; box-shadow:0 10px 26px rgba(129,140,248,.9);
       margin:2px;
     }
     .overlay .secondary{
@@ -192,130 +179,101 @@
       box-shadow:none;
     }
 
-    /* کنترل‌ها */
+    /* Controls */
     .controls{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      margin-top:8px;
-      direction:ltr; /* ترتیب چپ → شلیک → راست */
+      display:flex; justify-content:space-between;
+      gap:10px; margin-top:8px; direction:ltr;
     }
     .ctrl-btn{
-      flex:1;
-      padding:14px 0;
-      border-radius:22px;
-      border:none;
-      cursor:pointer;
-      font-size:20px;
-      font-weight:700;
+      flex:1; padding:14px 0; border-radius:22px;
+      border:none; cursor:pointer; font-size:20px; font-weight:700;
       background:linear-gradient(135deg,#0ea5e9,#3b82f6);
-      color:#e0faff;
-      box-shadow:0 8px 26px rgba(59,130,246,.45);
+      color:#e0faff; box-shadow:0 8px 26px rgba(59,130,246,.45);
       transition:transform .1s;
     }
-    .ctrl-btn:active{
-      transform:scale(.9);
-    }
+    .ctrl-btn:active{ transform:scale(.9); }
     .ctrl-btn.fire{
       flex:1.4;
       background:linear-gradient(135deg,#f97316,#e11d48);
       box-shadow:0 10px 32px rgba(239,68,68,.6);
     }
     .hint{
-      margin-top:6px;
-      font-size:11px;
-      opacity:.8;
+      margin-top:6px; font-size:11px; opacity:.8;
       text-align:center;
     }
 
-    /* مودال درباره طاویتا */
-    .about-modal,
-    .shop-modal{
-      position:fixed;
-      inset:0;
-      display:flex;
-      justify-content:center;
-      align-items:center;
+    /* Modal base */
+    .modal{
+      position:fixed; inset:0;
+      display:flex; justify-content:center; align-items:center;
       background:rgba(15,23,42,0.9);
       z-index:50;
     }
-    .about-modal.hidden,
-    .shop-modal.hidden{
-      display:none;
-    }
-    .about-box,
-    .shop-box{
+    .modal.hidden{ display:none; }
+    .modal-box{
       background:radial-gradient(circle at top,#020617,#020617 60%,#000);
       border-radius:20px;
       padding:18px;
       max-width:380px;
-      width:90%;
+      width:92%;
       border:1px solid rgba(148,163,184,0.45);
       box-shadow:0 18px 40px rgba(15,23,42,0.95);
       text-align:right;
     }
-    .about-box h2,
-    .shop-box h2{
-      font-size:16px;
-      margin-bottom:6px;
+    .modal-box h2{ font-size:16px; margin-bottom:6px; }
+    .modal-box p{
+      font-size:12px; line-height:1.9; opacity:0.9; margin-bottom:10px;
     }
-    .about-box p,
-    .shop-box p{
-      font-size:12px;
-      line-height:1.9;
-      opacity:0.9;
-      margin-bottom:10px;
+    .modal-actions{
+      display:flex; justify-content:flex-end; gap:8px; margin-top:10px;
     }
-    .about-box button,
-    .shop-box button{
-      border:none;
-      border-radius:999px;
-      padding:6px 14px;
-      font-size:12px;
+    .modal-actions button{
+      border:none; border-radius:999px; padding:6px 14px;
+      font-size:12px; cursor:pointer;
       background:linear-gradient(135deg,#6366f1,#0ea5e9);
       color:#f9fafb;
-      cursor:pointer;
+    }
+    .modal-actions .secondary{
+      background:transparent;
+      border:1px solid rgba(148,163,184,.6);
     }
 
-    .shop-items{
+    /* Shop items */
+    .shop-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
       margin-top:8px;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
     }
-    .shop-item{
+    .shop-card{
+      background:rgba(2,6,23,.9);
+      border:1px solid rgba(148,163,184,.35);
+      border-radius:14px;
+      padding:10px;
       display:flex;
       justify-content:space-between;
       align-items:center;
-      padding:7px 10px;
-      border-radius:12px;
-      background:rgba(15,23,42,0.9);
-      border:1px solid rgba(148,163,184,0.6);
-      font-size:12px;
+      gap:8px;
     }
-    .shop-item-info{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
+    .shop-info{
+      display:flex; flex-direction:column; gap:4px;
     }
-    .shop-item-title{
-      font-weight:600;
-      font-size:13px;
+    .shop-title{
+      font-size:13px; font-weight:800;
     }
-    .shop-item-desc{
-      opacity:0.9;
-      font-size:11px;
+    .shop-desc{
+      font-size:11px; opacity:.85; line-height:1.7;
     }
-    .shop-item button{
-      padding:4px 10px;
-      font-size:11px;
-      border-radius:999px;
-      background:linear-gradient(135deg,#22c55e,#16a34a);
+    .shop-buy{
+      border:none; border-radius:999px;
+      padding:6px 12px; font-size:12px; font-weight:700;
+      cursor:pointer;
+      background:linear-gradient(135deg,#f59e0b,#ef4444);
+      color:#fff;
+      white-space:nowrap;
     }
-    .shop-coins{
-      font-size:12px;
-      margin-bottom:4px;
-      opacity:0.9;
+    .shop-buy:disabled{
+      opacity:.5; cursor:not-allowed;
     }
 
     @media(max-width:480px){
@@ -327,12 +285,13 @@
 </head>
 <body>
   <div class="game-wrapper">
-    <!-- هدر -->
+
     <header class="header">
       <div class="header-left">
         <button class="header-link" id="aboutBtn">درباره طاویتا</button>
         <button class="header-link" id="shopBtn">فروشگاه</button>
       </div>
+
       <div class="header-right">
         <div class="logo-row">
           <div class="logo-badge">T</div>
@@ -348,31 +307,26 @@
     </header>
 
     <div class="game-panel">
+
       <div class="canvas-wrap">
         <canvas id="gameCanvas"></canvas>
 
-        <!-- شروع بازی -->
         <div id="startOverlay" class="overlay">
           <h2>تانک ذهن آماده‌ست 🚀</h2>
           <p>
-            با تانک طاویتا در مسیر حرکت کن، به بلوک‌های «بدی‌ها» شلیک کن و اجازه نده جلوی رشد و تمرکزت رو بگیرن.<br>
-            هر مرحله یک موضوع ذهنی جدید داره.
+            جلوی بدی‌ها رو بگیر، مسیر رشد و تمرکزت رو پاک کن.<br/>
+            آخر هر مرحله یک «غول» منتظرته!
           </p>
           <button id="startBtn">شروع از مرحله ۱</button>
           <button id="continueBtn" class="secondary">ادامه از آخرین مرحله</button>
         </div>
 
-        <!-- اتمام مرحله -->
         <div id="levelOverlay" class="overlay hidden">
-          <h2>مرحله تموم شد ✨</h2>
-          <p>
-            آفرین! مسیر این بخش ذهن رو تمیز کردی.<br>
-            آماده‌ای بری سراغ چالش بعدی؟
-          </p>
+          <h2>مرحله پاک‌سازی شد ✨</h2>
+          <p>آفرین! آماده‌ای غول بعدی رو شکست بدی؟</p>
           <button id="nextLevelBtn">مرحله بعد ▶️</button>
         </div>
 
-        <!-- باخت -->
         <div id="gameOverOverlay" class="overlay hidden">
           <h2>پایان بازی 💔</h2>
           <p>
@@ -383,146 +337,148 @@
         </div>
       </div>
 
-      <!-- امتیاز / مرحله / جون -->
+      <!-- stats above controls -->
       <div class="top-bar">
-        <span class="stat-pill">
-          <span class="dot"></span>
-          امتیاز: <span id="score">0</span>
-        </span>
-        <span class="stat-pill badge-level">
-          مرحله: <span id="levelLabel">۱</span>
-        </span>
-        <span class="stat-pill">
-          ❤️ <span id="lives">3</span>
-        </span>
+        <span class="stat-pill"><span class="dot"></span> امتیاز: <span id="score">0</span></span>
+        <span class="stat-pill badge-level">مرحله: <span id="levelLabel">۱</span></span>
+        <span class="stat-pill">❤️ <span id="lives">3</span></span>
+        <span class="stat-pill badge-coins">🪙 <span id="coins">0</span></span>
       </div>
 
-      <!-- کنترل‌ها -->
       <div class="controls">
         <button class="ctrl-btn" id="leftBtn">◀️</button>
         <button class="ctrl-btn fire" id="fireBtn">🔥</button>
         <button class="ctrl-btn" id="rightBtn">▶️</button>
       </div>
-      <div class="hint">
-        روی کامپیوتر: با ◀️▶️ حرکت کن، با Space شلیک کن. | روی موبایل از دکمه‌ها استفاده کن.
-      </div>
+      <div class="hint">PC: ◀️▶️ حرکت | Space شلیک — موبایل: دکمه‌ها</div>
     </div>
   </div>
 
-  <!-- مودال درباره طاویتا -->
-  <div class="about-modal hidden" id="aboutModal">
-    <div class="about-box">
+  <!-- About modal -->
+  <div class="modal hidden" id="aboutModal">
+    <div class="modal-box">
       <h2>درباره طاویتا</h2>
       <p>
-        طاویتا یک تیم کوچک اما عاشق یادگیری و بازی‌سازیه؛
-        ما بازی‌هایی می‌سازیم که هم ذهن رو به چالش بکشن، هم حس رشد و حالِ خوب بدن.
-        «تانک ذهنی طاویتا» یکی از بازی‌های این مسیرِ رشده.
+        طاویتا یک تیم کوچک اما عاشق «رشد ذهن و بازی‌سازی» است.
+        ما بازی‌هایی می‌سازیم که هم سرگرم کنند، هم ذهن را به چالش بکشند
+        و در مسیر ترک عادت‌های بد و حرکت به سمت خوبی‌ها همراهت باشند.
       </p>
-      <button id="aboutCloseBtn">باشه</button>
-    </div>
-  </div>
-
-  <!-- مودال فروشگاه -->
-  <div class="shop-modal hidden" id="shopModal">
-    <div class="shop-box">
-      <h2>فروشگاه قدرت‌ها</h2>
-      <p>اینجا می‌تونی توانایی‌های ویژه‌ای بگیری که احتمال افتادن پاورآپ‌ها رو بیشتر می‌کنه.</p>
-      <div class="shop-coins">ستاره‌های شما: <span id="coinsLabel">0</span></div>
-      <div class="shop-items">
-        <div class="shop-item">
-          <div class="shop-item-info">
-            <div class="shop-item-title">شلیک سه‌تایی</div>
-            <div class="shop-item-desc">توپ‌ها سه‌تا می‌شن؛ احتمال پاورآپ ×۳ بیشتر می‌شود.</div>
-          </div>
-          <button data-item="triple">خرید (۵⭐)</button>
-        </div>
-        <div class="shop-item">
-          <div class="shop-item-info">
-            <div class="shop-item-title">حفاظ انرژی</div>
-            <div class="shop-item-desc">شیلد محافظ قوی‌تر و کمی بیشتر ظاهر می‌شود.</div>
-          </div>
-          <button data-item="shield">خرید (۴⭐)</button>
-        </div>
-        <div class="shop-item">
-          <div class="shop-item-info">
-            <div class="shop-item-title">موشک زمانی</div>
-            <div class="shop-item-desc">پاورآپ اسلوموشن بیشتر می‌آید، کنترل ذهن راحت‌تر می‌شود.</div>
-          </div>
-          <button data-item="slow">خرید (۳⭐)</button>
-        </div>
-      </div>
-      <div style="margin-top:10px; font-size:11px; opacity:.8;">
-        * ستاره‌ها بر اساس امتیاز کلی شما محاسبه می‌شن و خریدها روی همه‌ی دورها اثر می‌گذارند.
-      </div>
-      <div style="margin-top:10px; text-align:left;">
-        <button id="shopCloseBtn">بستن</button>
+      <div class="modal-actions">
+        <button class="secondary" id="aboutCloseBtn">بستن</button>
       </div>
     </div>
   </div>
 
-  <!-- صدا برای ضربه (اگر فایل نباشه، نادیده گرفته می‌شود) -->
+  <!-- Shop modal -->
+  <div class="modal hidden" id="shopModal">
+    <div class="modal-box">
+      <h2>فروشگاه طاویتا 🛒</h2>
+      <p>
+        اینجا می‌تونی قدرت‌های ویژه بگیری و راحت‌تر غول‌ها رو بزنی.
+        سکه‌ها با زدن بدی‌ها به‌دست میاد.
+      </p>
+
+      <div class="shop-grid">
+        <div class="shop-card">
+          <div class="shop-info">
+            <div class="shop-title">شلیک سه‌تایی ×3</div>
+            <div class="shop-desc">۱۰ ثانیه شلیک سه‌تایی. عالی برای نصف‌کردن غول.</div>
+            <div class="shop-desc">قیمت: 60 🪙</div>
+          </div>
+          <button class="shop-buy" id="buyTripleBtn">خرید</button>
+        </div>
+
+        <div class="shop-card">
+          <div class="shop-info">
+            <div class="shop-title">حفاظ انرژی 🛡</div>
+            <div class="shop-desc">۱۲ ثانیه محافظ کامل از ضربه دشمن.</div>
+            <div class="shop-desc">قیمت: 50 🪙</div>
+          </div>
+          <button class="shop-buy" id="buyShieldBtn">خرید</button>
+        </div>
+
+        <div class="shop-card">
+          <div class="shop-info">
+            <div class="shop-title">موشک ویژه 🚀</div>
+            <div class="shop-desc">۳ شلیک موشکی خیلی قوی (برای غول‌ها).</div>
+            <div class="shop-desc">قیمت: 70 🪙</div>
+          </div>
+          <button class="shop-buy" id="buyRocketBtn">خرید</button>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="secondary" id="shopCloseBtn">بستن</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- optional sound -->
   <audio id="hitSound" src="hit.mp3" preload="auto"></audio>
 
   <script>
+    // Canvas
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
 
+    // UI
     const scoreEl = document.getElementById("score");
     const livesEl = document.getElementById("lives");
+    const coinsEl = document.getElementById("coins");
     const levelLabel = document.getElementById("levelLabel");
+
     const startOverlay = document.getElementById("startOverlay");
     const levelOverlay = document.getElementById("levelOverlay");
     const gameOverOverlay = document.getElementById("gameOverOverlay");
+
     const startBtn = document.getElementById("startBtn");
     const continueBtn = document.getElementById("continueBtn");
     const nextLevelBtn = document.getElementById("nextLevelBtn");
     const restartBtn = document.getElementById("restartBtn");
+
     const finalScoreEl = document.getElementById("finalScore");
     const bestScoreEl = document.getElementById("bestScore");
 
     const leftBtn = document.getElementById("leftBtn");
     const rightBtn = document.getElementById("rightBtn");
     const fireBtn = document.getElementById("fireBtn");
+
     const hitSound = document.getElementById("hitSound");
 
+    // About/Shop modal
     const aboutBtn = document.getElementById("aboutBtn");
     const shopBtn = document.getElementById("shopBtn");
     const aboutModal = document.getElementById("aboutModal");
-    const aboutCloseBtn = document.getElementById("aboutCloseBtn");
     const shopModal = document.getElementById("shopModal");
+    const aboutCloseBtn = document.getElementById("aboutCloseBtn");
     const shopCloseBtn = document.getElementById("shopCloseBtn");
-    const coinsLabel = document.getElementById("coinsLabel");
 
-    const shopItemButtons = shopModal.querySelectorAll(".shop-item button");
+    const buyTripleBtn = document.getElementById("buyTripleBtn");
+    const buyShieldBtn = document.getElementById("buyShieldBtn");
+    const buyRocketBtn = document.getElementById("buyRocketBtn");
 
-    // تصاویر تانک و باس
+    function playHitSound() {
+      if (!hitSound || !hitSound.src) return;
+      try { hitSound.currentTime = 0; hitSound.play(); } catch (e) {}
+    }
+
+    // resize
+    function resizeCanvas(){
+      const maxWidth = 420, ratio = 9/16;
+      const width = Math.min(maxWidth, window.innerWidth - 32);
+      const height = width / ratio;
+      canvas.width = width; canvas.height = height;
+    }
+    resizeCanvas(); window.addEventListener("resize", resizeCanvas);
+
+    // images
     const tankImg = new Image();
     tankImg.src = "https://cdnfa.com/irangiah/a9be/uploads/tank/tank.webp";
 
     const bossImg = new Image();
-    bossImg.src = "https://cdnfa.com/irangiah/a9be/uploads/tank/ghool1.webp";
+    bossImg.src = "https://cdnfa.com/irangiah/a9be/uploads/tank/ghool1";
 
-    function playHitSound() {
-      if (!hitSound || !hitSound.src) return;
-      try {
-        hitSound.currentTime = 0;
-        hitSound.play();
-      } catch (e) {}
-    }
-
-    // سایز کانواس
-    function resizeCanvas(){
-      const maxWidth = 420;
-      const ratio = 9/16;
-      const width = Math.min(maxWidth, window.innerWidth - 32);
-      const height = width / ratio;
-      canvas.width = width;
-      canvas.height = height;
-    }
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    // وضعیت بازی
+    // game state
     let tank = { x:0,y:0,w:50,h:30,speed:4 };
     let bullets = [];
     let enemies = [];
@@ -530,89 +486,68 @@
     let particles = [];
 
     let score = 0;
+    let coins = 0;
     let lives = 3;
+
     let gameRunning = false;
     let lastTime = 0;
     let lastEnemyTime = 0;
     let lastPowerUpTime = 0;
 
-    // افکت‌ها
+    // hit fx & forward feel
     let hitFlash = 0;
     let shakeTime = 0;
     let bgOffset = 0;
 
-    // سطح‌ها
+    // special ammo
+    let rocketShots = 0;
+
+    // levels (EVERY level has boss)
     const LEVELS = [
-      { id:1, label:"۱ - تنبلی",         goal:40,  enemySpeed:1.3, spawnInterval:1300, boss:true },
-      { id:2, label:"۲ - ترس",           goal:90,  enemySpeed:1.6, spawnInterval:1100, boss:true },
-      { id:3, label:"۳ - ناامیدی (باس)", goal:150, enemySpeed:1.8, spawnInterval:1000, boss:true }
+      { id:1, label:"۱ - تنبلی", goal:45, enemySpeed:1.3, spawnInterval:1200, bossName:"غول تنبلی", bossHP:30 },
+      { id:2, label:"۲ - ترس",   goal:95, enemySpeed:1.6, spawnInterval:1050, bossName:"غول ترس",   bossHP:36 },
+      { id:3, label:"۳ - ناامیدی", goal:155, enemySpeed:1.9, spawnInterval:950, bossName:"غول ناامیدی", bossHP:45 }
     ];
     let currentLevelIndex = 0;
     let levelGoal = LEVELS[0].goal;
     let spawnInterval = LEVELS[0].spawnInterval;
     let enemyBaseSpeed = LEVELS[0].enemySpeed;
+
     let bossSpawned = false;
     let bossAlive = false;
 
-    // پاورآپ‌ها
+    // power-ups
     const POWER_TYPES = ["shield","triple","slow"];
-    let activePowerUps = {
-      shield:false,
-      triple:false,
-      slow:false
-    };
+    let activePowerUps = { shield:false, triple:false, slow:false };
     let powerTimers = {};
 
-    // فروشگاه / ستاره‌ها
+    // controls
     let moveLeft = false;
     let moveRight = false;
 
+    // sins / bad habits list
     const badLabels = [
-      "دروغ",
-      "تهمت",
-      "غیبت",
-      "مردم‌آزاری",
-      "گرانفروشی",
-      "بی‌ادبی",
-      "دشنام",
-      "تنبلی",
-      "حسادت",
-      "بی‌حیایی",
-      "بی‌حجابی",
-      "ترک نماز",
-      "قضاوت",
-      "خودکم‌بینی",
-      "خودخواهی",
-      "لجاجت",
-      "چشم‌وهم‌چشمی",
-      "حق‌الناس",
-      "حیوان‌آزاری",
-      "قهر"
+      "دروغ","تهمت","غیبت","مردم‌آزاری","گرانفروشی","بی‌ادبی","دشنام","تنبلی",
+      "حسادت","بی‌حیایی","بی‌حجابی","ترک نماز","قضاوت","خودکم‌بینی","خودخواهی",
+      "لجاجت","چشم و هم‌چشمی","حق‌الناس","حیوان‌آزاری","قهر",
+      "ریا","ناامیدی","ترس","کینه","پرخاشگری","تعلل","بدبینی"
     ];
 
+    // storage
     const STORAGE_KEY = "tavita_tank_state";
     function loadState(){
       const raw = localStorage.getItem(STORAGE_KEY);
       if(!raw) return null;
-      try{
-        return JSON.parse(raw);
-      }catch(e){
-        return null;
-      }
+      try{ return JSON.parse(raw); }catch{ return null; }
     }
-    function saveState(extra = {}){
+    function saveState(){
       const prev = loadState() || {};
       const bestScore = Math.max(score, prev.bestScore || 0);
       const data = {
         bestScore,
         lastLevel: LEVELS[currentLevelIndex].id,
-        shop: prev.shop || {
-          triple:0,
-          shield:0,
-          slow:0,
-          coins:0
-        },
-        ...extra
+        coins,
+        rocketShots
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     }
@@ -623,78 +558,68 @@
         return;
       }
       continueBtn.style.display = "inline-block";
+      coins = saved.coins || 0;
+      rocketShots = saved.rocketShots || 0;
+      coinsEl.textContent = coins;
     }
 
-    // فروشگاه: گرفتن / ذخیره وضعیت شاپ
-    function getShopState(){
-      const saved = loadState();
-      if(!saved || !saved.shop){
-        return { triple:0, shield:0, slow:0, coins:0 };
-      }
-      return saved.shop;
-    }
-    function setShopState(shop){
-      const saved = loadState() || {};
-      saved.shop = shop;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
-    }
-
-    function getCoinsFromScore(s){
-      // خیلی ساده: هر ۳۰ امتیاز = ۱ ستاره
-      return Math.floor((s || 0) / 30);
-    }
-
-    function updateShopUI(){
-      const shop = getShopState();
-      const currentCoins = getCoinsFromScore(loadState()?.bestScore || score);
-      coinsLabel.textContent = currentCoins;
-    }
-
-    // ریست بازی
+    // reset
     function resetGameState(startFromLevelIndex = 0){
-      bullets = [];
-      enemies = [];
-      powerUps = [];
-      particles = [];
-      score = 0;
-      lives = 3;
-      bossSpawned = false;
-      bossAlive = false;
-      hitFlash = 0;
-      shakeTime = 0;
-      bgOffset = 0;
+      bullets=[]; enemies=[]; powerUps=[]; particles=[];
+      score=0; lives=3;
+      bossSpawned=false; bossAlive=false;
+      hitFlash=0; shakeTime=0; bgOffset=0;
 
       currentLevelIndex = startFromLevelIndex;
       const lvl = LEVELS[currentLevelIndex];
       levelGoal = lvl.goal;
       spawnInterval = lvl.spawnInterval;
       enemyBaseSpeed = lvl.enemySpeed;
+
       levelLabel.textContent = lvl.label;
       scoreEl.textContent = score;
       livesEl.textContent = lives;
+      coinsEl.textContent = coins;
 
-      tank.w = canvas.width * 0.16;
-      tank.h = tank.w * 0.55;
+      tank.w = canvas.width * 0.18;
+      tank.h = tank.w * 0.6;
       tank.x = canvas.width/2 - tank.w/2;
-      tank.y = canvas.height - tank.h - 20;
+      tank.y = canvas.height - tank.h - 18;
     }
 
-    // مستطیل گوشه‌گرد
-    function roundRect(ctx,x,y,w,h,r){
+    // helpers
+    function drawPolygon(x,y,points){
       ctx.beginPath();
-      ctx.moveTo(x+r,y);
-      ctx.lineTo(x+w-r,y);
-      ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-      ctx.lineTo(x+w,y+h-r);
-      ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-      ctx.lineTo(x+r,y+h);
-      ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-      ctx.lineTo(x,y+r);
-      ctx.quadraticCurveTo(x,y,x+r,y);
+      ctx.moveTo(x+points[0].x, y+points[0].y);
+      for(let i=1;i<points.length;i++){
+        ctx.lineTo(x+points[i].x, y+points[i].y);
+      }
       ctx.closePath();
     }
 
-    // پس‌زمینه + خطوط متحرک
+    function createBlobPoints(w,h){
+      const pts=[];
+      const jitter = 6 + Math.random()*6;
+      pts.push({x:0+Math.random()*jitter, y:0+Math.random()*jitter});
+      pts.push({x:w*0.5 + (Math.random()*jitter-jitter/2), y:0});
+      pts.push({x:w - Math.random()*jitter, y:0+Math.random()*jitter});
+      pts.push({x:w, y:h*0.5 + (Math.random()*jitter-jitter/2)});
+      pts.push({x:w - Math.random()*jitter, y:h - Math.random()*jitter});
+      pts.push({x:w*0.5 + (Math.random()*jitter-jitter/2), y:h});
+      pts.push({x:0+Math.random()*jitter, y:h - Math.random()*jitter});
+      pts.push({x:0, y:h*0.5 + (Math.random()*jitter-jitter/2)});
+      return pts;
+    }
+
+    function rectCircleCollide(cx,cy,cr, rx,ry,rw,rh){
+      const testX = Math.max(rx, Math.min(cx, rx+rw));
+      const testY = Math.max(ry, Math.min(cy, ry+rh));
+      const distX = cx - testX;
+      const distY = cy - testY;
+      return (distX*distX + distY*distY) <= cr*cr;
+    }
+
+    // background with forward feel
     function drawBackground(){
       const grad = ctx.createRadialGradient(
         canvas.width/2, canvas.height*0.1, 20,
@@ -708,8 +633,8 @@
 
       ctx.strokeStyle = "rgba(148,163,184,0.18)";
       ctx.lineWidth = 1;
-      for(let i=0;i<8;i++){
-        const y = (canvas.height - 20) - (i*26) + bgOffset;
+      for(let i=0;i<9;i++){
+        const y = (canvas.height - 16) - (i*26) + bgOffset;
         ctx.beginPath();
         ctx.moveTo(0,y);
         ctx.lineTo(canvas.width,y);
@@ -717,65 +642,20 @@
       }
     }
 
-    // تانک (با تصویر)
+    // tank draw (image preferred)
     function drawTank(){
       const {x,y,w,h} = tank;
-
-      if(tankImg.complete && tankImg.naturalWidth){
-        const ratio = tankImg.width / tankImg.height;
-        let drawW = w * 1.2;
-        let drawH = drawW / ratio;
-        if(drawH > h*2){
-          drawH = h*2;
-          drawW = drawH * ratio;
-        }
-        const dx = x + (w - drawW)/2;
-        const dy = y - (drawH - h);
-        ctx.drawImage(tankImg, dx, dy, drawW, drawH);
-
-        if(activePowerUps.shield){
-          ctx.strokeStyle = "rgba(56,189,248,0.7)";
-          ctx.lineWidth = 3;
-          ctx.beginPath();
-          ctx.arc(x+w/2, y+h/2, w*0.8, 0, Math.PI*2);
-          ctx.stroke();
-        }
-        return;
+      if(tankImg.complete && tankImg.naturalWidth>0){
+        ctx.drawImage(tankImg, x, y, w, h);
+      }else{
+        const grad = ctx.createLinearGradient(x,y,x+w,y+h);
+        grad.addColorStop(0,"#38bdf8");
+        grad.addColorStop(1,"#0f172a");
+        ctx.fillStyle = grad;
+        ctx.strokeStyle = "#7dd3fc";
+        ctx.lineWidth = 2;
+        ctx.fillRect(x,y,w,h);
       }
-
-      // fallback وکتوری
-      const grad = ctx.createLinearGradient(x,y,x+w,y+h);
-      grad.addColorStop(0,"#38bdf8");
-      grad.addColorStop(1,"#0f172a");
-      ctx.fillStyle = grad;
-      ctx.strokeStyle = "#7dd3fc";
-      ctx.lineWidth = 2;
-      roundRect(ctx,x,y,w,h,8);
-      ctx.fill();
-      ctx.stroke();
-
-      const tw = w*0.65, th = h*0.45;
-      const tx = x + (w - tw)/2;
-      const ty = y - th + 6;
-      const gradTurret = ctx.createLinearGradient(tx,ty,tx+tw,ty+th);
-      gradTurret.addColorStop(0,"#4ade80");
-      gradTurret.addColorStop(1,"#22c55e");
-      ctx.fillStyle = gradTurret;
-      roundRect(ctx,tx,ty,tw,th,6);
-      ctx.fill();
-
-      const bw = 9, bh = h*0.9;
-      const bx = x + w/2 - bw/2;
-      const by = ty - bh + 12;
-      ctx.fillStyle = "#f9fafb";
-      roundRect(ctx,bx,by,bw,bh,4);
-      ctx.fill();
-
-      ctx.fillStyle = "#22d3ee";
-      ctx.beginPath();
-      ctx.arc(x+w*0.23, y+h*0.3, 4, 0, Math.PI*2);
-      ctx.arc(x+w*0.77, y+h*0.3, 4, 0, Math.PI*2);
-      ctx.fill();
 
       if(activePowerUps.shield){
         ctx.strokeStyle = "rgba(56,189,248,0.7)";
@@ -786,15 +666,11 @@
       }
     }
 
-    // گلوله‌ها
     function drawBullets(){
       bullets.forEach(b=>{
-        const grad = ctx.createRadialGradient(
-          b.x, b.y, 1,
-          b.x, b.y, b.r
-        );
+        const grad = ctx.createRadialGradient(b.x,b.y,1,b.x,b.y,b.r);
         grad.addColorStop(0,"#fff");
-        grad.addColorStop(1,"#f97316");
+        grad.addColorStop(1, b.isRocket ? "#22c55e" : "#f97316");
         ctx.fillStyle = grad;
         ctx.beginPath();
         ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
@@ -802,367 +678,327 @@
       });
     }
 
-    // دشمن‌ها (نافُرم + باس با تصویر)
     function drawEnemies(){
       enemies.forEach(e=>{
-        ctx.save();
-        const cx = e.x + e.w/2;
-        const cy = e.y + e.h/2;
-        ctx.translate(cx, cy);
-        ctx.rotate(e.angle || 0);
+        if(e.isBoss){
+          // boss image box
+          ctx.save();
+          const boxGrad = ctx.createLinearGradient(e.x,e.y,e.x+e.w,e.y+e.h);
+          boxGrad.addColorStop(0,"rgba(225,29,72,0.9)");
+          boxGrad.addColorStop(1,"rgba(249,115,22,0.9)");
+          ctx.fillStyle = boxGrad;
+          ctx.strokeStyle = "rgba(15,23,42,0.9)";
+          ctx.lineWidth = 2;
+          ctx.fillRect(e.x,e.y,e.w,e.h);
+          ctx.strokeRect(e.x,e.y,e.w,e.h);
 
-        if(e.isBoss && bossImg.complete && bossImg.naturalWidth){
-          const bw = e.w * 1.1;
-          const bh = e.h * 2;
-          ctx.drawImage(bossImg, -bw/2, -bh/2, bw, bh);
+          if(bossImg.complete && bossImg.naturalWidth>0){
+            ctx.drawImage(bossImg, e.x, e.y, e.w, e.h);
+          }
 
+          // HP text
           ctx.fillStyle = "#0f172a";
           ctx.font = "bold 12px Vazirmatn, system-ui";
           ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillText("باس", 0, -bh/2 + 14);
-          ctx.fillText("HP: " + e.hp, 0, bh/2 - 12);
-        } else {
-          const grad = ctx.createLinearGradient(-e.w/2,-e.h/2,e.w/2,e.h/2);
-          grad.addColorStop(0,e.colorStart);
-          grad.addColorStop(1,e.colorEnd);
-          ctx.fillStyle = grad;
-          ctx.strokeStyle = "rgba(15,23,42,0.9)";
-          ctx.lineWidth = 2;
-          roundRect(ctx,-e.w/2,-e.h/2,e.w,e.h,8);
-          ctx.fill();
-          ctx.stroke();
-
-          ctx.fillStyle = "#0f172a";
-          ctx.font = "bold 13px Vazirmatn, system-ui";
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillText(e.label, 0, 0);
+          ctx.textBaseline = "top";
+          ctx.fillText(e.bossName, e.x+e.w/2, e.y+4);
+          ctx.fillText("HP: "+e.hp, e.x+e.w/2, e.y+20);
+          ctx.restore();
+          return;
         }
-        ctx.restore();
+
+        const grad = ctx.createLinearGradient(e.x,e.y,e.x+e.w,e.y+e.h);
+        grad.addColorStop(0,e.colorStart);
+        grad.addColorStop(1,e.colorEnd);
+        ctx.fillStyle = grad;
+        ctx.strokeStyle = "rgba(15,23,42,0.9)";
+        ctx.lineWidth=2;
+
+        if(e.points){
+          drawPolygon(e.x,e.y,e.points);
+          ctx.fill(); ctx.stroke();
+        }else{
+          ctx.fillRect(e.x,e.y,e.w,e.h);
+          ctx.strokeRect(e.x,e.y,e.w,e.h);
+        }
+
+        ctx.fillStyle="#0f172a";
+        ctx.font="bold 12px Vazirmatn, system-ui";
+        ctx.textAlign="center"; ctx.textBaseline="middle";
+        ctx.fillText(e.label, e.x+e.w/2, e.y+e.h/2);
       });
     }
 
-    // پارتیکل انفجار
     function drawParticles(){
       ctx.save();
       particles.forEach(p=>{
-        ctx.globalAlpha = p.life / p.maxLife;
+        ctx.globalAlpha = p.life/p.maxLife;
         ctx.fillStyle = p.color;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 3, 0, Math.PI*2);
+        ctx.arc(p.x,p.y,3,0,Math.PI*2);
         ctx.fill();
       });
       ctx.restore();
     }
-
     function createExplosion(cx,cy,color){
       for(let i=0;i<10;i++){
         const angle = Math.random()*Math.PI*2;
         const speed = 1 + Math.random()*2;
         particles.push({
-          x:cx,
-          y:cy,
+          x:cx,y:cy,
           vx:Math.cos(angle)*speed,
           vy:Math.sin(angle)*speed,
-          life:25,
-          maxLife:25,
-          color:color
+          life:25,maxLife:25,
+          color
         });
       }
     }
 
-    // پاورآپ‌ها
     function drawPowerUps(){
       powerUps.forEach(p=>{
         const {x,y,r,type} = p;
         let c1="#a855f7";
         if(type==="shield") c1="#22c55e";
         if(type==="triple") c1="#eab308";
-        if(type==="slow")   c1="#38bdf8";
+        if(type==="slow") c1="#38bdf8";
         const grad = ctx.createRadialGradient(x,y,1,x,y,r);
         grad.addColorStop(0,"#fff");
         grad.addColorStop(1,c1);
         ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(x,y,r,0,Math.PI*2);
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
 
-        ctx.font = "bold 11px Vazirmatn, system-ui";
-        ctx.fillStyle = "#020617";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        let text = "";
-        if(type==="shield") text = "🛡";
-        if(type==="triple") text = "×3";
-        if(type==="slow")   text = "⏳";
-        ctx.fillText(text,x,y);
+        ctx.font="bold 11px Vazirmatn, system-ui";
+        ctx.fillStyle="#020617";
+        ctx.textAlign="center"; ctx.textBaseline="middle";
+        ctx.fillText(type==="shield"?"🛡":type==="triple"?"×3":"⏳", x,y);
       });
     }
 
-    // دشمن جدید
-    function spawnEnemy(isBoss = false){
+    function spawnEnemy(isBoss=false){
       if(isBoss){
-        const w = canvas.width*0.45;
-        const h = 40;
-        const x = (canvas.width - w)/2;
-        const y = -h - 10;
+        const lvl = LEVELS[currentLevelIndex];
+        const w = canvas.width*0.7;
+        const h = 56;
+        const x = (canvas.width-w)/2;
+        const y = -h-10;
         enemies.push({
           x,y,w,h,
-          speed: enemyBaseSpeed*0.9,
-          colorStart:"#e11d48",
-          colorEnd:"#f97316",
-          label:"باس",
+          speed: enemyBaseSpeed*0.7,
           isBoss:true,
-          hp:40,
-          angle:0
+          bossName:lvl.bossName,
+          hp:lvl.bossHP
         });
-        bossAlive = true;
+        bossAlive=true;
         return;
       }
 
-      const laneCount = 5;
-      const laneWidth = canvas.width / laneCount;
-      const laneIndex = Math.floor(Math.random()*laneCount);
-      const w = laneWidth*0.7;
-      const h = 32;
-      const x = laneIndex*laneWidth + (laneWidth - w)/2;
-      const y = -h-8;
+      const laneCount=5, laneWidth=canvas.width/laneCount;
+      const laneIndex=Math.floor(Math.random()*laneCount);
+      const w=laneWidth*0.72, h=34;
+      const x=laneIndex*laneWidth+(laneWidth-w)/2;
+      const y=-h-8;
 
-      const colors = [
+      const colors=[
         ["#f97316","#fb923c"],
         ["#22c55e","#4ade80"],
         ["#3b82f6","#6366f1"],
         ["#e11d48","#f97316"],
         ["#a855f7","#6366f1"]
       ];
-      const pair = colors[Math.floor(Math.random()*colors.length)];
-      const label = badLabels[Math.floor(Math.random()*badLabels.length)];
+      const pair=colors[Math.floor(Math.random()*colors.length)];
+      const label=badLabels[Math.floor(Math.random()*badLabels.length)];
 
       enemies.push({
         x,y,w,h,
         speed: enemyBaseSpeed + Math.random()*0.6,
-        colorStart: pair[0],
-        colorEnd: pair[1],
-        label,
-        isBoss:false,
-        angle:(Math.random()-0.5)*0.35 // نافرم کردن
+        colorStart:pair[0], colorEnd:pair[1],
+        label, isBoss:false,
+        points:createBlobPoints(w,h)
       });
     }
 
-    // پاورآپ جدید (با اثر فروشگاه روی احتمال‌ها)
     function spawnPowerUp(){
-      const laneCount = 5;
-      const laneWidth = canvas.width/laneCount;
-      const laneIndex = Math.floor(Math.random()*laneCount);
-      const x = laneIndex*laneWidth + laneWidth/2;
-      const y = -15;
-      const r = 13;
-
-      const shop = getShopState();
-      const wTriple = 1 + (shop.triple || 0);
-      const wShield = 1 + (shop.shield || 0);
-      const wSlow   = 1 + (shop.slow || 0);
-      const total = wTriple + wShield + wSlow;
-      let rnd = Math.random()*total;
-      let type;
-      if(rnd < wTriple) type = "triple";
-      else if(rnd < wTriple + wShield) type = "shield";
-      else type = "slow";
-
+      const laneCount=5, laneWidth=canvas.width/laneCount;
+      const laneIndex=Math.floor(Math.random()*laneCount);
+      const x=laneIndex*laneWidth+laneWidth/2;
       powerUps.push({
-        x,y,r,
-        speed:1.1,
-        type
+        x, y:-15, r:13, speed:1.1,
+        type: POWER_TYPES[Math.floor(Math.random()*POWER_TYPES.length)]
       });
     }
 
-    // شلیک
+    function activatePowerUp(type){
+      activePowerUps[type]=true;
+      if(powerTimers[type]) clearTimeout(powerTimers[type]);
+      powerTimers[type]=setTimeout(()=>{
+        activePowerUps[type]=false;
+      }, type==="shield"?12000:type==="triple"?10000:8000);
+    }
+
     function fireBullet(){
       if(!gameRunning) return;
-      const baseBullet = () => ({
-        x: tank.x + tank.w/2,
-        y: tank.y - 6,
+
+      const base = () => ({
+        x: tank.x+tank.w/2,
+        y: tank.y-6,
         r: 7,
-        speed: 6
+        speed: 6,
+        isRocket:false,
+        damage:5
       });
 
-      if(activePowerUps.triple){
+      // Rocket ammo first
+      if(rocketShots>0){
+        const b = base();
+        b.isRocket=true;
+        b.r=12; b.speed=7; b.damage=15;
+        bullets.push(b);
+        rocketShots--;
+        saveState();
+      }else if(activePowerUps.triple){
         bullets.push(
-          {...baseBullet(), x: tank.x + tank.w*0.3},
-          {...baseBullet(), x: tank.x + tank.w/2},
-          {...baseBullet(), x: tank.x + tank.w*0.7}
+          {...base(), x:tank.x+tank.w*0.3},
+          {...base(), x:tank.x+tank.w*0.5},
+          {...base(), x:tank.x+tank.w*0.7}
         );
       }else{
-        bullets.push(baseBullet());
+        bullets.push(base());
       }
-      if(navigator.vibrate){
-        navigator.vibrate(15);
-      }
+
+      if(navigator.vibrate) navigator.vibrate(15);
     }
 
-    // فعال‌سازی پاورآپ
-    function activatePowerUp(type){
-      activePowerUps[type] = true;
-      if(powerTimers[type]) clearTimeout(powerTimers[type]);
-      powerTimers[type] = setTimeout(()=>{
-        activePowerUps[type] = false;
-      }, type==="shield" ? 8000 : 6000);
-    }
-
-    // برخورد دایره–مستطیل
-    function rectCircleCollide(cx,cy,cr, rx,ry,rw,rh){
-      const testX = Math.max(rx, Math.min(cx, rx+rw));
-      const testY = Math.max(ry, Math.min(cy, ry+rh));
-      const distX = cx - testX;
-      const distY = cy - testY;
-      return (distX*distX + distY*distY) <= cr*cr;
-    }
-
-    // آپدیت منطق
     function update(){
-      if(moveLeft)  tank.x -= tank.speed;
+      if(moveLeft) tank.x -= tank.speed;
       if(moveRight) tank.x += tank.speed;
-      tank.x = Math.max(4, Math.min(canvas.width - tank.w - 4, tank.x));
+      tank.x = Math.max(4, Math.min(canvas.width-tank.w-4, tank.x));
 
-      const enemySpeedFactor = activePowerUps.slow ? 0.5 : 1;
-      const enemySpawnFactor = activePowerUps.slow ? 1.4 : 1;
+      const enemySpeedFactor = activePowerUps.slow?0.5:1;
+      const enemySpawnFactor = activePowerUps.slow?1.5:1;
 
-      bgOffset += 1.2 * enemySpeedFactor;
-      if(bgOffset > 26) bgOffset -= 26;
+      // forward feel
+      bgOffset += 1.3*enemySpeedFactor;
+      if(bgOffset>26) bgOffset-=26;
 
-      bullets.forEach(b => b.y -= b.speed);
-      bullets = bullets.filter(b => b.y + b.r > 0);
+      bullets.forEach(b=> b.y -= b.speed);
+      bullets = bullets.filter(b=> b.y+b.r>0);
 
-      enemies.forEach(e => {
-        e.y += e.speed * enemySpeedFactor;
-      });
+      enemies.forEach(e=> e.y += e.speed*enemySpeedFactor);
 
-      powerUps.forEach(p => {
-        p.y += p.speed;
-      });
-      powerUps = powerUps.filter(p => p.y - p.r < canvas.height + 10);
+      powerUps.forEach(p=> p.y += p.speed);
+      powerUps = powerUps.filter(p=> p.y-p.r < canvas.height+10);
 
       particles.forEach(p=>{
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.03;
-        p.life--;
+        p.x+=p.vx; p.y+=p.vy; p.vy+=0.03; p.life--;
       });
       particles = particles.filter(p=>p.life>0);
 
       const now = performance.now();
-      if(now - lastEnemyTime > spawnInterval * enemySpawnFactor){
-        const lvl = LEVELS[currentLevelIndex];
-        if(lvl.boss){
-          if(!bossSpawned && score >= lvl.goal*0.4){
-            spawnEnemy(true);
-            bossSpawned = true;
-          }else if(!bossAlive){
-            spawnEnemy(false);
-          }
-        }else{
-          spawnEnemy(false);
-        }
-        lastEnemyTime = now;
+
+      // spawn boss at 60% of goal, stop normal spawns while boss alive
+      const lvl = LEVELS[currentLevelIndex];
+      if(!bossSpawned && score >= lvl.goal*0.6){
+        spawnEnemy(true);
+        bossSpawned=true;
       }
 
-      if(now - lastPowerUpTime > 7000){
+      if(!bossAlive && now-lastEnemyTime > spawnInterval*enemySpawnFactor){
+        spawnEnemy(false);
+        lastEnemyTime=now;
+      }
+
+      if(now-lastPowerUpTime>7000){
         spawnPowerUp();
-        lastPowerUpTime = now;
+        lastPowerUpTime=now;
       }
 
-      // برخورد گلوله با دشمن
+      // bullet vs enemy
       bullets.forEach((b,bi)=>{
         enemies.forEach((e,ei)=>{
           if(rectCircleCollide(b.x,b.y,b.r, e.x,e.y,e.w,e.h)){
             bullets.splice(bi,1);
-            const cx = e.x + e.w/2;
-            const cy = e.y + e.h/2;
-            createExplosion(cx,cy,e.colorStart);
+            const cx=e.x+e.w/2, cy=e.y+e.h/2;
+            createExplosion(cx,cy, e.colorStart || "#f97316");
 
             if(e.isBoss){
-              e.hp -= 5;
-              if(e.hp <= 0){
+              e.hp -= b.damage;
+              if(e.hp<=0){
                 enemies.splice(ei,1);
-                bossAlive = false;
-                score += 40;
-                scoreEl.textContent = score;
+                bossAlive=false;
+                score += 50;
+                coins += 30;
+                scoreEl.textContent=score;
+                coinsEl.textContent=coins;
+                saveState();
               }
             }else{
               enemies.splice(ei,1);
               score += 5;
-              scoreEl.textContent = score;
+              coins += 2;
+              scoreEl.textContent=score;
+              coinsEl.textContent=coins;
             }
           }
         });
       });
 
-      // برخورد پاورآپ با تانک
+      // powerup pickup
       powerUps.forEach((p,pi)=>{
         if(rectCircleCollide(p.x,p.y,p.r, tank.x,tank.y,tank.w,tank.h)){
           activatePowerUp(p.type);
           powerUps.splice(pi,1);
-          if(p.type === "shield" && navigator.vibrate) navigator.vibrate(25);
+          if(p.type==="shield" && navigator.vibrate) navigator.vibrate(25);
         }
       });
 
-      // برخورد دشمن با تانک / کف
+      // enemy hits tank / floor
       enemies.forEach((e,ei)=>{
         const collideWithTank =
-          e.x < tank.x + tank.w &&
-          e.x + e.w > tank.x &&
-          e.y < tank.y + tank.h &&
-          e.y + e.h > tank.y;
+          e.x < tank.x+tank.w &&
+          e.x+e.w > tank.x &&
+          e.y < tank.y+tank.h &&
+          e.y+e.h > tank.y;
 
-        if(collideWithTank || e.y + e.h >= canvas.height - 5){
+        if(collideWithTank || e.y+e.h >= canvas.height-5){
           enemies.splice(ei,1);
 
           if(activePowerUps.shield){
-            activePowerUps.shield = false;
+            activePowerUps.shield=false;
           }else{
-            lives -= 1;
-            livesEl.textContent = lives;
+            lives--;
+            livesEl.textContent=lives;
 
-            hitFlash = 1;
-            shakeTime = 10;
+            hitFlash=1;
+            shakeTime=10;
             playHitSound();
             if(navigator.vibrate) navigator.vibrate(80);
 
-            if(lives <= 0){
-              endGame();
-              return;
+            if(lives<=0){
+              endGame(); return;
             }
           }
         }
       });
 
-      // پایان مرحله
-      const lvl = LEVELS[currentLevelIndex];
-      const levelCleared = score >= lvl.goal && (!lvl.boss || (lvl.boss && !bossAlive));
+      // level cleared only after boss defeated
+      const levelCleared = score >= lvl.goal && !bossAlive && bossSpawned;
       if(levelCleared){
-        gameRunning = false;
-        const prev = loadState() || {};
-        const bestScore = Math.max(score, prev.bestScore || 0);
-        saveState({ bestScore, lastLevel: LEVELS[currentLevelIndex].id, shop: getShopState() });
+        gameRunning=false;
+        saveState();
         levelOverlay.classList.remove("hidden");
       }
     }
 
-    // حلقه بازی
     function gameLoop(ts){
       if(!gameRunning) return;
-      const delta = ts - lastTime;
       lastTime = ts;
 
       ctx.clearRect(0,0,canvas.width,canvas.height);
 
       ctx.save();
-      if (shakeTime > 0) {
-        const intensity = 4;
-        const dx = (Math.random()*2 - 1)*intensity;
-        const dy = (Math.random()*2 - 1)*intensity;
-        ctx.translate(dx, dy);
+      if(shakeTime>0){
+        const intensity=4;
+        ctx.translate((Math.random()*2-1)*intensity, (Math.random()*2-1)*intensity);
         shakeTime--;
       }
 
@@ -1176,92 +1012,74 @@
 
       ctx.restore();
 
-      if (hitFlash > 0) {
-        const alpha = hitFlash * 0.45;
-        const cx = tank.x + tank.w / 2;
-        const cy = tank.y + tank.h / 2;
-        const grad = ctx.createRadialGradient(
-          cx, cy, 10,
-          cx, cy, tank.w * 2.2
-        );
-        grad.addColorStop(0, `rgba(248,113,113,${alpha})`);
-        grad.addColorStop(1, "rgba(248,113,113,0)");
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        hitFlash -= 0.05;
+      if(hitFlash>0){
+        const alpha = hitFlash*0.45;
+        const cx=tank.x+tank.w/2, cy=tank.y+tank.h/2;
+        const grad=ctx.createRadialGradient(cx,cy,10,cx,cy,tank.w*2.2);
+        grad.addColorStop(0,`rgba(248,113,113,${alpha})`);
+        grad.addColorStop(1,"rgba(248,113,113,0)");
+        ctx.fillStyle=grad;
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        hitFlash-=0.05;
       }
 
       requestAnimationFrame(gameLoop);
     }
 
-    function startGame(fromLevelIndex = 0){
+    function startGame(fromLevelIndex=0){
       resetGameState(fromLevelIndex);
       startOverlay.classList.add("hidden");
       levelOverlay.classList.add("hidden");
       gameOverOverlay.classList.add("hidden");
-      gameRunning = true;
-      lastTime = performance.now();
-      lastEnemyTime = performance.now();
-      lastPowerUpTime = performance.now();
+      gameRunning=true;
+      lastEnemyTime=performance.now();
+      lastPowerUpTime=performance.now();
       requestAnimationFrame(gameLoop);
     }
 
     function endGame(){
-      gameRunning = false;
-      finalScoreEl.textContent = score;
-      const saved = loadState();
-      const best = Math.max(score, saved?.bestScore || 0);
-      bestScoreEl.textContent = best;
-      const shop = getShopState();
-      const data = {
-        bestScore: best,
-        lastLevel: LEVELS[currentLevelIndex].id,
-        shop
-      };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      gameRunning=false;
+      finalScoreEl.textContent=score;
+      const saved=loadState();
+      const best=Math.max(score, saved?.bestScore || 0);
+      bestScoreEl.textContent=best;
+      saveState();
       gameOverOverlay.classList.remove("hidden");
     }
 
-    // دکمه‌ها
-    startBtn.addEventListener("click", ()=>{ startGame(0); });
+    // UI events
+    startBtn.addEventListener("click", ()=> startGame(0));
 
     continueBtn.addEventListener("click", ()=>{
-      const saved = loadState();
-      if(!saved){startGame(0);return;}
-      const idx = LEVELS.findIndex(l => l.id === saved.lastLevel);
-      const levelIndex = idx >= 0 ? idx : 0;
-      startGame(levelIndex);
+      const saved=loadState();
+      if(!saved){ startGame(0); return; }
+      const idx=LEVELS.findIndex(l=>l.id===saved.lastLevel);
+      startGame(idx>=0?idx:0);
     });
 
     nextLevelBtn.addEventListener("click", ()=>{
       currentLevelIndex++;
-      if(currentLevelIndex >= LEVELS.length){
-        currentLevelIndex = 0;
-      }
+      if(currentLevelIndex>=LEVELS.length) currentLevelIndex=0;
       startGame(currentLevelIndex);
     });
 
-    restartBtn.addEventListener("click", ()=>{ startGame(0); });
+    restartBtn.addEventListener("click", ()=> startGame(0));
 
-    // کیبورد
+    // keyboard
     document.addEventListener("keydown",(e)=>{
-      if(e.code === "ArrowLeft") moveLeft = true;
-      else if(e.code === "ArrowRight") moveRight = true;
-      else if(e.code === "Space"){
-        e.preventDefault();
-        fireBullet();
-      }
+      if(e.code==="ArrowLeft") moveLeft=true;
+      else if(e.code==="ArrowRight") moveRight=true;
+      else if(e.code==="Space"){ e.preventDefault(); fireBullet(); }
     });
     document.addEventListener("keyup",(e)=>{
-      if(e.code === "ArrowLeft") moveLeft = false;
-      else if(e.code === "ArrowRight") moveRight = false;
+      if(e.code==="ArrowLeft") moveLeft=false;
+      else if(e.code==="ArrowRight") moveRight=false;
     });
 
-    // نگه‌داشتن روی موبایل
+    // mobile hold
     function bindHold(btn, cb){
-      const start = (e)=>{e.preventDefault();cb(true);};
-      const end   = (e)=>{e.preventDefault();cb(false);};
+      const start=(e)=>{e.preventDefault();cb(true);};
+      const end=(e)=>{e.preventDefault();cb(false);};
       btn.addEventListener("mousedown",start);
       btn.addEventListener("mouseup",end);
       btn.addEventListener("mouseleave",end);
@@ -1269,56 +1087,51 @@
       btn.addEventListener("touchend",end);
       btn.addEventListener("touchcancel",end);
     }
-    bindHold(leftBtn,(v)=>{moveLeft=v;});
-    bindHold(rightBtn,(v)=>{moveRight=v;});
-
+    bindHold(leftBtn,(v)=> moveLeft=v);
+    bindHold(rightBtn,(v)=> moveRight=v);
     fireBtn.addEventListener("click",(e)=>{e.preventDefault();fireBullet();});
     fireBtn.addEventListener("touchstart",(e)=>{e.preventDefault();fireBullet();},{passive:false});
 
-    // درباره طاویتا / فروشگاه
-    aboutBtn.addEventListener("click", ()=>{
-      aboutModal.classList.remove("hidden");
-    });
-    aboutCloseBtn.addEventListener("click", ()=>{
-      aboutModal.classList.add("hidden");
-    });
+    // about / shop
+    aboutBtn.addEventListener("click", ()=> aboutModal.classList.remove("hidden"));
+    aboutCloseBtn.addEventListener("click", ()=> aboutModal.classList.add("hidden"));
 
     shopBtn.addEventListener("click", ()=>{
-      updateShopUI();
       shopModal.classList.remove("hidden");
+      refreshShopButtons();
     });
-    shopCloseBtn.addEventListener("click", ()=>{
-      shopModal.classList.add("hidden");
-    });
+    shopCloseBtn.addEventListener("click", ()=> shopModal.classList.add("hidden"));
 
-    // خرید آیتم‌ها
-    shopItemButtons.forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const item = btn.getAttribute("data-item");
-        const saved = loadState() || {};
-        const bestScore = saved.bestScore || 0;
-        let coins = getCoinsFromScore(bestScore);
-        let cost = 3;
-        if(item==="shield") cost = 4;
-        if(item==="triple") cost = 5;
+    function refreshShopButtons(){
+      buyTripleBtn.disabled = coins < 60;
+      buyShieldBtn.disabled = coins < 50;
+      buyRocketBtn.disabled = coins < 70;
+    }
 
-        if(coins < cost){
-          alert("ستاره‌هات کمه؛ باید کمی بیشتر بازی کنی و امتیاز بگیری.");
-          return;
-        }
-        const shop = getShopState();
-        shop[item] = (shop[item] || 0) + 1;
-        // ستاره کم کردن رو فقط نمادین می‌گیم؛ فعلاً از bestScore حساب می‌کنیم
-        alert("خرید انجام شد. از این به بعد احتمال این پاورآپ بیشتر می‌شود.");
-        setShopState(shop);
-        updateShopUI();
-      });
+    buyTripleBtn.addEventListener("click", ()=>{
+      if(coins<60) return;
+      coins-=60; coinsEl.textContent=coins;
+      activatePowerUp("triple");
+      saveState(); refreshShopButtons();
     });
 
-    // شروع اولیه
+    buyShieldBtn.addEventListener("click", ()=>{
+      if(coins<50) return;
+      coins-=50; coinsEl.textContent=coins;
+      activatePowerUp("shield");
+      saveState(); refreshShopButtons();
+    });
+
+    buyRocketBtn.addEventListener("click", ()=>{
+      if(coins<70) return;
+      coins-=70; coinsEl.textContent=coins;
+      rocketShots += 3;
+      saveState(); refreshShopButtons();
+    });
+
+    // init
     resetGameState(0);
-    drawBackground();
-    drawTank();
+    drawBackground(); drawTank();
     applyLoadedState();
   </script>
 </body>
