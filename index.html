@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>تانک ذهنی طاویتا | Tavita Tank</title>
+  <title>تانکیتا | Tankita</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- فونت فارسی -->
@@ -87,7 +87,7 @@
       white-space:nowrap;
     }
 
-    /* چپ هدر: درباره / فروشگاه / صدا */
+    /* چپ هدر: درباره / فروشگاه */
     .header-left{
       display:flex;
       flex-direction:row;
@@ -109,19 +109,6 @@
     .header-link:hover{
       background:rgba(30,64,175,.9);
       border-color:rgba(129,140,248,.9);
-    }
-    .mute-btn{
-      width:28px;
-      height:28px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,.6);
-      background:rgba(15,23,42,.8);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-      font-size:15px;
-      padding:0;
     }
 
     .game-panel{
@@ -174,13 +161,38 @@
       border-color:rgba(234,179,8,.6);
     }
 
-    .reset-pill{
-      cursor:pointer;
+    /* آیکون‌های بالا (صدا و ری‌استارت) */
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      margin-right:auto;
+    }
+    .top-icon-btn{
+      width:28px;
+      height:28px;
       border-radius:999px;
-      border:1px solid rgba(148,163,184,.5);
-      padding:3px 9px;
-      background:rgba(15,23,42,.6);
-      font-size:11px;
+      border:1px solid rgba(148,163,184,.6);
+      background:rgba(15,23,42,.85);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      font-size:15px;
+      padding:0;
+    }
+
+    .game-panel .top-icon-btn:hover{
+      background:rgba(30,64,175,.9);
+      border-color:rgba(129,140,248,.9);
+    }
+
+    .game-panel .top-icon-btn:active{
+      transform:scale(.9);
+    }
+
+    .game-panel .top-icon-btn#resetRunBtn{
+      font-size:17px;
     }
 
     /* Overlays */
@@ -220,9 +232,12 @@
       border:none; cursor:pointer; font-size:20px; font-weight:700;
       background:linear-gradient(135deg,#0ea5e9,#3b82f6);
       color:#e0faff; box-shadow:0 8px 26px rgba(59,130,246,.45);
-      transition:transform .1s;
+      transition:transform .1s, box-shadow .15s;
     }
-    .ctrl-btn:active{ transform:scale(.9); }
+    .ctrl-btn:active{
+      transform:scale(.9);
+      box-shadow:0 4px 16px rgba(15,23,42,.8);
+    }
     .ctrl-btn.fire{
       flex:1.4;
       background:linear-gradient(135deg,#f97316,#e11d48);
@@ -322,7 +337,7 @@
 <body>
   <div class="game-wrapper">
 
-    <!-- هدر: راست = لوگو و عنوان / چپ = درباره + فروشگاه + صدا -->
+    <!-- هدر: راست = لوگو و عنوان / چپ = درباره + شاپ -->
     <header class="header">
       <!-- راست -->
       <div class="header-right">
@@ -330,17 +345,16 @@
         <div class="title-block">
           <div class="title-row">
             <span class="icon">🧠</span>
-            <h1>تانک ذهنی طاویتا</h1>
+            <h1>تانکیتا</h1>
           </div>
-          <div class="subtitle">با تانک کارتونی‌ات، مسیر ذهن رو از بدی‌ها پاک می‌کنی.</div>
+          <div class="subtitle">با تانک اراده، قلمرو ذهنت رو پاک کن.</div>
         </div>
       </div>
 
       <!-- چپ -->
       <div class="header-left">
-        <button class="header-link" id="aboutBtn">درباره طاویتا</button>
-        <button class="header-link" id="shopBtn">فروشگاه</button>
-        <button class="mute-btn" id="soundToggle" title="قطع/وصل صدا">🔊</button>
+        <button class="header-link" id="aboutBtn">درباره ما</button>
+        <button class="header-link" id="shopBtn">شاپ</button>
       </div>
     </header>
 
@@ -350,26 +364,26 @@
         <canvas id="gameCanvas"></canvas>
 
         <div id="startOverlay" class="overlay">
-          <h2>تانک ذهن آماده‌ست 🚀</h2>
+          <h2>تانکیتا آماده‌ست 🚀</h2>
           <p>
-            با تانک طاویتا جلوی گناه‌ها و عادت‌های بد رو بگیر؛<br/>
-            هر مرحله یک غول مخصوص خودش رو داره.
+            با تانک اراده‌ات، عادت‌های بد رو نابود کن و مرحله به مرحله<br/>
+            غول‌های قلمرو ذهنت رو شکست بده.
           </p>
           <button id="startBtn">شروع از مرحله ۱</button>
           <button id="continueBtn" class="secondary">ادامه از آخرین مرحله</button>
         </div>
 
         <div id="levelOverlay" class="overlay hidden">
-          <h2>مرحله پاک‌سازی شد ✨</h2>
+          <h2>مرحله تموم شد! 🎉</h2>
           <p>
-            آفرین! این بخش از مسیر ذهن رو تمیز کردی.<br/>
-            آماده‌ای غول مرحله بعد رو بزنی؟
+            غول این مرحله رو نابود کردی و مسیر ذهن تمیز شد.<br/>
+            آماده‌ای بری سراغ غول مرحله بعد؟
           </p>
           <button id="nextLevelBtn">مرحله بعد ▶️</button>
         </div>
 
         <div id="gameOverOverlay" class="overlay hidden">
-          <h2>پایان بازی 💔</h2>
+          <h2>پایان این دور 💔</h2>
           <p>
             امتیاز این دور: <span id="finalScore">0</span><br>
             بهترین امتیاز: <span id="bestScore">0</span>
@@ -378,7 +392,7 @@
         </div>
       </div>
 
-      <!-- آمار بالای پدال‌ها -->
+      <!-- آمار + آیکون‌ها بالای پدال‌ها -->
       <div class="top-bar">
         <span class="stat-pill">
           <span class="dot"></span> امتیاز: <span id="score">0</span>
@@ -392,7 +406,10 @@
         <span class="stat-pill badge-coins">
           🪙 <span id="coins">0</span>
         </span>
-        <button class="reset-pill" id="resetRunBtn" title="شروع دوباره">شروع مجدد</button>
+        <div class="top-actions">
+          <button class="top-icon-btn" id="soundToggle" title="قطع/وصل صدا">🔊</button>
+          <button class="top-icon-btn" id="resetRunBtn" title="شروع دوباره">⟲</button>
+        </div>
       </div>
 
       <!-- کنترل‌ها -->
@@ -425,7 +442,7 @@
   <!-- مودال فروشگاه -->
   <div class="modal hidden" id="shopModal">
     <div class="modal-box">
-      <h2>فروشگاه طاویتا 🛒</h2>
+      <h2>شاپ تانکیتا 🛒</h2>
       <p>
         با سکه‌ها می‌تونی قدرت‌های ویژه بگیری و راحت‌تر غول‌ها رو بزنی.
         سکه‌ها با نابود کردن بدی‌ها و غول‌ها جمع می‌شن.
@@ -457,7 +474,7 @@
         <div class="shop-card">
           <div class="shop-info">
             <div class="shop-title">موشک ویژه 🚀</div>
-          <div class="shop-desc">۳ شلیک موشکی خیلی قوی؛ مخصوص غول‌ها.</div>
+            <div class="shop-desc">۳ شلیک موشکی خیلی قوی؛ مخصوص غول‌ها.</div>
             <div class="shop-desc">قیمت: ۷۰ 🪙</div>
           </div>
           <button class="shop-buy" id="buyRocketBtn">خرید</button>
@@ -596,17 +613,17 @@
       "ریا","ناامیدی","ترس","کینه","پرخاشگری","تعلل","بدبینی"
     ];
 
-    // ۲۰ مرحله با باس اختصاصی – سخت‌تر از قبل
+    // ۲۰ مرحله
     const LEVELS = [];
     for(let i=1;i<=20;i++){
       LEVELS.push({
         id: i,
         label: `مرحله ${i}`,
-        goal: 60 + (i-1)*15,             // امتیاز لازم
-        enemySpeed: 1.5 + (i-1)*0.12,    // سرعت پایه دشمن‌ها
-        spawnInterval: 1200 - (i-1)*40,  // فاصله اسپاون
+        goal: 120 + (i-1)*35,
+        enemySpeed: 1.6 + (i-1)*0.12,
+        spawnInterval: 1100 - (i-1)*35,
         bossName: `غول مرحله ${i}`,
-        bossHP: 80 + (i-1)*12,           // HP غول – خیلی بیشتر
+        bossHP: 120 + (i-1)*20,
         bossImgIndex: i-1
       });
     }
@@ -623,7 +640,6 @@
     let activePowerUps = { shield:false, triple:false, slow:false };
     let powerTimers = {};
 
-    // ذخیره‌سازی
     const STORAGE_KEY = "tavita_tank_state_v3";
     function loadState(){
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -653,7 +669,6 @@
       coinsEl.textContent = coins;
     }
 
-    // تانک: حفظ نسبت تصویر
     tankImg.onload = ()=>{
       const ratio = tankImg.naturalHeight / tankImg.naturalWidth || 0.6;
       tank.w = canvas.width * 0.18;
@@ -693,7 +708,6 @@
       return (distX*distX + distY*distY) <= cr*cr;
     }
 
-    // پس‌زمینه + حس جلو رفتن
     function drawBackground(){
       const grad = ctx.createRadialGradient(
         canvas.width/2, canvas.height*0.1, 20,
@@ -705,8 +719,8 @@
       ctx.fillStyle = grad;
       ctx.fillRect(0,0,canvas.width,canvas.height);
 
-      ctx.strokeStyle = "rgba(148,163,184,0.18)";
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = "rgba(148,163,184,0.35)";
+      ctx.lineWidth = 1.3;
       for(let i=0;i<9;i++){
         const y = (canvas.height - 16) - (i*26) + bgOffset;
         ctx.beginPath();
@@ -719,14 +733,13 @@
     function drawTank(){
       const {x,y,w,h} = tank;
 
-      // پلتفرم نئونی زیر تانک
       const px = x + w/2;
       const py = y + h + 6;
-      const rx = w*0.75;
-      const ry = h*0.45;
+      const rx = w*0.55;
+      const ry = h*0.35;
       const g = ctx.createRadialGradient(px,py,2,px,py,rx);
-      g.addColorStop(0,"rgba(56,189,248,0.85)");
-      g.addColorStop(0.6,"rgba(56,189,248,0.25)");
+      g.addColorStop(0,"rgba(56,189,248,0.75)");
+      g.addColorStop(0.5,"rgba(56,189,248,0.22)");
       g.addColorStop(1,"rgba(15,23,42,0)");
       ctx.fillStyle = g;
       ctx.beginPath();
@@ -769,9 +782,8 @@
         if(e.isBoss){
           const {x,y,w,h} = e;
 
-          // فقط خود تصویر غول (بدون بک‌گراند اضافه)
           if(bossImg.complete && bossImg.naturalWidth>0){
-            const scale = 0.85; // کمی کوچکتر از کل مساحت
+            const scale = 0.75;
             const iw = w * scale;
             const ih = h * scale;
             const ix = x + (w - iw)/2;
@@ -779,7 +791,6 @@
             ctx.drawImage(bossImg, ix, iy, iw, ih);
           }
 
-          // HP و نام
           ctx.fillStyle = "#ffffff";
           ctx.font = "bold 13px Vazirmatn, system-ui";
           ctx.textAlign = "center";
@@ -863,8 +874,8 @@
     function spawnEnemy(isBoss=false){
       if(isBoss){
         const lvl = LEVELS[currentLevelIndex];
-        const w = canvas.width*0.7;
-        const h = canvas.height*0.55;
+        const w = canvas.width*0.65;
+        const h = canvas.height*0.52;
         const x = (canvas.width-w)/2;
         const y = -h-20;
         enemies.push({
@@ -936,7 +947,7 @@
         r: 7,
         speed: 6,
         isRocket:false,
-        damage:3     // کمتر از قبل؛ غول سخت‌تر می‌شود
+        damage:3
       });
 
       if(rocketShots>0){
@@ -968,7 +979,7 @@
       currentLevelIndex = startFromLevelIndex;
       const lvl = LEVELS[currentLevelIndex];
       levelGoal = lvl.goal;
-      spawnInterval = Math.max(500, lvl.spawnInterval);
+      spawnInterval = Math.max(550, lvl.spawnInterval);
       enemyBaseSpeed = lvl.enemySpeed;
 
       levelLabel.textContent = lvl.label;
@@ -1025,7 +1036,6 @@
         lastPowerUpTime=now;
       }
 
-      // برخورد گلوله با دشمن/باس
       bullets.forEach((b,bi)=>{
         enemies.forEach((e,ei)=>{
           if(rectCircleCollide(b.x,b.y,b.r, e.x,e.y,e.w,e.h)){
@@ -1056,7 +1066,6 @@
         });
       });
 
-      // پاورآپ با تانک
       powerUps.forEach((p,pi)=>{
         if(rectCircleCollide(p.x,p.y,p.r, tank.x,tank.y,tank.w,tank.h)){
           activatePowerUp(p.type);
@@ -1065,7 +1074,6 @@
         }
       });
 
-      // دشمن / باس با تانک یا خارج شدن از پایین
       enemies.forEach((e,ei)=>{
         const collideWithTank =
           e.x < tank.x+tank.w &&
@@ -1178,7 +1186,6 @@
       gameOverOverlay.classList.remove("hidden");
     }
 
-    // ======== رویدادها ========
     startBtn.addEventListener("click", ()=> startGame(0));
 
     continueBtn.addEventListener("click", ()=>{
@@ -1226,7 +1233,6 @@
     fireBtn.addEventListener("click",(e)=>{e.preventDefault();fireBullet();});
     fireBtn.addEventListener("touchstart",(e)=>{e.preventDefault();fireBullet();},{passive:false});
 
-    // درباره / فروشگاه
     aboutBtn.addEventListener("click", ()=> aboutModal.classList.remove("hidden"));
     aboutCloseBtn.addEventListener("click", ()=> aboutModal.classList.add("hidden"));
 
@@ -1264,7 +1270,6 @@
       saveState(); refreshShopUI();
     });
 
-    // شروع اولیه
     resetGameState(0);
     drawBackground(); drawTank();
     applyLoadedState();
