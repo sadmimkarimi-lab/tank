@@ -39,6 +39,7 @@
       border:1px solid rgba(148,163,184,.5);
       margin-bottom:12px;
       box-shadow:0 10px 30px rgba(15,23,42,.9);
+      direction:ltr; /* ✅ برای اینکه چیدمان هدر مستقل از RTL درست بشه */
     }
 
     /* راست هدر: لوگو + عنوان (لوگو کاملاً چسبیده به راست) */
@@ -52,8 +53,8 @@
       justify-content:flex-end;
     }
     .logo-badge{
-      width:52px;
-      height:52px;
+      width:64px;   /* ✅ بزرگ‌تر شد */
+      height:64px;  /* ✅ بزرگ‌تر شد */
       border-radius:16px;
       background:radial-gradient(circle at top,#38bdf8,#0f172a);
       box-shadow:0 0 18px rgba(56,189,248,.9);
@@ -61,7 +62,7 @@
       align-items:center;
       justify-content:center;
       font-weight:900;
-      font-size:18px;
+      font-size:20px;
       letter-spacing:1px;
       color:#e0faff;
       flex-shrink:0;
@@ -96,8 +97,8 @@
       gap:6px;
     }
     .header-link{
-      background:linear-gradient(135deg,#1f2937,#0f172a);
-      border:1px solid rgba(148,163,184,.9);
+      background:linear-gradient(135deg,#3b82f6,#0ea5e9); /* ✅ رنگی و جذاب */
+      border:1px solid rgba(191,219,254,.9);
       color:#e5e7eb;
       cursor:pointer;
       padding:6px 11px;
@@ -105,15 +106,15 @@
       font-size:11px;
       font-weight:600;
       white-space:nowrap;
-      box-shadow:0 6px 14px rgba(15,23,42,.9);
+      box-shadow:0 6px 18px rgba(37,99,235,.8); /* ✅ برجسته‌تر */
       transition:all .15s;
     }
     .header-link:hover{
-      background:linear-gradient(135deg,#6366f1,#0ea5e9);
-      border-color:rgba(191,219,254,1);
+      background:linear-gradient(135deg,#0ea5e9,#22c55e);
+      border-color:rgba(190,242,100,1);
       color:#f9fafb;
-      transform:translateY(-1px);
-      box-shadow:0 10px 20px rgba(59,130,246,.8);
+      transform:translateY(-1px) scale(1.03);
+      box-shadow:0 10px 24px rgba(34,197,94,.85);
     }
     .header-link:active{
       transform:translateY(1px) scale(.97);
@@ -191,26 +192,25 @@
       margin-right:auto;
     }
     .top-icon-btn{
-      width:28px;
-      height:28px;
+      width:32px;   /* ✅ بزرگ‌تر و واضح‌تر */
+      height:32px;
       border-radius:999px;
       border:1px solid rgba(148,163,184,.6);
-      background:rgba(15,23,42,.85);
+      background:linear-gradient(135deg,#6366f1,#0ea5e9); /* ✅ دیده‌تر */
       display:flex;
       align-items:center;
       justify-content:center;
       cursor:pointer;
-      font-size:15px;
+      font-size:17px;
       padding:0;
       user-select:none;
       -webkit-user-select:none;
-      box-shadow:0 6px 14px rgba(15,23,42,.9);
+      box-shadow:0 6px 16px rgba(37,99,235,.8);
       transition:all .15s;
     }
     .top-icon-btn:hover{
-      background:linear-gradient(135deg,#6366f1,#0ea5e9);
-      border-color:rgba(191,219,254,1);
-      transform:translateY(-1px);
+      transform:translateY(-1px) scale(1.03);
+      box-shadow:0 9px 22px rgba(59,130,246,.9);
     }
     .top-icon-btn:active{
       transform:translateY(1px) scale(.96);
@@ -362,7 +362,7 @@
     @media(max-width:480px){
       h1{font-size:17px;}
       .subtitle{font-size:11px;}
-      .logo-badge{width:48px;height:48px;}
+      .logo-badge{width:56px;height:56px;}
     }
   </style>
 </head>
