@@ -29,10 +29,9 @@
     }
 
     /* هدر کارت‌شده */
- .header{
+.header{
   display:flex;
-  direction: rtl;      
-  flex-direction:row;
+  flex-direction: row-reverse; /
   justify-content:space-between;
   align-items:center;
   gap:10px;
@@ -45,15 +44,15 @@
 }
 
     /* راست هدر: لوگو + عنوان (لوگو کاملاً سمت راست) */
-    .header-right{
-      display:flex;
-      flex-direction:row;
-      align-items:center;
-      gap:6px;
-      text-align:right;
-      flex:1;
-      justify-content:flex-start;
-    }
+ .header-right{
+  display:flex;
+  flex-direction: row-reverse;
+  align-items:center;
+  gap:6px;
+  text-align:right;
+  flex:1;
+  justify-content:flex-start;
+}
     .logo-badge{
       width:64px;
       height:64px;
