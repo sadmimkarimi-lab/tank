@@ -523,6 +523,8 @@
       muted
     ></video>
 
+<audio id="startSfx" src="https://cdn.jsdelivr.net/gh/itsrahaa/sfx/tank-start.mp3" preload="auto"></audio>
+    
     <div class="intro-controls">
       <button id="introMuteBtn" class="intro-btn mute">🔇 صدا</button>
       <button id="introSkipBtn" class="intro-btn skip">رد کردن ⏭️</button>
@@ -735,8 +737,23 @@ const introMuteBtn = document.getElementById("introMuteBtn");
 const introSkipBtn = document.getElementById("introSkipBtn");
 
 function finishIntro(){
-  introScreen.style.display = "none";
-  gameWrapper.classList.remove("hidden-game");
+  const startSfx = document.getElementById("startSfx");
+
+  // فید اوت قشنگ
+  introScreen.style.transition = "opacity 0.7s ease";
+  introScreen.style.opacity = "0";
+
+  setTimeout(() => {
+    introScreen.style.display = "none";
+    gameWrapper.classList.remove("hidden-game");
+
+    // پخش صدای شروع (اگر مرورگر اجازه بده)
+    if (startSfx) {
+      startSfx.currentTime = 0;
+      startSfx.play().catch(()=>{});
+    }
+  }, 700);
+
   introVideo.pause();
   introVideo.currentTime = 0;
 }
@@ -1630,5 +1647,6 @@ introMuteBtn.addEventListener("click", ()=>{
       }catch(e){}
     }, 600);
   </script>
+
 </body>
 </html>
