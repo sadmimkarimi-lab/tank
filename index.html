@@ -352,6 +352,29 @@
       box-shadow:none;
     }
 
+/* مخصوص صفحه شروع بازی */
+#startOverlay button{
+  width:100%;
+  max-width:260px;
+}
+
+/* استایل جدا برای دکمه مراحل بازی */
+#startOverlay #levelsBtn{
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  color:#ecfdf5;
+  border:none;
+  box-shadow:0 10px 26px rgba(34,197,94,0.85);
+  margin-top:4px;
+}
+
+/* دکمه ادامه مثل قبل ساده بماند */
+#startOverlay #continueBtn{
+  background:transparent;
+  border:1px solid rgba(148,163,184,.6);
+  box-shadow:none;
+}
+
+  
     /* Controls */
     .controls{
       display:flex; justify-content:space-between;
@@ -401,6 +424,12 @@
       box-shadow:0 18px 40px rgba(15,23,42,0.95);
       text-align:right;
     }
+
+  /* فقط برای مودال مراحل: ارتفاع محدود + اسکرول داخلی */
+#levelModal .modal-box{
+  max-height:82vh;
+  overflow-y:auto;
+}
     .modal-box h2{ font-size:16px; margin-bottom:6px; }
     .modal-box p{
       font-size:12px; line-height:1.9; opacity:0.9; margin-bottom:10px;
@@ -471,6 +500,86 @@
     }
 
 
+
+/* دکمه‌ی مرحله توی HUD کلیک‌خور باشد */
+.badge-level{
+  cursor:pointer;
+}
+
+/* گرید مراحل – ۴ ستون، کارت‌های کوچیک */
+.level-grid{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+}
+
+/* هر کارت مرحله */
+.level-btn{
+  border:none;
+  border-radius:16px;
+  padding:6px 4px;
+  font-size:11px;
+  cursor:pointer;
+  background:linear-gradient(135deg,#020617,#020617);
+  color:#e5e7eb;
+  box-shadow:0 8px 18px rgba(15,23,42,0.9);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  gap:4px;
+}
+
+/* تصویر غول */
+.level-boss-thumb{
+  width:52px;
+  height:52px;
+  border-radius:14px;
+  object-fit:cover;
+  box-shadow:0 0 0 2px rgba(15,23,42,0.9),
+             0 8px 18px rgba(15,23,42,0.95);
+}
+
+/* متن زیر تصویر */
+.level-btn .level-label{
+  text-align:center;
+  font-weight:600;
+}
+
+/* تصویر غول هر مرحله (داخل دکمه) */
+.level-boss-thumb{
+  width:50px;
+  height:50px;
+  border-radius:14px;
+  object-fit:cover;
+  box-shadow:0 0 0 2px rgba(15,23,42,0.9),
+             0 10px 22px rgba(15,23,42,0.9);
+}
+
+/* مرحله فعلی */
+.level-btn.current{
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+}
+
+/* مراحل قفل شده */
+.level-btn.locked{
+  background:#020617;
+  color:#9ca3af;
+  border:1px dashed rgba(148,163,184,.7);
+  box-shadow:none;
+  cursor:not-allowed;
+}
+
+/* غولِ مرحله قفل‌شده؛ کم‌رنگ و سیاه‌وسفید */
+.level-btn.locked .level-boss-thumb{
+  opacity:0.4;
+  filter:grayscale(1);
+}
+
+
+  
+
 /* ===== اینتروی ویدئویی ===== */
 .intro-screen{
   position:fixed;
@@ -533,38 +642,139 @@
   100%{ transform:translateX(220%); }
 }
     
+/* کنترل‌های ویدئوی اینترو – نوار مینیمال زیر ویدئو */
 .intro-controls{
-  margin-top:12px;
+  margin-top:10px;
   display:flex;
-  gap:10px;
+  gap:8px;
+  padding:4px 10px;
+  border-radius:999px;
+  background:rgba(15,23,42,0.65);
+  border:1px solid rgba(30,64,175,0.7);
+  box-shadow:0 10px 24px rgba(15,23,42,0.9);
+  backdrop-filter:blur(10px);
 }
 
+/* دکمه‌های اینترو (کوچیک و مینیمال) */
 .intro-btn{
-  border:none;
   border-radius:999px;
-  padding:6px 14px;
-  font-size:12px;
-  font-weight:600;
+  border:1px solid transparent;
+  padding:4px 10px;
+  font-size:11px;
+  font-weight:500;
   cursor:pointer;
   white-space:nowrap;
+  display:flex;
+  align-items:center;
+  gap:4px;
 }
 
+/* دکمه صدا – تیره و ساده */
 .intro-btn.mute{
-  background:#111827;
+  background:transparent;
   color:#e5e7eb;
-  border:1px solid rgba(148,163,184,.7);
+  border-color:rgba(148,163,184,0.7);
 }
 
+/* دکمه رد کردن – گرادیان کوچیک و جذاب */
 .intro-btn.skip{
   background:linear-gradient(135deg,#f97316,#ec4899);
   color:#fff;
-  box-shadow:0 10px 24px rgba(248,113,113,.8);
+  box-shadow:0 8px 18px rgba(248,113,113,0.8);
 }
-
 .hidden-game{
   display:none;
 }
 
+/* نوار جون باس */
+#bossHpBar {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 16px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  box-shadow: 0 0 18px rgba(248, 113, 113, 0.7);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* وقتی نوار باس hidden بشه، کلاً از صفحه بره */
+#bossHpBar.hidden {
+  display: none;
+}
+  
+/* پرشدگی نوار */
+#bossHpFill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #22c55e, #eab308, #f97316, #ef4444);
+  box-shadow: 0 0 14px rgba(248, 113, 113, 0.9);
+  transition: width 0.18s ease-out;
+}
+
+/* عدد HP وسط نوار */
+#bossHpText {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Vazir", Vazirmatn, system-ui;
+  font-size: 11px;
+  font-weight: 700;
+  color: #e5f6ff;
+  text-shadow: 0 0 6px #020617;
+}
+
+.hidden{
+  opacity:0;
+  pointer-events:none;
+}
+
+/* لرزش صفحه هنگام مرگ باس */
+@keyframes bossDieShake {
+  0%   { transform: translate(0,0); }
+  15%  { transform: translate(-12px, 10px); }
+  30%  { transform: translate(10px, -12px); }
+  45%  { transform: translate(-14px, 8px); }
+  60%  { transform: translate(12px, -10px); }
+  75%  { transform: translate(-10px, 12px); }
+  100% { transform: translate(0,0); }
+}
+
+.screen-shake {
+  animation: bossDieShake 0.75s ease-out; /* مدت بیشتر */
+}
+/* انفجار / دود بنفش */
+@keyframes bossExplosion {
+  0%   { opacity: 1; transform: scale(0.4); filter: blur(0px); }
+  50%  { opacity: 1; transform: scale(2.4); filter: blur(2px); }
+  100% { opacity: 0; transform: scale(3.1); filter: blur(4px); }
+}
+
+.boss-death-flash {
+  position: absolute;
+  left: 50%;     /* مقدار پیش‌فرض، بعداً با JS override می‌شه */
+  top: 50%;
+  width: 220px;
+  height: 220px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(0,0,0,0.85) 0%,      /* مرکز خیلی تیره */
+    rgba(76,29,149,0.90) 35%, /* بنفش خیلی تیره */
+    rgba(147,51,234,0.85) 70%,/* بنفش روشن‌تر مثل دود */
+    rgba(15,23,42,0) 100%     /* محو شدن */
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 30;
+  animation: bossExplosion 0.9s forwards;
+}
     
   </style>
 </head>
@@ -621,19 +831,27 @@
     <div class="game-panel">
 
       <div class="canvas-wrap">
-        <canvas id="gameCanvas"></canvas>
+      <canvas id="gameCanvas"></canvas>
 
+<div id="bossHpBar" class="hidden">
+  <div id="bossHpFill"></div>
+  <span id="bossHpText"></span>
+</div>
+        
         <!-- شروع -->
         <div id="startOverlay" class="overlay">
-          <h2>تانکیتا آماده‌ست 🚀</h2>
-          <p>
-            با تانک اراده‌ات، عادت‌های بد رو نابود کن و مرحله به مرحله<br/>
-            غول‌های قلمرو ذهنت رو شکست بده. <br>
-            برای شروع روی دکمه «شروع از مرحله ۱» بزن.
-          </p>
-          <button id="startBtn">شروع از مرحله ۱</button>
-          <button id="continueBtn" class="secondary">ادامه از آخرین مرحله</button>
-        </div>
+  <h2>تانکیتا آماده‌ست 🚀</h2>
+  <p>
+    با تانک اراده‌ات، عادت‌های بد رو نابود کن و مرحله به مرحله<br/>
+    غول‌های قلمرو ذهنت رو شکست بده. <br>
+    برای شروع روی دکمه «شروع از مرحله ۱» بزن.
+  </p>
+
+  <button id="startBtn">شروع از مرحله ۱</button>
+  <button id="continueBtn" class="secondary">ادامه از آخرین مرحله</button>
+  <!-- 👇 دکمه جدید -->
+  <button id="levelsBtn" class="secondary">مراحل بازی</button>
+</div>
 
         <!-- پایان مرحله -->
         <div id="levelOverlay" class="overlay hidden">
@@ -829,6 +1047,25 @@
     </div>
   </div>
 
+
+<!-- مودال مراحل -->
+<div class="modal hidden" id="levelModal">
+  <div class="modal-box">
+    <h2>مراحل بازی</h2>
+    <p style="font-size:11px;opacity:.85;margin-top:4px;">
+      مراحل باز شده را می‌تونی انتخاب کنی. بقیه قفل هستند.
+    </p>
+
+    <div class="level-grid" id="levelGrid"></div>
+
+    <div class="modal-actions">
+      <button class="secondary" id="levelCloseBtn">بستن</button>
+    </div>
+  </div>
+</div>
+
+
+  
   <script>
     // ======== Canvas & اندازه ========
     const canvas = document.getElementById("gameCanvas");
@@ -918,6 +1155,12 @@ introMuteBtn.addEventListener("click", ()=>{
     const continueBtn = document.getElementById("continueBtn");
     const nextLevelBtn = document.getElementById("nextLevelBtn");
     const restartBtn = document.getElementById("restartBtn");
+    const levelsBtn     = document.getElementById("levelsBtn");
+const levelModal    = document.getElementById("levelModal");
+const levelGrid     = document.getElementById("levelGrid");
+const levelCloseBtn = document.getElementById("levelCloseBtn");
+const levelBadge    = document.querySelector(".badge-level");
+    
     const finalScoreEl = document.getElementById("finalScore");
     const bestScoreEl = document.getElementById("bestScore");
 
@@ -1003,6 +1246,22 @@ const sfxShieldBreak = () => {
   // یه افکت ریز مثل ترک شیشه: یه تیز، بعدش یه بم‌تر
   playTone(950, 0.08, "triangle", 0.24);
   setTimeout(() => playTone(420, 0.14, "sawtooth", 0.26), 70);
+};
+
+// صدای مرگ غول
+const sfxBossDie = () => {
+    // انفجار اول (تیز)
+    playTone(620, 0.18, "sawtooth", 0.35);
+
+    // انفجار دوم (بم‌تر)
+    setTimeout(() => {
+        playTone(280, 0.28, "square", 0.32);
+    }, 150);
+
+    // انفجار سوم (سقوط بم و شدید)
+    setTimeout(() => {
+        playTone(90, 0.45, "square", 0.4);
+    }, 300);
 };
     
     soundToggleBtn.addEventListener("click", ()=>{
@@ -1105,7 +1364,8 @@ let inventory = { shield:0, triple:0, rocket:0, slow:0 };
 
     let moveLeft = false;
     let moveRight = false;
-
+let isPaused = false;   // وضعیت توقف بازی
+    
     const badLabels = [
       "دروغ","تهمت","غیبت","مردم‌آزاری","گرانفروشی","بی‌ادبی","دشنام","تنبلی",
       "حسادت","بی‌حیایی","بی‌حجابی","ترک نماز","قضاوت","خودکم‌بینی","خودخواهی",
@@ -1136,12 +1396,72 @@ let inventory = { shield:0, triple:0, rocket:0, slow:0 };
     let bossSpawned = false;
     let bossAlive = false;
 let miniBossSpawned = false;
+  let inBossFight = false;
     
     const POWER_TYPES = ["shield","triple","slow","rocket"];
 
     let activePowerUps = { shield:false, triple:false, slow:false };
     let powerTimers = {};
 
+// حداکثر مرحله‌ای که باز شده
+function getMaxUnlockedLevelId(){
+  const saved = loadState();
+  if(!saved) return 1;
+  return saved.lastLevel || 1;
+}
+
+// ساخت دکمه‌های مراحل (با تصویر غول هر مرحله)
+function buildLevelGrid(){
+  if(!levelGrid) return;
+  levelGrid.innerHTML = "";
+
+  const maxId = getMaxUnlockedLevelId();
+
+  LEVELS.forEach((lvl, index)=>{
+    const btn = document.createElement("button");
+    btn.className = "level-btn";
+
+    // تصویر غول هر مرحله
+    const img = document.createElement("img");
+    img.className = "level-boss-thumb";
+    const bossUrl = bossImages[lvl.bossImgIndex] || bossImages[0];
+    img.src = bossUrl;
+    img.alt = lvl.bossName || lvl.label;
+
+    // عنوان مرحله
+    const label = document.createElement("span");
+    label.className = "level-label";
+    label.textContent = lvl.label;
+
+    // چسباندن به دکمه
+    btn.appendChild(img);
+    btn.appendChild(label);
+
+    // وضعیت قفل / فعلی
+    if(lvl.id > maxId){
+      btn.classList.add("locked");
+      btn.disabled = true;
+    }else{
+      if(index === currentLevelIndex){
+        btn.classList.add("current");
+      }
+      btn.addEventListener("click", ()=>{
+        levelModal.classList.add("hidden");
+        startGame(index);
+      });
+    }
+
+    levelGrid.appendChild(btn);
+  });
+}
+
+
+    // باز کردن مودال مراحل
+function openLevelModal(){
+  buildLevelGrid();
+  levelModal.classList.remove("hidden");
+}
+    
     const STORAGE_KEY = "tavita_tank_state_v4";
 
     function loadState(){
@@ -1327,30 +1647,46 @@ let miniBossSpawned = false;
 
     function drawEnemies(){
       enemies.forEach(e=>{
-        if(e.isBoss){
-          const {x,y,w,h} = e;
+        if (e.isBoss) {
+      const { x, y, w, h } = e;
 
-          if(bossImg.complete && bossImg.naturalWidth>0){
-            const scale = 0.75;
-            const iw = w * scale;
-            const ih = h * scale;
-            const ix = x + (w - iw)/2;
-            const iy = y + (h - ih)/2;
-            ctx.drawImage(bossImg, ix, iy, iw, ih);
-          }
+      // تصویر غول
+      if (bossImg.complete && bossImg.naturalWidth > 0) {
+        const scale = 0.75;
+        const iw = w * scale;
+        const ih = h * scale;
+        const ix = x + (w - iw) / 2;
+        const iy = y + (h - ih) / 2;
+        ctx.drawImage(bossImg, ix, iy, iw, ih);
+      }
 
-          ctx.fillStyle = "#ffffff";
-          ctx.font = "bold 13px Vazir, Vazirmatn, system-ui";
-          ctx.textAlign = "center";
-          ctx.textBaseline = "top";
-          ctx.fillText("HP: "+e.hp, x+w/2, y+4);
+      // 🎯 نوار جون + عدد، دقیقا زیر خود باس
+      const bossHpBar  = document.getElementById("bossHpBar");
+      const bossHpFill = document.getElementById("bossHpFill");
+      const bossHpText = document.getElementById("bossHpText");
 
-          ctx.font = "bold 13px Vazir, Vazirmatn, system-ui";
-          ctx.textBaseline = "bottom";
-          ctx.fillText(e.bossName, x+w/2, y+h-4);
+      // نسبت جون فعلی به حداکثر
+      const ratio = Math.max(0, e.hp) / e.maxHp;
+      bossHpFill.style.width = (ratio * 100) + "%";
 
-          return;
-        }
+      // متن وسط نوار (مثلا 75 / 120)
+      const currentHp = Math.max(0, Math.round(e.hp));
+      bossHpText.textContent = `${currentHp} / ${e.maxHp}`;
+
+      // جای نوار: کمی زیر غول
+      const barTop = y + h - 70;
+      bossHpBar.style.top = barTop + "px";
+      bossHpBar.classList.remove("hidden");
+
+      // فقط اسم غول را پایینش بنویسیم
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 13px Vazir, Vazirmatn, system-ui";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "bottom";
+      ctx.fillText(e.bossName, x + w / 2, y + h - 4);
+
+      return;
+    }
 
 
         else if(e.isMiniBoss){
@@ -1477,52 +1813,64 @@ const h = canvas.height * 0.22;
 
     
     function spawnEnemy(isBoss=false){
-      if(isBoss){
-        const lvl = LEVELS[currentLevelIndex];
-        const w = canvas.width*0.65;
-        const h = canvas.height*0.52;
-        const x = (canvas.width-w)/2;
-        const y = -h-20;
-        enemies.push({
-          x,y,w,h,
-          speed: enemyBaseSpeed*0.7,
-          isBoss:true,
-          bossName:lvl.bossName,
-          hp:lvl.bossHP
-        });
-        bossAlive = true;
+  if (isBoss) {
+    const lvl = LEVELS[currentLevelIndex];
+    const w = canvas.width * 0.65;
+    const h = canvas.height * 0.52;
+    const x = (canvas.width - w) / 2;
+    const y = -h - 20;
 
-        const bossImgSrc = bossImages[lvl.bossImgIndex] || bossImages[0];
-        bossImg.src = bossImgSrc;
+    enemies.push({
+      x, y, w, h,
+      speed: enemyBaseSpeed * 0.7,
+      isBoss: true,
+      bossName: lvl.bossName,
+      hp: lvl.bossHP,
+      maxHp: lvl.bossHP,          // 👈 خیلی مهم برای نوار
+      colorStart: "#f97316"       // واسه رنگ انفجار باس
+    });
 
-        sfxBoss();
-        return;
-      }
+    bossAlive   = true;
+    inBossFight = true;
 
-      const laneCount=5, laneWidth=canvas.width/laneCount;
-      const laneIndex=Math.floor(Math.random()*laneCount);
-      const w=laneWidth*0.72, h=34;
-      const x=laneIndex*laneWidth+(laneWidth-w)/2;
-      const y=-h-8;
+    // 🔥 روشن کردن نوار جون باس
+    const bossHpBar  = document.getElementById("bossHpBar");
+    const bossHpFill = document.getElementById("bossHpFill");
+    bossHpBar.classList.remove("hidden");
+    bossHpFill.style.width = "100%";
 
-      const colors=[
-        ["#f97316","#fb923c"],
-        ["#22c55e","#4ade80"],
-        ["#3b82f6","#6366f1"],
-        ["#e11d48","#f97316"],
-        ["#a855f7","#6366f1"]
-      ];
-      const pair=colors[Math.floor(Math.random()*colors.length)];
-      const label=badLabels[Math.floor(Math.random()*badLabels.length)];
+    const bossImgSrc = bossImages[lvl.bossImgIndex] || bossImages[0];
+    bossImg.src = bossImgSrc;
 
-      enemies.push({
-        x,y,w,h,
-        speed: enemyBaseSpeed + Math.random()*0.8,
-        colorStart:pair[0], colorEnd:pair[1],
-        label, isBoss:false,
-        points:createBlobPoints(w,h)
-      });
-    }
+    sfxBoss();
+    return;
+  }
+
+  // 👇 از این‌جا به بعد همون دشمن‌های معمولی‌ات بمونن، دست نزن
+  const laneCount=5, laneWidth=canvas.width/laneCount;
+  const laneIndex=Math.floor(Math.random()*laneCount);
+  const w=laneWidth*0.72, h=34;
+  const x=laneIndex*laneWidth+(laneWidth-w)/2;
+  const y=-h-8;
+
+  const colors=[
+    ["#f97316","#fb923c"],
+    ["#22c55e","#4ade80"],
+    ["#3b82f6","#6366f1"],
+    ["#e11d48","#f97316"],
+    ["#a855f7","#6366f1"]
+  ];
+  const pair=colors[Math.floor(Math.random()*colors.length)];
+  const label=badLabels[Math.floor(Math.random()*badLabels.length)];
+
+  enemies.push({
+    x,y,w,h,
+    speed: enemyBaseSpeed + Math.random()*0.8,
+    colorStart:pair[0], colorEnd:pair[1],
+    label, isBoss:false,
+    points:createBlobPoints(w,h)
+  });
+}
 
     function spawnPowerUp(){
       const laneCount=5, laneWidth=canvas.width/laneCount;
@@ -1609,11 +1957,13 @@ const h = canvas.height * 0.22;
 }
 
     let frameId = null;
+let levelClearTimer = null;   // 👈 تایمر تاخیر پیام مرحله بعد
 
     function update(){
-      if(moveLeft) tank.x -= tank.speed;
-      if(moveRight) tank.x += tank.speed;
-      tank.x = Math.max(4, Math.min(canvas.width-tank.w-4, tank.x));
+      // حرکت آزاد تانک (همیشه، حتی زمان باس‌فایت)
+if (moveLeft)  tank.x -= tank.speed;
+if (moveRight) tank.x += tank.speed;
+tank.x = Math.max(4, Math.min(canvas.width - tank.w - 4, tank.x));
 
       const enemySpeedFactor = activePowerUps.slow?0.5:1;
       const enemySpawnFactor = activePowerUps.slow?1.5:1;
@@ -1624,7 +1974,21 @@ const h = canvas.height * 0.22;
       bullets.forEach(b=> b.y -= b.speed);
       bullets = bullets.filter(b=> b.y+b.r>0);
 
-      enemies.forEach(e=> e.y += e.speed*enemySpeedFactor);
+      enemies.forEach(e=>{
+        if(e.isBoss && inBossFight){
+          const targetY = canvas.height * 0.16; // جای ایستادن غول
+
+          if(e.y < targetY){
+            e.y += e.speed * enemySpeedFactor;
+            if(e.y > targetY) e.y = targetY;
+          } else {
+            e.y = targetY;
+          }
+
+        } else {
+          e.y += e.speed * enemySpeedFactor;
+        }
+      });
 
       powerUps.forEach(p=> p.y += p.speed);
       powerUps = powerUps.filter(p=> p.y-p.r < canvas.height+10);
@@ -1644,7 +2008,11 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
       
       if(!bossSpawned && score >= lvl.goal*0.65){
         spawnEnemy(true);
-        bossSpawned=true;
+        bossSpawned = true;
+        inBossFight = true;
+
+        // تانک رو وسط صفحه قرار بده
+        tank.x = (canvas.width - tank.w)/2;
       }
 
       if(now-lastEnemyTime > spawnInterval*enemySpawnFactor){
@@ -1653,56 +2021,105 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
       }
 
       if(now-lastPowerUpTime>8000){
-        spawnPowerUp();
-        lastPowerUpTime=now;
+  spawnPowerUp();
+  lastPowerUpTime=now;
+}
+
+bullets.forEach((b, bi) => {
+  enemies.forEach((e, ei) => {
+    if (rectCircleCollide(b.x, b.y, b.r, e.x, e.y, e.w, e.h)) {
+
+      // 🔸 گلوله مصرف شود
+      bullets.splice(bi, 1);
+
+      // ✨ انفجار معمولی روی دشمن
+      const cx = e.x + e.w / 2;
+      const cy = e.y + e.h / 2;
+      createExplosion(cx, cy, e.colorStart || "#f97316");
+      sfxHit();
+
+      // 🧟‍♂️ اگر باس بزرگ است
+      if (e.isBoss) {
+        // کم کردن HP باس
+        e.hp -= b.damage;
+
+        const bossHpBar  = document.getElementById("bossHpBar");
+        const bossHpFill = document.getElementById("bossHpFill");
+
+        // اگر به هر دلیل maxHp نبود، همین الان تنظیمش کن
+        if (e.maxHp === undefined) e.maxHp = e.hp;
+
+        // آپدیت عرض نوار
+        if (bossHpFill) {
+          bossHpFill.style.width = Math.max(0, (e.hp / e.maxHp) * 100) + "%";
+        }
+
+        // مرگ باس
+        if (e.hp <= 0) {
+
+          // افکت صوتی مرگ
+          sfxBossDie();
+
+          // انفجار / دود بنفش - دقیقا از جای خود غول
+  const boom = document.createElement("div");
+  boom.classList.add("boss-death-flash");
+
+  // مرکز غول رو حساب کن
+  const centerX = e.x + e.w / 2;
+  const centerY = e.y + e.h / 2;
+
+  boom.style.left = centerX + "px";
+  boom.style.top  = centerY + "px";
+
+  document.body.appendChild(boom);
+  setTimeout(() => boom.remove(), 900);
+
+          // لرزش صفحه
+          document.body.classList.add("screen-shake");
+          setTimeout(() => document.body.classList.remove("screen-shake"), 500);
+
+          // 🟢 مخفی کردن نوار جون باس
+          if (bossHpBar) bossHpBar.classList.add("hidden");
+
+          // موج ضربه روی کل صفحه
+          hitFlash = 1;
+          shakeTime = 45;
+
+          // حذف باس و پایان باس‌فایت
+          enemies.splice(ei, 1);
+          bossAlive   = false;
+          inBossFight = false;
+
+          // امتیاز و سکه
+          score += 80;
+          coins += 40;
+          scoreEl.textContent  = score;
+          coinsEl.textContent  = coins;
+          saveState();
+        }
+
+      // 🧿 مینی‌باس
+      } else if (e.isMiniBoss) {
+        e.hp -= b.damage;
+        if (e.hp <= 0) {
+          enemies.splice(ei, 1);
+          score += 30;
+          coins += 15;
+          scoreEl.textContent = score;
+          coinsEl.textContent = coins;
+        }
+
+      // 🧱 دشمن معمولی
+      } else {
+        enemies.splice(ei, 1);
+        score += 7;
+        coins += 3;
+        scoreEl.textContent = score;
+        coinsEl.textContent = coins;
       }
-
-      bullets.forEach((b,bi)=>{
-        enemies.forEach((e,ei)=>{
-          if(rectCircleCollide(b.x,b.y,b.r, e.x,e.y,e.w,e.h)){
-            // گلوله مصرف شود
-            bullets.splice(bi,1);
-
-            const cx = e.x + e.w/2;
-            const cy = e.y + e.h/2;
-            createExplosion(cx, cy, e.colorStart || "#f97316");
-            sfxHit();
-
-            if(e.isBoss){
-              // باس بزرگ
-              e.hp -= b.damage;
-              if(e.hp <= 0){
-                enemies.splice(ei,1);
-                bossAlive = false;
-                score += 80;
-                coins += 40;
-                scoreEl.textContent = score;
-                coinsEl.textContent = coins;
-                saveState();
-              }
-
-            } else if(e.isMiniBoss){
-              // مینی‌باس
-              e.hp -= b.damage;
-              if(e.hp <= 0){
-                enemies.splice(ei,1);
-                score += 30;   // پاداش بیشتر از دشمن ساده
-                coins += 15;
-                scoreEl.textContent = score;
-                coinsEl.textContent = coins;
-              }
-
-            } else {
-              // دشمن معمولی
-              enemies.splice(ei,1);
-              score += 7;
-              coins += 2;
-              scoreEl.textContent = score;
-              coinsEl.textContent = coins;
-            }
-          }
-        });
-      });
+    }
+  });
+});
 
       // پاورآپ‌ها: به انبار اضافه شوند (انتخابی)
       powerUps.forEach((p,pi)=>{
@@ -1726,25 +2143,66 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
   }
 });
 
-      enemies.forEach((e,ei)=>{
+      enemies.forEach((e, ei) => {
         const collideWithTank =
-          e.x < tank.x+tank.w &&
-          e.x+e.w > tank.x &&
-          e.y < tank.y+tank.h &&
-          e.y+e.h > tank.y;
+          e.x < tank.x + tank.w &&
+          e.x + e.w > tank.x &&
+          e.y < tank.y + tank.h &&
+          e.y + e.h > tank.y;
 
-        const outBottom = e.y+e.h >= canvas.height-5;
+        const outBottom = e.y + e.h >= canvas.height - 5;
 
-        if (collideWithTank || outBottom) {
-  enemies.splice(ei, 1);
+        // ۱) برخورد مستقیم با تانک
+        if (collideWithTank) {
 
-  if (activePowerUps.shield) {
-    // سپر فعاله ⇒ فقط دشمن نابود می‌شه، جان کم نمی‌شه
-    const cx = e.x + e.w / 2;
-    const cy = e.y + e.h / 2;
-    createExplosion(cx, cy, "#38bdf8"); // انفجار آبی برای برخورد با سپر
-    // عمداً سپر رو خاموش نمی‌کنیم؛ تا پایان زمانش روشن می‌مونه
-  } else {
+          // اگر سپر فعاله ⇒ فقط محافظت، نه نابود کردن دشمن
+          if (activePowerUps.shield) {
+            const cx = e.x + e.w / 2;
+            const cy = e.y + e.h / 2;
+
+            // افکت برخورد با سپر
+            createExplosion(cx, cy, "#38bdf8");
+
+            // کمی دشمن را به بالا برگردون، انگار از سپر برگشته عقب
+            e.y -= 18;
+
+            // ❗ نه جان کم میشه، نه غول/دشمن پاک میشه
+            return;
+          }
+
+          // بدون سپر ⇒ برخورد باعث از دست دادن جان می‌شود
+          enemies.splice(ei, 1);
+
+          lives--;
+          livesEl.textContent = lives;
+          hitFlash = 1;
+          shakeTime = e.isBoss ? 12 : 10;
+          flashLifeDanger();
+          sfxHit();
+          if (navigator.vibrate) navigator.vibrate(e.isBoss ? 100 : 80);
+
+          if (lives <= 0) {
+            endGame();
+            return;
+          } else if (e.isBoss) {
+    bossAlive = false;
+    bossSpawned = false;
+    inBossFight = false;   // 👈 این خط جدیده
+}
+
+        // ۲) رسیدن دشمن به کف صفحه (خط پایین)
+        } else if (outBottom) {
+
+    // اگر سپر روشنه: دشمن هیــچ اثری نداره
+    if (activePowerUps.shield) {
+      // فقط از صفحه حذفش کن، بدون کم شدن جون
+      enemies.splice(ei, 1);
+      return;
+    }
+
+    // بدون سپر → مثل قبل، برخورد با خط پایین باعث کم شدن جان میشه
+    enemies.splice(ei, 1);
+
     lives--;
     livesEl.textContent = lives;
     hitFlash = 1;
@@ -1752,25 +2210,33 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
     flashLifeDanger();
     sfxHit();
     if (navigator.vibrate) navigator.vibrate(e.isBoss ? 100 : 80);
+
     if (lives <= 0) {
       endGame();
       return;
     } else if (e.isBoss) {
-      bossAlive = false;
-      bossSpawned = false;
-    }
-  }
+    bossAlive = false;
+    bossSpawned = false;
+    inBossFight = false;   // 👈 این خط جدیده
 }
-      });
+  }
+});
 
       const levelCleared = score >= lvl.goal && bossSpawned && !bossAlive;
-      if(levelCleared){
-        lives = Math.min(MAX_LIVES, lives + 2);
-        livesEl.textContent = lives;
-        gameRunning=false;
-        saveState();
-        levelOverlay.classList.remove("hidden");
-      }
+
+// 👇 وقتی باس مرد، فقط یک بار تایمر ۲.۳ ثانیه‌ای بزار
+if (levelCleared && !levelClearTimer) {
+  levelClearTimer = setTimeout(() => {
+    lives = Math.min(MAX_LIVES, lives + 2);
+    livesEl.textContent = lives;
+
+    gameRunning = false;           // حالا بازی رو متوقف کن
+    saveState();
+    levelOverlay.classList.remove("hidden"); // پیام مرحله بعد
+
+    levelClearTimer = null;        // ریست برای مرحله‌های بعد
+  }, 2300); // ≈ ۲.۳ ثانیه
+}
     }
 
     function gameLoop(){
@@ -1819,7 +2285,8 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
       bullets=[]; enemies=[]; powerUps=[]; particles=[];
       score=0; lives=3;
       bossSpawned=false; bossAlive=false;
-      miniBossSpawned=false;
+  miniBossSpawned=false;
+  inBossFight = false;   // ⭐ هر بار بازی از نو، باس‌فایت خاموش شود
       hitFlash=0; shakeTime=0; bgOffset=0;
       rocketArmed=false;
 
@@ -1841,31 +2308,56 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
       tank.y = canvas.height - tank.h - 18;
     }
 
-    function startGame(fromLevelIndex=0){
-      if(frameId) cancelAnimationFrame(frameId);
+    function startGame(fromLevelIndex = 0) {
+  if (frameId) cancelAnimationFrame(frameId);
 
-      resetGameState(fromLevelIndex);
-      startOverlay.classList.add("hidden");
-      levelOverlay.classList.add("hidden");
-      gameOverOverlay.classList.add("hidden");
-      gameRunning=true;
-      lastEnemyTime=performance.now();
-      lastPowerUpTime=performance.now();
-      gameLoop();
-    }
+  // ⛔ در شروع هر بازی، نوار جون باس رو کامل مخفی کن
+  const bossHpBar = document.getElementById("bossHpBar");
+  if (bossHpBar) bossHpBar.classList.add("hidden");
 
-    function endGame(){
-      gameRunning=false;
-      if(frameId) cancelAnimationFrame(frameId);
+  resetGameState(fromLevelIndex);
+  startOverlay.classList.add("hidden");
+  levelOverlay.classList.add("hidden");
+  gameOverOverlay.classList.add("hidden");
 
-      finalScoreEl.textContent=score;
-      const saved=loadState();
-      const best=Math.max(score, saved?.bestScore || 0);
-      bestScoreEl.textContent=best;
-      saveState();
-      sfxGameOver();
-      gameOverOverlay.classList.remove("hidden");
-    }
+  gameRunning = true;
+  lastEnemyTime = performance.now();
+  lastPowerUpTime = performance.now();
+  gameLoop();
+}
+
+function endGame() {
+  // ۱) نوار جون باس را کامل پنهان کن
+  const bossHpBar  = document.getElementById("bossHpBar");
+  const bossHpFill = document.getElementById("bossHpFill");
+  const bossHpText = document.getElementById("bossHpText");
+
+  if (bossHpBar) {
+    bossHpBar.classList.add("hidden");
+    
+  }
+  if (bossHpFill) bossHpFill.style.width = "100%";
+  if (bossHpText) bossHpText.textContent = "";
+
+  // ۲) وضعیت باس را خاموش کن
+  bossAlive   = false;
+  inBossFight = false;
+
+  // ۳) توقف بازی
+  gameRunning = false;
+  if (frameId) cancelAnimationFrame(frameId);
+
+  // ۴) امتیاز نهایی و بهترین امتیاز
+  finalScoreEl.textContent = score;
+  const saved = loadState();
+  const best = Math.max(score, (saved && saved.bestScore) || 0);
+  bestScoreEl.textContent = best;
+  saveState();
+
+  // ۵) صدای گیم‌اور و نمایش صفحه
+  sfxGameOver();
+  gameOverOverlay.classList.remove("hidden");
+}
 
     // رویدادهای اصلی
     startBtn.addEventListener("click", ()=> startGame(0));
@@ -1884,7 +2376,6 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
     });
 
 
-let isPaused = false;
 
 pauseBtn.addEventListener("click", ()=>{
   isPaused = !isPaused;
@@ -1936,6 +2427,24 @@ pauseBtn.addEventListener("click", ()=>{
     });
     shopCloseBtn.addEventListener("click", ()=> shopModal.classList.add("hidden"));
 
+
+// دکمه «مراحل بازی» در صفحه شروع
+if(levelsBtn){
+  levelsBtn.addEventListener("click", openLevelModal);
+}
+
+// کلیک روی کادر «مرحله: ...» در HUD
+if(levelBadge){
+  levelBadge.addEventListener("click", openLevelModal);
+}
+
+// بستن مودال مراحل
+if(levelCloseBtn){
+  levelCloseBtn.addEventListener("click", ()=>{
+    levelModal.classList.add("hidden");
+  });
+}
+    
     function refreshShopUI(){
   shopCoinsEl.textContent = coins;
 
