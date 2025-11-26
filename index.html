@@ -423,6 +423,8 @@
       border:1px solid rgba(148,163,184,0.45);
       box-shadow:0 18px 40px rgba(15,23,42,0.95);
       text-align:right;
+      max-height:82vh;
+  overflow-y:auto;
     }
 
   /* فقط برای مودال مراحل: ارتفاع محدود + اسکرول داخلی */
@@ -775,7 +777,159 @@
   z-index: 30;
   animation: bossExplosion 0.9s forwards;
 }
-    
+
+
+
+
+/* --- About Tavita Modal --- */
+
+.about-modal {
+  max-width: 520px;
+  padding: 24px 22px 18px;
+  background: radial-gradient(circle at top, #18243a 0%, #050814 60%, #040712 100%);
+  border-radius: 24px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(120, 180, 255, 0.25);
+}
+
+.about-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.about-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 30% 0, #ff7dd4, #803bff);
+  box-shadow: 0 0 18px rgba(168, 120, 255, 0.7);
+  font-size: 22px;
+}
+
+.about-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.about-tagline {
+  margin: 2px 0 0;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.about-body {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 2.1;
+  text-align: right;
+}
+
+.about-body p {
+  margin: 6px 0 8px;
+}
+
+.about-highlight {
+  margin: 10px 0 8px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(74, 144, 226, 0.08);
+  border: 1px solid rgba(74, 144, 226, 0.25);
+}
+
+.about-highlight strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.about-highlight ul {
+  margin: 0;
+  padding-right: 18px;
+  list-style: "•  ";
+}
+
+.about-highlight li {
+  margin: 2px 0;
+}
+
+.about-channel {
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.about-channel-box {
+  margin-top: 6px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(13, 194, 138, 0.1);
+  border: 1px solid rgba(13, 194, 138, 0.4);
+}
+
+.about-id {
+  font-weight: 700;
+  color: #0dc28a;
+  direction: ltr;
+}
+
+/* اطمینان از خوانایی روی موبایل */
+@media (max-width: 480px) {
+  .about-modal {
+    margin: 0 12px;
+    padding: 20px 18px 16px;
+  }
+
+  .about-title {
+    font-size: 16px;
+  }
+}
+  
+/* لوگوی واقعی طاویتا در مودال */
+.about-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.07);  /* یه بک‌گراند خیلی لطیف */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.35);
+}
+
+.about-icon img {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+
+.help-modal h3{
+  font-size:14px;
+  margin:10px 0 4px;
+}
+
+.help-list{
+  margin:0;
+  padding-right:18px;
+  font-size:12px;
+  line-height:2;
+}
+
+.help-list li{
+  margin-bottom:2px;
+}
+  
+  
   </style>
 </head>
 <body>
@@ -813,7 +967,9 @@
     <header class="header">
       <!-- راست: لوگو بعد عنوان -->
       <div class="header-right">
-        <div class="logo-badge">T</div>
+        <div class="logo-badge">
+  <img src="https://cdnfa.com/irangiah/a9be/uploads/tank/tankitalo.webp" style="width:100%;height:100%;object-fit:contain;border-radius:14px;">
+</div>
         <div class="title-block">
           <div class="title-row">
             <h1>تانکیتا</h1>
@@ -823,9 +979,10 @@
       </div>
 
       <!-- چپ: فقط درباره ما -->
-      <div class="header-left">
-        <button class="header-link" id="aboutBtn">درباره ما</button>
-      </div>
+    <div class="header-left">
+  <button class="header-link" id="helpBtn">راهنما</button>
+  <button class="header-link" id="aboutBtn">درباره ما</button>
+</div>
     </header>
 
     <div class="game-panel">
@@ -960,20 +1117,107 @@
   </div>
 
   <!-- مودال درباره طاویتا -->
-  <div class="modal hidden" id="aboutModal">
-    <div class="modal-box">
-      <h2>درباره طاویتا</h2>
+<div class="modal hidden" id="aboutModal">
+  <div class="modal-box about-modal">
+    
+    <div class="about-header">
+    <div class="about-icon">
+  <img src="https://cdnfa.com/irangiah/a9be/uploads/tank/tavitalo.webp" alt="Tavita Logo">
+</div>
+      <div>
+        <h2 class="about-title">درباره طاویتا</h2>
+        <p class="about-tagline">از ایده تا رشد ذهن و کسب‌درآمد</p>
+      </div>
+    </div>
+
+    <div class="about-body">
       <p>
-        طاویتا یک تیم کوچک اما عاشق «رشد ذهن و بازی‌سازی» است.
-        ما بازی‌هایی می‌سازیم که هم سرگرم کنند، هم ذهن را به چالش بکشند
-        و در مسیر ترک عادت‌های بد و حرکت به سمت خوبی‌ها همراهت باشند.
+        طاویتا یک مجموعهٔ خلاق در حوزه‌ی رشد ذهن، بازی‌سازی و آموزش مهارت‌های نوین است.  
+        ما بازی‌ها و ابزارهایی می‌سازیم که هم سرگرم‌کننده باشند، هم ذهن را تقویت کنند و
+        هم به ساختن عادت‌های خوب در زندگی کمک کنند.
       </p>
+
+      <p>
+        تمرکز ما روی طراحی تجربه‌هایی است که کاربر را از «تفریحِ صرف» به سمت 
+        «رشد فردی» نزدیک کند؛  
+        جایی که هر مرحله، یک قدم واقعی به سمت بهتر شدن باشد.
+      </p>
+
+      <div class="about-highlight">
+        <strong>در طاویتا چه کار می‌کنیم؟</strong>
+        <ul>
+          <li>طراحی بازی‌های ذهنی و عادت‌ساز مثل تانکیتا 🎮</li>
+          <li>آموزش تولید محتوا و استفاده از هوش مصنوعی برای کسب‌درآمد 💡</li>
+          <li>ساخت ابزارهای کاربردی برای رشد فردی و شغلی 📈</li>
+        </ul>
+      </div>
+
+      <div class="about-channel">
+        <span>برای اطلاع از پروژه‌ها و آموزش‌های جدید، ما را در کانال رسمی طاویتا دنبال کنید:</span>
+        <div class="about-channel-box">
+          <span>کانال طاویتا در ایتا</span>
+          <span class="about-id">@tavita</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="secondary" id="aboutCloseBtn">بستن</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- مودال راهنمای بازی -->
+  <div class="modal hidden" id="helpModal">
+    <div class="modal-box help-modal">
+      <h2>راهنمای بازی تانکیتا</h2>
+
+      <p>
+        تو «تانکیتا» با تانک اراده‌ات، عادت‌های بد رو نابود می‌کنی، غول‌های ذهن رو شکست می‌دی
+        و مرحله به مرحله قوی‌تر می‌شی. این راهنمای کوتاه بهت کمک می‌کنه راحت‌تر بازی کنی.
+      </p>
+
+      <h3>🎮 کنترل‌ها</h3>
+      <ul class="help-list">
+        <li>کشیدن انگشت زیر تانک → حرکت به چپ و راست</li>
+        <li>دکمه شلیک → تیر معمولی</li>
+        <li>دوبار پشت‌سرهم زدن روی شلیک → موشک 🚀</li>
+      </ul>
+
+      <h3>🧱 سنگ‌ها و مکعب‌ها</h3>
+      <ul class="help-list">
+        <li>غول‌ها سنگ‌ها و مکعب‌های «عادت‌های بد» رو به سمتت پرتاب می‌کنن.</li>
+        <li>قبل از رسیدن به تانک، با شلیک نابودشون کن.</li>
+      </ul>
+
+      <h3>💥 غول‌ها</h3>
+      <ul class="help-list">
+        <li>غول‌های کوچک و متوسط با چند ضربه از بین می‌رن.</li>
+        <li>غول اصلی مرحله (باس) نوار جان دارد و به چند موشک و شلیک پشت‌سرهم نیاز دارد.</li>
+      </ul>
+
+      <h3>🔋 قدرت‌های ویژه</h3>
+      <ul class="help-list">
+        <li>🛡 سپر: چند ثانیه از برخوردها محافظت می‌کند.</li>
+        <li>🚀 موشک: ضربه‌ی بسیار قوی به غول‌ها و سنگ‌ها.</li>
+        <li>❤️ جان اضافه: ادامه دادن بازی وقتی نزدیک باختی.</li>
+        <li>⏳ کندکننده: حرکت دشمن‌ها و سنگ‌ها را کند می‌کند.</li>
+      </ul>
+
+      <h3>💡 نکته‌ها</h3>
+      <ul class="help-list">
+        <li>با سکه‌ها می‌تونی از شاپ، قدرت‌های ویژه بخری.</li>
+        <li>هرچه مرحله بالاتر می‌ره، بازی سخت‌تر و هیجان‌انگیزتر می‌شه.</li>
+        <li>تمرکز، صبر و تکرار = کلید پیروزی در تانکیتاست! 🚀</li>
+      </ul>
+
       <div class="modal-actions">
-        <button class="secondary" id="aboutCloseBtn">بستن</button>
+        <button class="secondary" id="helpCloseBtn">متوجه شدم</button>
       </div>
     </div>
   </div>
-
+  
   <!-- مودال فروشگاه -->
   <div class="modal hidden" id="shopModal">
     <div class="modal-box">
@@ -1037,6 +1281,96 @@
       <div class="shop-desc">قیمت: ۵۵۰ 🪙</div>
     </div>
     <button class="shop-buy" id="buySlowBtn">خرید</button>
+  </div>
+
+
+<!-- اسکین‌های تانک -->
+  <hr class="shop-separator" />
+  <div class="shop-section-title">اسکین‌های تانک 🎨</div>
+
+  <!-- تانک دیفالت (رایگان / انتخابی) -->
+  <div class="shop-card">
+    <div class="shop-info">
+      <div class="shop-title">تانکیتا</div>
+      <div class="shop-desc">بازیگوش اما با ادب.</div>
+      <div class="shop-desc">قیمت: ۰ 🪙</div>
+    </div>
+    <img
+      src="https://cdnfa.com/irangiah/a9be/uploads/tank/tank-abi-nama.webp"
+      alt="تانکیتا"
+      style="width:64px;height:64px;object-fit:contain;border-radius:8px;margin-top:6px;"
+    />
+    <button class="shop-buy tank-skin-btn" data-skin-id="default">
+      انتخاب ✅
+    </button>
+  </div>
+
+  <!-- تانک جنگلی -->
+  <div class="shop-card">
+    <div class="shop-info">
+      <div class="shop-title">تانکیتا جنگلی 🌳</div>
+      <div class="shop-desc">منظم و قدرتمند.</div>
+      <div class="shop-desc">قیمت: ۲۵۰۰ 🪙</div>
+    </div>
+    <img
+      src="https://cdnfa.com/irangiah/a9be/uploads/tank/tank-jangal-nama.webp"
+      alt="تانکیتا جنگلی"
+      style="width:64px;height:64px;object-fit:contain;border-radius:8px;margin-top:6px;"
+    />
+    <button class="shop-buy tank-skin-btn" data-skin-id="jangal">
+      خرید ۲۵۰۰ 🪙
+    </button>
+  </div>
+
+  <!-- تانک کویر -->
+  <div class="shop-card">
+    <div class="shop-info">
+      <div class="shop-title">تانکیتا کویری 🏜</div>
+      <div class="shop-desc">صبور، مقاوم و چالاک.</div>
+      <div class="shop-desc">قیمت: ۲۵۰۰ 🪙</div>
+    </div>
+    <img
+      src="https://cdnfa.com/irangiah/a9be/uploads/tank/tank-kavir-nama.webp"
+      alt="تانکیتا کویری"
+      style="width:64px;height:64px;object-fit:contain;border-radius:8px;margin-top:6px;"
+    />
+    <button class="shop-buy tank-skin-btn" data-skin-id="kavir">
+      خرید ۲۵۰۰ 🪙
+    </button>
+  </div>
+
+  <!-- تانک پری -->
+  <div class="shop-card">
+    <div class="shop-info">
+      <div class="shop-title">تانکیتا پری 🧚‍♀️</div>
+      <div class="shop-desc">مهربان، مودب، قدرتمند.</div>
+      <div class="shop-desc">قیمت: ۲۵۰۰ 🪙</div>
+    </div>
+    <img
+      src="https://cdnfa.com/irangiah/a9be/uploads/tank/tank-pari-nama.webp"
+      alt="تانکیتا پری"
+      style="width:64px;height:64px;object-fit:contain;border-radius:8px;margin-top:6px;"
+    />
+    <button class="shop-buy tank-skin-btn" data-skin-id="pari">
+      خرید ۲۵۰۰ 🪙
+    </button>
+  </div>
+
+  <!-- تانک پاپیونی -->
+  <div class="shop-card">
+    <div class="shop-info">
+      <div class="shop-title">تانکیتا پاپیونی 🎀</div>
+      <div class="shop-desc">خوش تیپ، با وقار و سختکوش.</div>
+      <div class="shop-desc">قیمت: ۲۵۰۰ 🪙</div>
+    </div>
+    <img
+      src="https://cdnfa.com/irangiah/a9be/uploads/tank/tank-papi-nama.webp"
+      alt="تانکیتا پاپیونی"
+      style="width:64px;height:64px;object-fit:contain;border-radius:8px;margin-top:6px;"
+    />
+    <button class="shop-buy tank-skin-btn" data-skin-id="papi">
+      خرید ۲۵۰۰ 🪙
+    </button>
   </div>
 
 </div>
@@ -1169,11 +1503,16 @@ const levelBadge    = document.querySelector(".badge-level");
     const fireBtn = document.getElementById("fireBtn");
 
     const aboutBtn = document.getElementById("aboutBtn");
-    const shopBtn = document.getElementById("shopBtn");
-    const aboutModal = document.getElementById("aboutModal");
-    const shopModal = document.getElementById("shopModal");
-    const aboutCloseBtn = document.getElementById("aboutCloseBtn");
-    const shopCloseBtn = document.getElementById("shopCloseBtn");
+const helpBtn  = document.getElementById("helpBtn");
+const shopBtn  = document.getElementById("shopBtn");
+
+const aboutModal = document.getElementById("aboutModal");
+const helpModal  = document.getElementById("helpModal");
+const shopModal  = document.getElementById("shopModal");
+
+const aboutCloseBtn = document.getElementById("aboutCloseBtn");
+const helpCloseBtn  = document.getElementById("helpCloseBtn");
+const shopCloseBtn  = document.getElementById("shopCloseBtn");
 
     const buyTripleBtn = document.getElementById("buyTripleBtn");
 const buyShieldBtn = document.getElementById("buyShieldBtn");
@@ -1181,7 +1520,8 @@ const buyRocketBtn = document.getElementById("buyRocketBtn");
 const buyLifeBtn   = document.getElementById("buyLifeBtn");
 const buySlowBtn   = document.getElementById("buySlowBtn");
 const shopCoinsEl  = document.getElementById("shopCoins");
-
+const tankSkinButtons = document.querySelectorAll(".tank-skin-btn");
+    
     const soundToggleBtn = document.getElementById("soundToggle");
 const pauseBtn = document.getElementById("pauseBtn");
     
@@ -1196,6 +1536,22 @@ const rocketCountEl = document.getElementById("rocketCount");
 const tripleCountEl = document.getElementById("tripleCount");
 const slowCountEl   = document.getElementById("slowCount");
 
+// دابل‌تپ روی دکمه شلیک -> استفاده از موشک
+let lastTap = 0;
+function handleDoubleTap(){
+  const now = Date.now();
+
+  // اگر دو تا ضربه پشت سر هم (کمتر از ۲۵۰ میلی‌ثانیه)
+  if(now - lastTap < 250){
+    // دقیقا مثل اینه که روی دکمه موشک بزنی
+    if (rocketUseBtn) {
+      rocketUseBtn.click();
+    }
+  }
+
+  lastTap = now;
+}
+    
     const motivationTextEl = document.getElementById("motivationText");
     const MOTIVATIONS = [
       "یاد خدا به قلب آرامش می‌بخشه.",
@@ -1270,8 +1626,60 @@ const sfxBossDie = () => {
     });
 
     // ======== تصاویر تانک و غول ========
-    const tankImg = new Image();
-    tankImg.src = "https://cdnfa.com/irangiah/a9be/uploads/tank/tank.webp";
+    // ======== اسکین‌های تانک + تصویر فعلی ========
+const TANK_SKINS = {
+  default: {
+    id: "default",
+    name: "تانک آبی",
+    price: 0,
+    gameSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank.webp",
+    thumbSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-abi-nama.webp"
+  },
+  jangal: {
+    id: "jangal",
+    name: "تانک جنگلی",
+    price: 2500,
+    gameSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-jangal-game.webp",
+    thumbSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-jangal-nama.webp"
+  },
+  kavir: {
+    id: "kavir",
+    name: "تانک کویری",
+    price: 2500,
+    gameSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-kavir-game.webp",
+    thumbSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-kavir-nama.webp"
+  },
+  pari: {
+    id: "pari",
+    name: "تانک پری",
+    price: 2500,
+    gameSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-pari-game.webp",
+    thumbSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-pari-nama.webp"
+  },
+  papi: {
+    id: "papi",
+    name: "تانک پاپیونی",
+    price: 2500,
+    gameSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-papi-game.webp",
+    thumbSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-papi-nama.webp"
+  }
+};
+
+let selectedTankSkinId = "default";
+let unlockedTankSkins = ["default"];
+
+const tankImg = new Image();
+
+function applyTankSkin(skinId){
+  const skin = TANK_SKINS[skinId] || TANK_SKINS.default;
+  selectedTankSkinId = skin.id;
+  tankImg.src = skin.gameSrc;
+}
+
+// اسکین پیش‌فرض
+applyTankSkin("default");
+
+
 
     const bossImages = [
   "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-1.webp",
@@ -1473,11 +1881,13 @@ function openLevelModal(){
       const prev = loadState() || {};
       const bestScore = Math.max(score, prev.bestScore || 0);
       const data = {
-        bestScore,
-        lastLevel: LEVELS[currentLevelIndex].id,
-        coins,
-        inventory
-      };
+    bestScore,
+    lastLevel: LEVELS[currentLevelIndex].id,
+    coins,
+    inventory,
+    selectedTankSkinId,
+    unlockedTankSkins
+  };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     }
     function applyLoadedState(){
@@ -1489,6 +1899,15 @@ function openLevelModal(){
       continueBtn.style.display = "inline-block";
       coins = saved.coins || 0;
       inventory = saved.inventory || {shield:0,triple:0,rocket:0};
+   
+      selectedTankSkinId = saved.selectedTankSkinId || "default";
+  unlockedTankSkins = saved.unlockedTankSkins || ["default"];
+  applyTankSkin(selectedTankSkinId);
+
+  // اگر دکمه‌های شاپ لود شده باشند، UI رو آپدیت کن
+  if (typeof refreshShopUI === "function") {
+    refreshShopUI();
+  }
       coinsEl.textContent = coins;
       updateInventoryUI();
     }
@@ -1930,7 +2349,7 @@ const h = canvas.height * 0.22;
         b.isRocket = true;
         b.r = 11;
         b.speed = 7;
-        b.damage = 12;
+        b.damage = 30;
         bullets.push(b);
         inventory.rocket--;
         rocketArmed = false;
@@ -1950,6 +2369,7 @@ const h = canvas.height * 0.22;
       sfxShoot();
     }
 
+    
     function flashLifeDanger(){
   if(!lifeDisplay) return;
   lifeDisplay.classList.add("danger");
@@ -2415,18 +2835,30 @@ pauseBtn.addEventListener("click", ()=>{
     bindHold(leftBtn,(v)=> moveLeft=v);
     bindHold(rightBtn,(v)=> moveRight=v);
 
-    fireBtn.addEventListener("click",(e)=>{e.preventDefault();fireBullet();});
-    fireBtn.addEventListener("touchstart",(e)=>{e.preventDefault();fireBullet();},{passive:false});
+    // کلیک / تاچ روی «شلیک»
+fireBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    handleDoubleTap();  // چک دابل‌کلیک
+    fireBullet();       // شلیک معمولی
+});
+
+fireBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    handleDoubleTap();  // روی موبایل هم دابل‌تاپ حساب میشه
+    fireBullet();       // شلیک معمولی
+}, { passive: false });
 
     aboutBtn.addEventListener("click", ()=> aboutModal.classList.remove("hidden"));
-    aboutCloseBtn.addEventListener("click", ()=> aboutModal.classList.add("hidden"));
+aboutCloseBtn.addEventListener("click", ()=> aboutModal.classList.add("hidden"));
 
-    shopBtn.addEventListener("click", ()=>{
-      shopModal.classList.remove("hidden");
-      refreshShopUI();
-    });
-    shopCloseBtn.addEventListener("click", ()=> shopModal.classList.add("hidden"));
+helpBtn.addEventListener("click", ()=> helpModal.classList.remove("hidden"));
+helpCloseBtn.addEventListener("click", ()=> helpModal.classList.add("hidden"));
 
+shopBtn.addEventListener("click", ()=>{
+  shopModal.classList.remove("hidden");
+  refreshShopUI();
+});
+shopCloseBtn.addEventListener("click", ()=> shopModal.classList.add("hidden"));
 
 // دکمه «مراحل بازی» در صفحه شروع
 if(levelsBtn){
@@ -2464,8 +2896,26 @@ if(levelCloseBtn){
     coins < SHOP_PRICES.slow ||
     slowBuys >= MAX_SLOW_BUYS ||
     inventory.slow >= MAX_SLOW_ITEMS;
-}
 
+// اسکین‌های تانک
+  tankSkinButtons.forEach(btn => {
+    const id = btn.dataset.skinId;
+    const skin = TANK_SKINS[id];
+    if (!skin) return;
+
+    if (id === selectedTankSkinId) {
+      btn.textContent = "انتخاب شده ✅";
+      btn.disabled = true;
+    } else if (unlockedTankSkins.includes(id)) {
+      btn.textContent = "انتخاب 🎯";
+      btn.disabled = false;
+    } else {
+      btn.textContent = `خرید ${skin.price} 🪙`;
+      btn.disabled = coins < skin.price;
+    }
+  });
+}
+    
     // خرید آیتم‌ها -> فقط به انبار اضافه می‌شوند
     // خرید شلیک سه‌تایی
 buyTripleBtn.addEventListener("click", ()=>{
@@ -2537,6 +2987,34 @@ buySlowBtn.addEventListener("click", ()=>{
   refreshShopUI();
 });
 
+// خرید / انتخاب اسکین‌های تانک
+tankSkinButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const id = btn.dataset.skinId;
+    const skin = TANK_SKINS[id];
+    if (!skin) return;
+
+    // اگر قبلاً باز شده ⇒ فقط انتخاب
+    if (unlockedTankSkins.includes(id)) {
+      applyTankSkin(id);
+      saveState();
+      refreshShopUI();
+      return;
+    }
+
+    // خرید اسکین
+    if (coins < skin.price) return;
+    coins -= skin.price;
+    coinsEl.textContent = coins;
+
+    unlockedTankSkins.push(id);
+    applyTankSkin(id);
+    saveState();
+    refreshShopUI();
+  });
+});
+
+    
     // استفاده انتخابی از آیتم‌ها
     shieldUseBtn.addEventListener("click", ()=>{
       if(!gameRunning) return;
@@ -2584,6 +3062,38 @@ slowUseBtn.addEventListener("click", ()=>{
     updateMotivation();
     setInterval(updateMotivation, 10000);
 
+// --- حرکت با انگشت (Touch Move) ---
+let isTouching = false;
+
+canvas.addEventListener("touchstart", (e) => {
+  if (!gameRunning) return;
+  isTouching = true;
+  handleTouchMove(e);
+});
+
+canvas.addEventListener("touchmove", (e) => {
+  if (!isTouching || !gameRunning) return;
+  e.preventDefault();
+  handleTouchMove(e);
+}, { passive: false });
+
+canvas.addEventListener("touchend", () => {
+  isTouching = false;
+});
+
+function handleTouchMove(e) {
+  const rect = canvas.getBoundingClientRect();
+  const touchX = e.touches[0].clientX - rect.left;
+
+  // مرکز تانک را به موقعیت انگشت ببر
+  tank.x = touchX - tank.w / 2;
+
+  // جلوگیری از خروج تانک از لبه‌ها
+  if (tank.x < 4) tank.x = 4;
+  if (tank.x + tank.w > canvas.width - 4) {
+    tank.x = canvas.width - tank.w - 4;
+  }
+}
     
   </script>
 
