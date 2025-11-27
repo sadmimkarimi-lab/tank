@@ -2602,7 +2602,7 @@ tank.x = Math.max(4, Math.min(canvas.width - tank.w - 4, tank.x));
 
       enemies.forEach(e=>{
         if(e.isBoss && inBossFight){
-          const targetY = canvas.height * 0.16; // جای ایستادن غول
+          const targetY = canvas.height * 0.10; // جای ایستادن غول
 
           if(e.y < targetY){
             e.y += e.speed * enemySpeedFactor;
