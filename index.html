@@ -36,6 +36,9 @@ body{
 .game-wrapper{
   width:100%;
   max-width:420px;
+
+  transform: scale(0.9);
+  transform-origin: top center;
 }
 
 /* هدر کارت‌شده */
@@ -1123,48 +1126,7 @@ canvas{
 
 
 
-/* --- فیکس نهایی برای همه دیوایس‌ها --- */
 
-/* روی صفحه‌های کوتاه‌تر از حدود 720px، کمی بازی را کوچیک کن */
-@media (max-height: 720px) {
-  .game-wrapper {
-    transform: scale(0.94);
-    transform-origin: top center;
-  }
-}
-
-/* روی صفحه‌های خیلی کوتاه‌تر (قد موبایل‌های ریز) کمی بیشتر کوچیک می‌کنیم */
-@media (max-height: 640px) {
-  .game-wrapper {
-    transform: scale(0.9);
-    transform-origin: top center;
-  }
-}
-
-/* جلوگیری از اسکرول عمودی ناخواسته */
-html, body {
-  height: 100%;
-  overflow: hidden;
-}
-
-
-
-/* --- فیکس مخصوص نمایش داخل اپ ایتا --- */
-
-/* ایتا معمولا ارتفاع واقعی کمتر داره، پس داخل ایتا بازی رو کمی کوچک‌تر می‌کنیم */
-@media (max-height: 760px) {
-  .game-wrapper{
-    transform: scale(0.92);
-    transform-origin: top center;
-  }
-}
-
-@media (max-height: 680px) {
-  .game-wrapper{
-    transform: scale(0.88);
-    transform-origin: top center;
-  }
-}
 
 
   
