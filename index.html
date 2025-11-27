@@ -1633,26 +1633,47 @@ canvas{
 
 
 // ======== Intro Video ========
-const introScreen = document.getElementById("introScreen");
-const gameWrapper = document.getElementById("gameWrapper");
+const introScreen  = document.getElementById("introScreen");
+const gameWrapper  = document.getElementById("gameWrapper");
 const introVideo   = document.getElementById("introVideo");
 const introLoader  = document.getElementById("introLoader");
-    const introMuteBtn = document.getElementById("introMuteBtn");
+const introMuteBtn = document.getElementById("introMuteBtn");
 const introSkipBtn = document.getElementById("introSkipBtn");
 
-introVideo.addEventListener("loadeddata", () => {
+let introReady = false;   // یعنی صفحه از نظر ما آماده است یا نه
+
+function hideIntroLoader() {
+  if (!introLoader || introLoader.style.display === "none") return;
   introLoader.style.transition = "opacity 0.3s ease";
   introLoader.style.opacity = "0";
   setTimeout(() => {
     introLoader.style.display = "none";
   }, 300);
-});
+}
 
-    
-function finishIntro(){
+// هر وقت صفحه آماده شد، فقط یک بار این رو صدا می‌زنیم
+function markIntroReady() {
+  if (introReady) return;
+  introReady = true;
+  hideIntroLoader();
+}
+
+// ۱) وقتی ویدئو قابل پخش شد
+introVideo.addEventListener("canplay", markIntroReady);
+// (می‌تونی به‌جاش از "loadeddata" استفاده کنی اگر خواستی)
+
+// ۲) اگر به هر دلیل ویدئو خطا داد
+introVideo.addEventListener("error", markIntroReady);
+
+// ۳) بک‌آپ: اگر بعد از 2 ثانیه هنوز آماده نشد، باز هم لودینگ را ببند
+setTimeout(markIntroReady, 2000);  // اگر خواستی کن‌تر بشه می‌تونی 1500 یا 2500 بذاری
+
+function finishIntro() {
+  // مطمئن شو لودینگ حتماً خاموش شده
+  markIntroReady();
+
   const startSfx = document.getElementById("startSfx");
 
-  // فید اوت قشنگ
   introScreen.style.transition = "opacity 0.7s ease";
   introScreen.style.opacity = "0";
 
@@ -1660,16 +1681,13 @@ function finishIntro(){
     introScreen.style.display = "none";
     gameWrapper.classList.remove("hidden-game");
 
-
-
-// بعد از ظاهر شدن بازی، اسکرول به سمت دکمه‌ها
-    setTimeout(()=>{
-      try{
-        fireBtn.scrollIntoView({ behavior:"smooth", block:"end" });
-      }catch(e){}
+    // بعد از ظاهر شدن بازی، اسکرول به سمت دکمه آتش
+    setTimeout(() => {
+      try {
+        fireBtn.scrollIntoView({ behavior: "smooth", block: "end" });
+      } catch (e) {}
     }, 100);
-    
-    // پخش صدای شروع (اگر مرورگر اجازه بده)
+
     if (startSfx) {
       startSfx.currentTime = 0;
       startSfx.play().catch(()=>{});
@@ -1681,10 +1699,9 @@ function finishIntro(){
 }
 
 introVideo.addEventListener("ended", finishIntro);
-
 introSkipBtn.addEventListener("click", finishIntro);
 
-introMuteBtn.addEventListener("click", ()=>{
+introMuteBtn.addEventListener("click", () => {
   introVideo.muted = !introVideo.muted;
   introMuteBtn.textContent = introVideo.muted ? "🔇 صدا" : "🔊 صدا";
 });
