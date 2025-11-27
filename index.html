@@ -3335,7 +3335,7 @@ function startAutoFire() {
     fireBullet();
     fireInterval = setInterval(() => {
         fireBullet();
-    }, 250);
+    }, 250); // هر ۲۵۰ میلی‌ثانیه یک تیر
 }
 
 function stopAutoFire() {
@@ -3343,18 +3343,22 @@ function stopAutoFire() {
     fireInterval = null;
 }
 
-    
+// fireBtn بالاتر تو کد تعریف شده، اینجا فقط fireZone رو می‌گیریم
 const fireZone = document.querySelector(".fire-zone");
 
+// روی خود دکمه آتش
 fireBtn.addEventListener("touchstart", startAutoFire);
 fireBtn.addEventListener("touchend", stopAutoFire);
 fireBtn.addEventListener("mousedown", startAutoFire);
 fireBtn.addEventListener("mouseup", stopAutoFire);
 
-fireZone.addEventListener("touchstart", startAutoFire);
-fireZone.addEventListener("touchend", stopAutoFire);
-fireZone.addEventListener("mousedown", startAutoFire);
-fireZone.addEventListener("mouseup", stopAutoFire);
+// اگر fire-zone وجود داشته باشد، روی آن هم لیسنر بگذار
+if (fireZone) {
+    fireZone.addEventListener("touchstart", startAutoFire);
+    fireZone.addEventListener("touchend", stopAutoFire);
+    fireZone.addEventListener("mousedown", startAutoFire);
+    fireZone.addEventListener("mouseup", stopAutoFire);
+}
     
   
   
