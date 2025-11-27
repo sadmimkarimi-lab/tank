@@ -34,11 +34,10 @@ body{
 }
 
 .game-wrapper{
-  width:100%;
-  max-width:420px;
-
-  transform: scale(0.88);
-  transform-origin: top center;
+    width:100%;
+    max-width:420px;
+    transform: scale(0.96);   /* کوچیک‌تر */
+    transform-origin: top center;
 }
 
 /* هدر کارت‌شده */
@@ -1126,10 +1125,7 @@ canvas{
 
 
 
-.game-wrapper {
-    transform: scale(1.1); /* می‌تونی 1.08 یا 1.12 هم بزاری */
-    transform-origin: top center;
-}
+
 
 
   
@@ -2986,6 +2982,15 @@ function endGame() {
   // ۵) صدای گیم‌اور و نمایش صفحه
   sfxGameOver();
   gameOverOverlay.classList.remove("hidden");
+
+// اسکرول خودکار به پایین بازی
+setTimeout(() => {
+    document.querySelector('.game-wrapper').scrollIntoView({
+        behavior: 'smooth',
+        block: 'end'
+    });
+}, 300);
+
 }
 
     // رویدادهای اصلی
