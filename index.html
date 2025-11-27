@@ -1663,7 +1663,12 @@ function finishIntro(){
 
 
 
-
+// بعد از ظاهر شدن بازی، اسکرول به سمت دکمه‌ها
+    setTimeout(()=>{
+      try{
+        fireBtn.scrollIntoView({ behavior:"smooth", block:"end" });
+      }catch(e){}
+    }, 100);
     
     // پخش صدای شروع (اگر مرورگر اجازه بده)
     if (startSfx) {
@@ -2967,21 +2972,6 @@ if (levelCleared && !levelClearTimer) {
   lastPowerUpTime = performance.now();
   gameLoop();
 
-  // اسکرول خودکار به سمت دکمه آتش (پایین صفحه)
-  setTimeout(() => {
-    const fireBtnEl = document.getElementById("fireBtn");
-    if (fireBtnEl && fireBtnEl.scrollIntoView) {
-      fireBtnEl.scrollIntoView({
-        behavior: "smooth",
-        block: "end"
-      });
-    } else {
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth"
-      });
-    }
-  }, 400);
 }
 
 function endGame() {
