@@ -1148,6 +1148,25 @@ html, body {
 }
 
 
+
+/* --- فیکس مخصوص نمایش داخل اپ ایتا --- */
+
+/* ایتا معمولا ارتفاع واقعی کمتر داره، پس داخل ایتا بازی رو کمی کوچک‌تر می‌کنیم */
+@media (max-height: 760px) {
+  .game-wrapper{
+    transform: scale(0.92);
+    transform-origin: top center;
+  }
+}
+
+@media (max-height: 680px) {
+  .game-wrapper{
+    transform: scale(0.88);
+    transform-origin: top center;
+  }
+}
+
+
   
 
   
