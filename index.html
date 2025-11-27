@@ -1122,11 +1122,23 @@ canvas{
   gap:10px;
 }
 
+/* 🔥 بزرگ‌تر کردن دکمه آتش */
+#fireBtn {
+    transform: scale(1.5);
+    transform-origin: center;
+}
 
 
 
-
-
+.fire-zone {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 45%;
+    height: 45%;
+    z-index: 9;
+}
+  
 
   
 
@@ -1324,6 +1336,8 @@ canvas{
 
         <button class="ctrl-btn big-fire" id="fireBtn">🔥</button>
       </div>
+
+      <div class="fire-zone"></div>
 
       
   <!-- مودال درباره طاویتا -->
@@ -3309,6 +3323,39 @@ function handleTouchMove(e) {
   }
 }
     
+
+/* --- شلیک خودکار و منطقه آتش --- */
+
+let fireInterval = null;
+
+function startAutoFire() {
+    if (fireInterval) return;
+    fireBullet();
+    fireInterval = setInterval(() => {
+        fireBullet();
+    }, 250);
+}
+
+function stopAutoFire() {
+    clearInterval(fireInterval);
+    fireInterval = null;
+}
+
+const fireBtn = document.getElementById("fireBtn");
+const fireZone = document.querySelector(".fire-zone");
+
+fireBtn.addEventListener("touchstart", startAutoFire);
+fireBtn.addEventListener("touchend", stopAutoFire);
+fireBtn.addEventListener("mousedown", startAutoFire);
+fireBtn.addEventListener("mouseup", stopAutoFire);
+
+fireZone.addEventListener("touchstart", startAutoFire);
+fireZone.addEventListener("touchend", stopAutoFire);
+fireZone.addEventListener("mousedown", startAutoFire);
+fireZone.addEventListener("mouseup", stopAutoFire);
+    
+  
+  
   </script>
 
 </body>
