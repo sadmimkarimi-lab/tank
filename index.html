@@ -2997,15 +2997,16 @@ function endGame() {
   sfxGameOver();
   gameOverOverlay.classList.remove("hidden");
 
-// اسکرول خودکار به پایین بازی
+// اسکرول خودکار به سمت دکمه آتش (پایین صفحه)
 setTimeout(() => {
-    document.querySelector('.game-wrapper').scrollIntoView({
-        behavior: 'smooth',
-        block: 'end'
+  const fireBtnEl = document.getElementById("fireBtn");
+  if (fireBtnEl) {
+    fireBtnEl.scrollIntoView({
+      behavior: "smooth",
+      block: "end"
     });
+  }
 }, 300);
-
-}
 
     // رویدادهای اصلی
     startBtn.addEventListener("click", ()=> startGame(0));
@@ -3341,7 +3342,7 @@ function stopAutoFire() {
     fireInterval = null;
 }
 
-const fireBtn = document.getElementById("fireBtn");
+    
 const fireZone = document.querySelector(".fire-zone");
 
 fireBtn.addEventListener("touchstart", startAutoFire);
