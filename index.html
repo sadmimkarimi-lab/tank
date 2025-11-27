@@ -2966,6 +2966,22 @@ if (levelCleared && !levelClearTimer) {
   lastEnemyTime = performance.now();
   lastPowerUpTime = performance.now();
   gameLoop();
+
+  // اسکرول خودکار به سمت دکمه آتش (پایین صفحه)
+  setTimeout(() => {
+    const fireBtnEl = document.getElementById("fireBtn");
+    if (fireBtnEl && fireBtnEl.scrollIntoView) {
+      fireBtnEl.scrollIntoView({
+        behavior: "smooth",
+        block: "end"
+      });
+    } else {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+      });
+    }
+  }, 400);
 }
 
 function endGame() {
@@ -2998,18 +3014,7 @@ function endGame() {
   // ۵) صدای گیم‌اور و نمایش صفحه
   sfxGameOver();
   gameOverOverlay.classList.remove("hidden");
-
-  // اسکرول خودکار به سمت دکمه آتش (پایین صفحه)
-  setTimeout(() => {
-    const fireBtnEl = document.getElementById("fireBtn");
-    if (fireBtnEl) {
-      fireBtnEl.scrollIntoView({
-        behavior: "smooth",
-        block: "end"
-      });
-    }
-  }, 300);
-}  // 👈 این آکولاد بسته‌ی تابع endGame است
+}
 
 // رویدادهای اصلی
 startBtn.addEventListener("click", ()=> startGame(0));
