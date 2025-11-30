@@ -3376,77 +3376,61 @@ if (fireZone) {
 
 
 // ========= هندل کردن "بک" داخل بازی =========
-function handleBackAction() {
-  // ۱) اگر یکی از مودال‌ها باز است، فقط همان را ببند
-  if (aboutModal && !aboutModal.classList.contains("hidden")) {
-    aboutModal.classList.add("hidden");
-    return true;
-  }
-  if (helpModal && !helpModal.classList.contains("hidden")) {
-    helpModal.classList.add("hidden");
-    return true;
-  }
-  if (shopModal && !shopModal.classList.contains("hidden")) {
-    shopModal.classList.add("hidden");
-    return true;
-  }
-  if (levelModal && !levelModal.classList.contains("hidden")) {
-    levelModal.classList.add("hidden");
-    return true;
-  }
-
-  // ۲) اگر اوورلی مرحله یا گیم‌اور باز است → برگرد به صفحه شروع
-  if (gameOverOverlay && !gameOverOverlay.classList.contains("hidden")) {
-    gameOverOverlay.classList.add("hidden");
-    startOverlay.classList.remove("hidden");
-    return true;
-  }
-
-  if (levelOverlay && !levelOverlay.classList.contains("hidden")) {
-    levelOverlay.classList.add("hidden");
-    startOverlay.classList.remove("hidden");
-    return true;
-  }
-
-  // ۳) اگر وسط بازی هستیم و صفحه شروع مخفی است → پاز و برگشت به اینتروی شروع
-  if (gameRunning && startOverlay && startOverlay.classList.contains("hidden")) {
-    isPaused = true;
-    startOverlay.classList.remove("hidden");
-    return true;
-  }
-
-  // ۴) اگر هیچ‌کدام از حالت‌های بالا نبود → چیزی برای هندل‌کردن نداریم
-  return false;
-}
-
-
-// ========= بک فیزیکی گوشی / مرورگر با History API =========
-window.addEventListener("load", () => {
-  try {
-    // یک state ریشه برای بازی ثبت می‌کنیم
-    if (!history.state || !history.state.tankitaRoot) {
-      history.replaceState({ tankitaRoot: true }, "");
-      history.pushState({ tankitaRoot: true }, "");
+  function handleBackAction() {
+    // ۱) اگر یکی از مودال‌ها باز است، فقط همان را ببند
+    if (typeof aboutModal !== "undefined" && aboutModal && !aboutModal.classList.contains("hidden")) {
+      aboutModal.classList.add("hidden");
+      return;
     }
-  } catch (e) {
-    // بعضی وب‌ویوها ممکن است history را محدود کنند
+    if (typeof helpModal !== "undefined" && helpModal && !helpModal.classList.contains("hidden")) {
+      helpModal.classList.add("hidden");
+      return;
+    }
+    if (typeof shopModal !== "undefined" && shopModal && !shopModal.classList.contains("hidden")) {
+      shopModal.classList.add("hidden");
+      return;
+    }
+    if (typeof levelModal !== "undefined" && levelModal && !levelModal.classList.contains("hidden")) {
+      levelModal.classList.add("hidden");
+      return;
+    }
+
+    // ۲) اگر اوورلی مرحله یا گیم‌اور باز است → برگرد به صفحه شروع
+    if (typeof gameOverOverlay !== "undefined" && gameOverOverlay && !gameOverOverlay.classList.contains("hidden")) {
+      gameOverOverlay.classList.add("hidden");
+      if (typeof startOverlay !== "undefined" && startOverlay) {
+        startOverlay.classList.remove("hidden");
+      }
+      return;
+    }
+
+    if (typeof levelOverlay !== "undefined" && levelOverlay && !levelOverlay.classList.contains("hidden")) {
+      levelOverlay.classList.add("hidden");
+      if (typeof startOverlay !== "undefined" && startOverlay) {
+        startOverlay.classList.remove("hidden");
+      }
+      return;
+    }
+
+    // ۳) اگر وسط بازی هستیم و صفحه شروع مخفی است → پاز و برگشت به صفحه شروع
+    if (typeof gameRunning !== "undefined" &&
+        gameRunning &&
+        typeof startOverlay !== "undefined" &&
+        startOverlay &&
+        startOverlay.classList.contains("hidden")) {
+
+      if (typeof isPaused !== "undefined") {
+        isPaused = true;
+      }
+      startOverlay.classList.remove("hidden");
+      return;
+    }
+
+    // ۴) اگر هیچ‌کدام از حالت‌های بالا نبود،
+    // اجازه می‌دهیم خود ایتا رفتار بستن/خروج را مدیریت کند.
+    // یعنی اینجا عمداً کاری نمی‌کنیم.
   }
-});
 
-// وقتی کاربر دکمه بک گوشی / مرورگر را می‌زند
-window.addEventListener("popstate", () => {
-  const handled = handleBackAction();
-  // اگر داخل بازی چیزی بستیم، نگذار صفحه از بازی خارج شود
-  if (handled) {
-    try {
-      history.pushState({ tankitaRoot: true }, "");
-    } catch (e) {}
-  }
-});
-
-
-
-    
   // ========= اتصال به BackButton و ready در SDK ایتا =========
   function initEitaaBackButton() {
     if (!window.Eitaa || !window.Eitaa.WebApp) return;
@@ -3458,12 +3442,12 @@ window.addEventListener("popstate", () => {
       webApp.ready();
     }
 
-    // فعال‌کردن تأیید برای بستن (اختیاری ولی پیشنهادی)
+    // روشن‌کردن پیغام تأیید بستن (اختیاری)
     if (typeof webApp.enableClosingConfirmation === "function") {
       webApp.enableClosingConfirmation();
     }
 
-    // نمایش دکمه بک هدر ایتا و هندل‌کردن کلیک آن
+    // نمایش دکمه بک هدر ایتا و هندل‌کردن کلیک/بک گوشی
     if (webApp.BackButton) {
       webApp.BackButton.onClick(handleBackAction);
       webApp.BackButton.show();
