@@ -5,7 +5,8 @@
   <title>تانکیتا | Tankita</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  
+  <!-- SDK رسمی ایتا -->
+  <script src="https://developer.eitaa.com/eitaa-web-app.js"></script>
   
   <!-- فونت‌های فارسی -->
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" />
@@ -1214,9 +1215,9 @@ canvas{
         <div id="startOverlay" class="overlay">
   <h2>تانکیتا آماده‌ست 🚀</h2>
   <p>
-    با تانک اراده‌ات، عادت‌های بد رو نابود کن و مرحله به مرحله<br/>
-    غول‌های قلمرو ذهنت رو شکست بده. <br>
-    برای شروع روی دکمه «شروع از مرحله ۱» بزن.
+    با تانک اراده‌ات بدی‌ها رو نابود کن.<br>
+    و غول‌های قلمرو ذهن رو شکست بده.<br>
+    برای شروع روی دکمه‌های زیر بزن.
   </p>
 
   <button id="startBtn">شروع از مرحله ۱</button>
@@ -3372,6 +3373,84 @@ if (fireZone) {
   fireZone.addEventListener("mouseup", stopAutoFire);
 }
 
+
+
+// ========= هندل کردن "بک" داخل بازی =========
+  function handleBackAction() {
+    // ۱) اگر یکی از مودال‌ها باز است، فقط همان را ببند
+    if (aboutModal && !aboutModal.classList.contains("hidden")) {
+      aboutModal.classList.add("hidden");
+      return;
+    }
+    if (helpModal && !helpModal.classList.contains("hidden")) {
+      helpModal.classList.add("hidden");
+      return;
+    }
+    if (shopModal && !shopModal.classList.contains("hidden")) {
+      shopModal.classList.add("hidden");
+      return;
+    }
+    if (levelModal && !levelModal.classList.contains("hidden")) {
+      levelModal.classList.add("hidden");
+      return;
+    }
+
+    // ۲) اگر اوورلی مرحله یا گیم‌اور باز است → برگرد به صفحه شروع
+    if (gameOverOverlay && !gameOverOverlay.classList.contains("hidden")) {
+      gameOverOverlay.classList.add("hidden");
+      startOverlay.classList.remove("hidden");
+      return;
+    }
+
+    if (levelOverlay && !levelOverlay.classList.contains("hidden")) {
+      levelOverlay.classList.add("hidden");
+      startOverlay.classList.remove("hidden");
+      return;
+    }
+
+    // ۳) اگر وسط بازی هستیم و صفحه شروع مخفی است → پاز و برگشت به اینتروی شروع
+    if (gameRunning && startOverlay && startOverlay.classList.contains("hidden")) {
+      isPaused = true;
+      startOverlay.classList.remove("hidden");
+      return;
+    }
+
+    // ۴) اگر هیچ‌کدام از حالت‌های بالا نبود،
+    // اجازه می‌دهیم خود ایتا رفتار بستن/خروج را مدیریت کند.
+  }
+
+  // ========= اتصال به BackButton و ready در SDK ایتا =========
+  function initEitaaBackButton() {
+    if (!window.Eitaa || !window.Eitaa.WebApp) return;
+
+    const webApp = window.Eitaa.WebApp;
+
+    // اعلام اینکه برنامک آماده است
+    if (typeof webApp.ready === "function") {
+      webApp.ready();
+    }
+
+    // فعال‌کردن تأیید برای بستن (اختیاری ولی پیشنهادی)
+    if (typeof webApp.enableClosingConfirmation === "function") {
+      webApp.enableClosingConfirmation();
+    }
+
+    // نمایش دکمه بک هدر ایتا و هندل‌کردن کلیک آن
+    if (webApp.BackButton) {
+      webApp.BackButton.onClick(handleBackAction);
+      webApp.BackButton.show();
+    }
+  }
+
+  // وقتی صفحه لود شد، اگر داخل ایتا بودیم، بک را فعال کن
+  if (document.readyState === "complete" || document.readyState === "interactive") {
+    initEitaaBackButton();
+  } else {
+    window.addEventListener("load", initEitaaBackButton);
+  }
+
+
+    
 </script>
 
 </body>
