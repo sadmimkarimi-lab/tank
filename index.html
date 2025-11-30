@@ -3060,65 +3060,122 @@ pauseBtn.addEventListener("click", ()=>{
         fireBullet();
       }
     });
+
     document.addEventListener("keyup",(e)=>{
       if(e.code==="ArrowLeft") moveLeft=false;
       else if(e.code==="ArrowRight") moveRight=false;
     });
 
-    function bindHold(btn, cb){
-      const start=(e)=>{e.preventDefault();cb(true);};
-      const end=(e)=>{e.preventDefault();cb(false);};
-      btn.addEventListener("mousedown",start);
-      btn.addEventListener("mouseup",end);
-      btn.addEventListener("mouseleave",end);
-      btn.addEventListener("touchstart",start,{passive:false});
-      btn.addEventListener("touchend",end);
-      btn.addEventListener("touchcancel",end);
+
+    
+function bindHold(btn, cb){
+      const start = (e) => { e.preventDefault(); cb(true); };
+      const end   = (e) => { e.preventDefault(); cb(false); };
+      btn.addEventListener("mousedown", start);
+      btn.addEventListener("mouseup", end);
+      btn.addEventListener("mouseleave", end);
+      btn.addEventListener("touchstart", start, { passive: false });
+      btn.addEventListener("touchend", end);
+      btn.addEventListener("touchcancel", end);
     }
-    bindHold(leftBtn,(v)=> moveLeft=v);
-    bindHold(rightBtn,(v)=> moveRight=v);
+    bindHold(leftBtn,  (v) => moveLeft  = v);
+    bindHold(rightBtn, (v) => moveRight = v);
 
     // کلیک / تاچ روی «شلیک»
-fireBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    handleDoubleTap();  // چک دابل‌کلیک
-    fireBullet();       // شلیک معمولی
-});
+    fireBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      handleDoubleTap();  // چک دابل‌کلیک
+      fireBullet();       // شلیک معمولی
+    });
 
-fireBtn.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    handleDoubleTap();  // روی موبایل هم دابل‌تاپ حساب میشه
-    fireBullet();       // شلیک معمولی
-}, { passive: false });
+    fireBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      handleDoubleTap();  // روی موبایل هم دابل‌تاپ حساب میشه
+      fireBullet();       // شلیک معمولی
+    }, { passive: false });
 
-    aboutBtn.addEventListener("click", ()=> aboutModal.classList.remove("hidden"));
-aboutCloseBtn.addEventListener("click", ()=> aboutModal.classList.add("hidden"));
+    // ==========================
+    // مدیریت مودال‌ها + history برای بک گوشی
+    // ==========================
+    function openModalWithHistory(openFn) {
+      if (typeof openFn === "function") {
+        openFn();
+      }
+      if (window.history && typeof window.history.pushState === "function") {
+        window.history.pushState({ popup: true }, "");
+      }
+    }
 
-helpBtn.addEventListener("click", ()=> helpModal.classList.remove("hidden"));
-helpCloseBtn.addEventListener("click", ()=> helpModal.classList.add("hidden"));
+    // ABOUT
+    if (aboutBtn && aboutModal && aboutCloseBtn) {
+      aboutBtn.addEventListener("click", () => {
+        openModalWithHistory(() => {
+          aboutModal.classList.remove("hidden");
+        });
+      });
+      aboutCloseBtn.addEventListener("click", () => {
+        aboutModal.classList.add("hidden");
+      });
+    }
 
-shopBtn.addEventListener("click", ()=>{
-  shopModal.classList.remove("hidden");
-  refreshShopUI();
-});
-shopCloseBtn.addEventListener("click", ()=> shopModal.classList.add("hidden"));
+    // HELP
+    if (helpBtn && helpModal && helpCloseBtn) {
+      helpBtn.addEventListener("click", () => {
+        openModalWithHistory(() => {
+          helpModal.classList.remove("hidden");
+        });
+      });
+      helpCloseBtn.addEventListener("click", () => {
+        helpModal.classList.add("hidden");
+      });
+    }
 
-// دکمه «مراحل بازی» در صفحه شروع
-if(levelsBtn){
-  levelsBtn.addEventListener("click", openLevelModal);
-}
+    // SHOP
+    if (shopBtn && shopModal && shopCloseBtn) {
+      shopBtn.addEventListener("click", () => {
+        openModalWithHistory(() => {
+          shopModal.classList.remove("hidden");
+          refreshShopUI();
+        });
+      });
+      shopCloseBtn.addEventListener("click", () => {
+        shopModal.classList.add("hidden");
+      });
+    }
 
-// کلیک روی کادر «مرحله: ...» در HUD
-if(levelBadge){
-  levelBadge.addEventListener("click", openLevelModal);
-}
+    // دکمه «مراحل بازی» در صفحه شروع
+    if (levelsBtn) {
+      levelsBtn.addEventListener("click", () => {
+        openModalWithHistory(() => {
+          openLevelModal();   // تابع قبلی‌ات همونه، فقط اینجا history هم اضافه میشه
+        });
+      });
+    }
 
-// بستن مودال مراحل
-if(levelCloseBtn){
-  levelCloseBtn.addEventListener("click", ()=>{
-    levelModal.classList.add("hidden");
-  });
-}
+    // کلیک روی کادر «مرحله: ...» در HUD
+    if (levelBadge) {
+      levelBadge.addEventListener("click", () => {
+        openModalWithHistory(() => {
+          openLevelModal();
+        });
+      });
+    }
+
+    // بستن مودال مراحل
+    if (levelCloseBtn) {
+      levelCloseBtn.addEventListener("click", () => {
+        levelModal.classList.add("hidden");
+      });
+    }
+
+    // رویداد بک (history.popstate) برای بستن مودال‌ها
+    if (window.history && typeof window.history.pushState === "function") {
+      window.addEventListener("popstate", function (event) {
+        if (typeof handleBackAction === "function") {
+          handleBackAction();
+        }
+      });
+    }
     
     function refreshShopUI(){
   shopCoinsEl.textContent = coins;
