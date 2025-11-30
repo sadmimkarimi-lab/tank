@@ -3426,12 +3426,11 @@ if (fireZone) {
       return;
     }
 
-    // ۴) اگر هیچ‌کدام از حالت‌های بالا نبود،
-    // اجازه می‌دهیم خود ایتا رفتار بستن/خروج را مدیریت کند.
-    // یعنی اینجا عمداً کاری نمی‌کنیم.
+    // ۴) اگر هیچ‌کدام از حالت‌های بالا نبود، کاری نمی‌کنیم
+    // تا خود ایتا خروج را مدیریت کند.
   }
 
-  // ========= اتصال به BackButton و ready در SDK ایتا =========
+  // ========= اتصال به BackButton و رویداد backButtonClicked =========
   function initEitaaBackButton() {
     if (!window.Eitaa || !window.Eitaa.WebApp) return;
 
@@ -3442,14 +3441,21 @@ if (fireZone) {
       webApp.ready();
     }
 
-    // روشن‌کردن پیغام تأیید بستن (اختیاری)
-    if (typeof webApp.enableClosingConfirmation === "function") {
-      webApp.enableClosingConfirmation();
+    // یک هندلر مشترک برای بک
+    const backHandler = function () {
+      // اگر خواستی بعداً با WebView Debug ببینی، این لاگ کمک می‌کند
+      console.log("backButtonClicked");
+      handleBackAction();
+    };
+
+    // ۱) رویداد سراسری بک
+    if (typeof webApp.onEvent === "function") {
+      webApp.onEvent("backButtonClicked", backHandler);
     }
 
-    // نمایش دکمه بک هدر ایتا و هندل‌کردن کلیک/بک گوشی
+    // ۲) خود دکمه BackButton در هدر ایتا
     if (webApp.BackButton) {
-      webApp.BackButton.onClick(handleBackAction);
+      webApp.BackButton.onClick(backHandler);
       webApp.BackButton.show();
     }
   }
@@ -3460,7 +3466,6 @@ if (fireZone) {
   } else {
     window.addEventListener("load", initEitaaBackButton);
   }
-
 
     
 </script>
