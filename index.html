@@ -3486,32 +3486,41 @@ function handleBackAction() {
 }
 
 
-    // ========= اتصال به BackButton و رویداد backButtonClicked =========
+ // ========= اتصال به BackButton و رویداد backButtonClicked =========
 function initEitaaBackButton() {
-  if (!window.Eitaa || !window.Eitaa.WebApp) return;
+  // اگر داخل ایتا نیستیم، بی‌خیال
+  if (!window.Eitaa || !window.Eitaa.WebApp) {
+    console.log("Eitaa WebApp API not found");
+    return;
+  }
 
   const webApp = window.Eitaa.WebApp;
 
-  // اعلام اینکه برنامک آماده است
+  // اعلام آماده بودن برنامک به ایتا
   if (typeof webApp.ready === "function") {
     webApp.ready();
   }
 
-  // یک هندلر مشترک برای بک
+  // هندلر مشترک برای بک
   const backHandler = function () {
-    console.log("backButtonClicked");
-    handleBackAction();
+    // برای تست، می‌تونی موقتاً این خط رو از کامنت دربیاری:
+    // alert("BACK");
+
+    if (typeof handleBackAction === "function") {
+      handleBackAction();
+    }
   };
 
-  // ۱) رویداد سراسری بک
-  if (typeof webApp.onEvent === "function") {
-    webApp.onEvent("backButtonClicked", backHandler);
+  // طبق چیزی که پشتیبانی گفت:
+  // اول show, بعد onClick
+  if (webApp.BackButton) {
+    webApp.BackButton.show();           // دکمه بک را نمایش بده
+    webApp.BackButton.onClick(backHandler); // کلیک روی بک را مدیریت کن
   }
 
-  // ۲) خود دکمه BackButton در هدر ایتا
-  if (webApp.BackButton) {
-    webApp.BackButton.onClick(backHandler);
-    webApp.BackButton.show();
+  // رویداد سراسری backButtonClicked (اختیاری، ولی بد نیست باشد)
+  if (typeof webApp.onEvent === "function") {
+    webApp.onEvent("backButtonClicked", backHandler);
   }
 }
 
@@ -3521,7 +3530,6 @@ if (document.readyState === "complete" || document.readyState === "interactive")
 } else {
   window.addEventListener("load", initEitaaBackButton);
 }
-
 
 
     
