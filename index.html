@@ -1628,6 +1628,30 @@ canvas{
 
   
   <script>
+
+
+
+const tag = document.createElement("div");
+tag.style.position = "fixed";
+tag.style.left = "8px";
+tag.style.top = "8px";
+tag.style.zIndex = "99999";
+tag.style.fontSize = "10px";
+tag.style.padding = "2px 4px";
+tag.style.background = "rgba(0,0,0,0.6)";
+tag.style.color = "#fff";
+
+if (window.Eitaa && window.Eitaa.WebApp) {
+  tag.textContent = "SDK: OK";
+} else {
+  tag.textContent = "SDK: NO";
+}
+document.body.appendChild(tag);
+
+
+
+
+    
     // ======== Canvas & اندازه ========
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
