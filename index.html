@@ -1807,6 +1807,16 @@ const aboutModal = document.getElementById("aboutModal");
 const helpModal  = document.getElementById("helpModal");
 const shopModal  = document.getElementById("shopModal");
 
+function closeAllPopups() {
+  const modals = [aboutModal, helpModal, shopModal, levelModal];
+  modals.forEach(m => {
+    if (m) {
+      m.classList.add("hidden");
+    }
+  });
+}
+
+    
 const aboutCloseBtn = document.getElementById("aboutCloseBtn");
 const helpCloseBtn  = document.getElementById("helpCloseBtn");
 const shopCloseBtn  = document.getElementById("shopCloseBtn");
