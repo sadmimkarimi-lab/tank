@@ -3504,108 +3504,17 @@ if (fireZone) {
   fireZone.addEventListener("mouseup", stopAutoFire);
 }
 
-// ========= هندل کردن "بک" داخل بازی =========
-function handleBackAction() {
-  // ۱) اگر یکی از مودال‌ها باز است، فقط همان را ببند
-  if (typeof aboutModal !== "undefined" && aboutModal && !aboutModal.classList.contains("hidden")) {
-    aboutModal.classList.add("hidden");
-    return;
-  }
-  if (typeof helpModal !== "undefined" && helpModal && !helpModal.classList.contains("hidden")) {
-    helpModal.classList.add("hidden");
-    return;
-  }
-  if (typeof shopModal !== "undefined" && shopModal && !shopModal.classList.contains("hidden")) {
-    shopModal.classList.add("hidden");
-    return;
-  }
-  if (typeof levelModal !== "undefined" && levelModal && !levelModal.classList.contains("hidden")) {
-    levelModal.classList.add("hidden");
-    return;
-  }
 
-  // ۲) اگر اوورلی مرحله یا گیم‌اور باز است → برگرد به صفحه شروع
-  if (typeof gameOverOverlay !== "undefined" && gameOverOverlay && !gameOverOverlay.classList.contains("hidden")) {
-    gameOverOverlay.classList.add("hidden");
-    if (typeof startOverlay !== "undefined" && startOverlay) {
-      startOverlay.classList.remove("hidden");
-    }
-    return;
-  }
-
-  if (typeof levelOverlay !== "undefined" && levelOverlay && !levelOverlay.classList.contains("hidden")) {
-    levelOverlay.classList.add("hidden");
-    if (typeof startOverlay !== "undefined" && startOverlay) {
-      startOverlay.classList.remove("hidden");
-    }
-    return;
-  }
-
-  // ۳) اگر وسط بازی هستیم و صفحه شروع مخفی است → پاز و برگشت به صفحه شروع
-  if (typeof gameRunning !== "undefined" &&
-      gameRunning &&
-      typeof startOverlay !== "undefined" &&
-      startOverlay &&
-      startOverlay.classList.contains("hidden")) {
-
-    if (typeof isPaused !== "undefined") {
-      isPaused = true;
-    }
-    startOverlay.classList.remove("hidden");
-    return;
-  }
-
-  // ۴) اگر هیچ‌کدام از حالت‌های بالا نبود، کاری نمی‌کنیم
-  // تا خود ایتا خروج را مدیریت کند.
+if (window.Eitaa && window.Eitaa.WebApp) {
+  try {
+    const wa = window.Eitaa.WebApp;
+    if (typeof wa.ready === "function") wa.ready();
+    if (typeof wa.expand === "function") wa.expand();
+  } catch (e) {}
 }
 
 
- // ========= اتصال به BackButton و رویداد backButtonClicked =========
-function initEitaaBackButton() {
-  // اگر داخل ایتا نیستیم، بی‌خیال
-  if (!window.Eitaa || !window.Eitaa.WebApp) {
-    console.log("Eitaa WebApp API not found");
-    return;
-  }
-
-  const webApp = window.Eitaa.WebApp;
-
-  // اعلام آماده بودن برنامک به ایتا
-  if (typeof webApp.ready === "function") {
-    webApp.ready();
-  }
-
-  // هندلر مشترک برای بک
-  const backHandler = function () {
-    // برای تست، می‌تونی موقتاً این خط رو از کامنت دربیاری:
-    // alert("BACK");
-
-    if (typeof handleBackAction === "function") {
-      handleBackAction();
-    }
-  };
-
-  // طبق چیزی که پشتیبانی گفت:
-  // اول show, بعد onClick
-  if (webApp.BackButton) {
-    webApp.BackButton.show();           // دکمه بک را نمایش بده
-    webApp.BackButton.onClick(backHandler); // کلیک روی بک را مدیریت کن
-  }
-
-  // رویداد سراسری backButtonClicked (اختیاری، ولی بد نیست باشد)
-  if (typeof webApp.onEvent === "function") {
-    webApp.onEvent("backButtonClicked", backHandler);
-  }
-}
-
-// وقتی صفحه لود شد، اگر داخل ایتا بودیم، بک را فعال کن
-if (document.readyState === "complete" || document.readyState === "interactive") {
-  initEitaaBackButton();
-} else {
-  window.addEventListener("load", initEitaaBackButton);
-}
-
-
+    
     
 </script>
 
