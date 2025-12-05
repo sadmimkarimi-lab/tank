@@ -3171,24 +3171,24 @@ function bindHold(btn, cb){
 
     // ABOUT → کانال طاویتا (بدون پاپ‌آپ)
     if (aboutBtn) {
-      // متن دکمه را عوض می‌کنیم
+      // متن دکمه «درباره ما» رو می‌کنیم «کانال طاویتا»
       aboutBtn.textContent = "کانال طاویتا";
 
       aboutBtn.addEventListener("click", () => {
         const url = "https://eitaa.com/tavita";
 
-        // اگر داخل ایتا باشیم، لینک کانال را داخل خود ایتا باز کن
-        if (window.Eitaa && window.Eitaa.WebApp && typeof window.Eitaa.WebApp.openLink === "function") {
+        // اگر داخل ایتا هستیم، کانال رو داخل خود ایتا باز کن
+        if (window.Eitaa && window.Eitaa.WebApp && typeof window.Eitaa.WebApp.openEitaaLink === "function") {
           try {
-            window.Eitaa.WebApp.openLink(url);
+            window.Eitaa.WebApp.openEitaaLink(url);
             return;
           } catch (e) {
-            console.warn("openLink for channel failed, fallback to location", e);
+            console.warn("openEitaaLink for channel failed, fallback to browser", e);
           }
         }
 
-        // اگر بیرون از ایتا بودیم، مثل لینک عادی باز کن
-        window.location.href = url;
+        // اگر خارج از ایتا بودیم یا SDK کار نکرد، مثل لینک عادی باز کن
+        window.open(url, "_blank");
       });
     }
 
